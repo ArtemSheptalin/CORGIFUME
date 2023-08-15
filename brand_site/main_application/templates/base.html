@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт парфюмерии</title>
+    <link rel="stylesheet" href="{% static 'main_application/css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="{% static 'main_application/js/scripts.js' %}"></script>
+    <script src="path-to-the-file/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+    <a href={% url 'main_page' %} class="logo">CORGIFUME</a>
+    <nav>
+        <ul>
+            <li>
+                <a href={% url 'main_page' %}>Главная</a>
+            </li>
+            <li>
+                <a href="#">Категории</a>
+                <ul>
+                    <li>
+                        <a href={% url 'brands'%}>Бренды</a>
+                        <a href={% url 'cosmetics'%}>Косметика</a>
+                        <a href="#">Парфюм</a>
+                        <a href={% url 'discounts'%}>Акции</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href={% url 'blog' %}>Блог</a>
+            </li>
+            <li>
+                <a href={% url 'contacts' %}>Контакты</a>
+            </li>
+
+            <li>
+                <a href="#">Корзина</a>
+                <ul>
+                    <li>
+                        <a href="#">Товаров в корзине: 2</a>
+                        <a href="#">Сумма: 999₽</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <form action="" method="get">
+        <input name="s" placeholder="Искать здесь..." type="search" class="form-control">
+    </form>
+
+    <div class="col-md-3 text-end">
+        <button class="btn btn-secondary">Регистрация</button>
+        <button class="btn btn-secondary">Войти</button>
+    </div>
+</header>
+
+{% block content %}
+{% endblock %}
+
+<hr class="featurette-divider fine-line">
+<footer>
+    <nav>
+        <a href={%url 'main_page' %}>© 2023 CORGIFUME</a>
+        <a href={% url 'main_page' %}>Главная</a>
+        <a href="#">Категории</a>
+        <a href={% url 'blog' %}>Блог</a>
+        <a href={% url 'contacts' %}>Контакты</a>
+    </nav>
+</footer>

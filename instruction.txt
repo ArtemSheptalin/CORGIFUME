@@ -1,0 +1,22 @@
+# Инструкция для утсановки и запуска файла.
+
+# 1. На рабочем столе создать папку.
+
+# 2. В терминале вводим следующие команды:
+
+cd Desktop (или Рабочий стол, в зависимости от ОС)
+cd название папки/ (например, cd shop/)
+git clone https://github.com/ArtemSheptalin/CORGIFUME.git
+
+Клонируется репозиторий с проектом, далее:
+
+cd CORGIFUME/brand_site/
+source venv/bin/activate (для MacOS и Linux, для Windows venv\Scripts\activate)
+python3 manage.py runserver (для MacOS и Linux, для Windows python manage.py runserver)
+
+# 3. Далее на экране терминала покажется ссылка в формате: http://127.0.0.1:8000/
+Её мы копируем и вставляем в Google. Всё, сайт запущен на локальном сервере на порте 8000.
+
+После окончания работы, в терминале вводим:
+
+Ctrl + C и закрываем окно терминала.
