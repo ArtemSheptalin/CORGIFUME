@@ -1,15 +1,19 @@
 // СКРИПТ ВЫПАДАЮЩЕГО МЕНЮ
 
 document.addEventListener('DOMContentLoaded', () => {
-    const menu = document.querySelector("mouse-menu");
+    const menu = document.getElementById("mouse-menu");
     const dropDownMenu = document.getElementById("drop-down");
     const body = document.getElementsByTagName("body")[0];
 
-    menu.addEventListener('mouseover', () => {
-      dropDownMenu.style.display = "block";
-      dropDownMenu.style.zIndex = "1";
-      dropDownMenu.style.backgroundColor = "#fafafa";
-    });
+    if (menu !== null) {
+      menu.addEventListener('mouseover', () => {
+        dropDownMenu.style.display = "block";
+        dropDownMenu.style.zIndex = "1";
+        dropDownMenu.style.backgroundColor = "#fafafa";
+      });
+    } else {
+      console.log('Error!');
+    }
 
     dropDownMenu.addEventListener('mouseleave', () => {
       dropDownMenu.style.display = "none";
@@ -18,6 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     menu.addEventListener('mouseleave', () => {
       dropDownMenu.style.display = "none";
     });
-})
+});
 
   

@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сайт парфюмерии</title>
-    <script src="{% static 'main_application/js/scripts.js' %}"></script>
     <link rel="stylesheet" href="{% static 'main_application/css/style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script> {% endcomment %}
@@ -44,6 +43,29 @@
                             <a href="" class="reg" data-context="login">Зарегистрироваться</a>
                         </li>
                         <hr>
+                        <p class="cartCondition">1 продукт в корзине: 156€</p>
+                        <hr>
+                        <div class="responsiveFlyoutBasket_basketScroll" data-scroll="">
+                            <ul class="responsiveFlyoutBasket_basketItemsList" aria-label="Your Items" data-js-element="responsiveFlyoutBasket_basketItemsList">
+                                <li class="responsiveFlyoutBasket_basketItem">
+                                    <a href="https://www.lookfantastic.ru/first-aid-beauty-kp-bump-eraser-body-scrub-with-10-aha-226g/12208246.html" class="responsiveFlyoutBasket_basketItemLink">
+                                        <span class="responsiveFlyoutBasket_basketItemImageColumn">
+                                            <img src="https://static.thcdn.com//productimg/70/70/12208246-1365068781065464.jpg" alt="" role="presentation" width="70" height="70">
+                                        </span>
+                                        <span class="responsiveFlyoutBasket_basketItemInfo">
+                                            <p class="responsiveFlyoutBasket_basketItemTitle">Кислотный скраб для тела First Aid Beauty KP Bump Eraser Body Scrub with 10% AHA, 226 мл</p>
+                                            <p class="responsiveFlyoutBasket_basketItemPrice">
+                                            156€
+                                            </p>
+                                            <p class="responsiveFlyoutBasket_basketItemQuantity">Количество:&nbsp;1</p>
+                                        </span>      
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <li>
+                            <a href="" class="sign-in" data-context="login">Перейти в корзину</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -132,16 +154,74 @@
         </header>
     </div>
 
-{% block content %}
-{% endblock %}
+    {% block content %}
+    {% endblock %}
 
-<hr class="featurette-divider fine-line">
-<footer>
-    <nav>
-        <a href={%url 'main_page' %}>© 2023 CORGIFUME</a>
-        <a href={% url 'main_page' %}>Главная</a>
-        <a href="#">Категории</a>
-        <a href={% url 'blog' %}>Блог</a>
-        <a href={% url 'contacts' %}>Контакты</a>
-    </nav>
-</footer>
+    <hr class="featurette-divider fine-line">
+    <footer>
+        <nav>
+            <a href={%url 'main_page' %}>© 2023 CORGIFUME</a>
+            <a href={% url 'main_page' %}>Главная</a>
+            <a href="#">Категории</a>
+            <a href={% url 'blog' %}>Блог</a>
+            <a href={% url 'contacts' %}>Контакты</a>
+        </nav>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const menu = document.getElementById("mouse-menu");
+          const dropDownMenu = document.getElementById("drop-down");
+          const body = document.getElementsByTagName("body")[0];
+      
+          if (menu !== null) {
+            menu.addEventListener('mouseover', () => {
+              dropDownMenu.style.display = "block";
+              dropDownMenu.style.zIndex = "1";
+              dropDownMenu.style.backgroundColor = "#fafafa";
+            });
+          } else {
+            console.log('Error!');
+          }
+      
+          dropDownMenu.addEventListener('mouseleave', () => {
+            dropDownMenu.style.display = "none";
+          });
+      
+          menu.addEventListener('mouseleave', () => {
+            dropDownMenu.style.display = "none";
+          });
+        });
+
+        const brandBtn = document.getElementById("btnBrand");
+        const pricedBtn = document.getElementById("btnPrice");
+        const discountBtn = document.getElementById("btnDiscount");
+
+        const sortContainer = document.querySelector(".sort-container-inform");
+        const sortContainerPrice = document.querySelector(".info-price");
+        const sortContainerDiscount = document.querySelector(".info-discount");
+
+        brandBtn.addEventListener('click', function() {
+            sortContainer.classList.toggle("show-menu");
+            this.classList.toggle("rotate");
+        });
+
+        pricedBtn.addEventListener('click', function() {
+            sortContainerPrice.classList.toggle("show-menu");
+            this.classList.toggle("rotate");
+        });
+
+        discountBtn.addEventListener('click', function() {
+            sortContainerDiscount.classList.toggle("show-menu");
+            this.classList.toggle("rotate");
+        });
+
+
+
+
+
+
+
+      </script>
+      
+</body>

@@ -153,8 +153,11 @@ body {
     right: 0;
     padding: 10px;
     background-color: #ffffff;
-    border: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     display: none;
+    width: 100%;
 }
 
 .buttons-section li {
@@ -207,6 +210,7 @@ body {
     cursor: pointer;
     text-align: center;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .sign-in:hover {
@@ -220,6 +224,47 @@ body {
     color: black;
     text-decoration: underline;
 }
+
+.cartCondition {
+    font-family: "Work Sans",sans-serif;
+    font-size: 16px;
+    letter-spacing: .19px;
+    text-decoration: none;
+    
+    line-height: 1.5;
+    display: inline-block;
+    transition: background-color .2s;
+    padding: 12.5px 12px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.responsiveFlyoutBasket_basketItemLink {
+    display: flex;
+    text-decoration: none;
+}
+  
+.responsiveFlyoutBasket_basketItemImageColumn {
+    margin-left: -30px;
+}
+  
+.responsiveFlyoutBasket_basketItemTitle {
+    margin: 0;
+    margin-left: 12px;
+    color: #333;
+}
+
+.responsiveFlyoutBasket_basketItemTitle:hover {
+    text-decoration: underline;
+}
+  
+.responsiveFlyoutBasket_basketItemPrice,
+.responsiveFlyoutBasket_basketItemQuantity {
+    margin: 0;
+    color: #999;
+    margin-left: 12px;
+}
+  
 
 .widgets-block {
     display: flex;
@@ -698,6 +743,19 @@ footer a:hover {
     padding-right: 19.2px;
     background-image: none;
     border-radius: inherit;
+}
+
+.sort-container-inform {
+    display: none; 
+    width: 100%;
+}
+
+.sort-container-inform.show-menu {
+    display: block; 
+}
+
+.rotate {
+    transform: rotate(180deg);
 }
 
 
