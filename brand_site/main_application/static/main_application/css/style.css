@@ -246,8 +246,11 @@ body {
 }
 
 .categories-link {
-    border: 1px solid #f4f4f4;
+    border-bottom: 1px solid #f4f4f4;
+    border-left: 1px solid #f4f4f4;
+    border-right: 1px solid #f4f4f4;
     padding: 15px;
+  
 }
 
 .categories-link ul {
@@ -316,9 +319,12 @@ body {
 }
 
 .brands-nav nav ul li a:hover {
-    background-color: #6c757d;
-    transition: .5s;
-    color: white;
+    transition: .6s;
+    background-color: #f4f4f4;
+}
+
+.brands-nav nav ul li a:not(:hover) {
+    transition: .6s;
 }
 
 .letter {
@@ -459,9 +465,20 @@ footer a:hover {
 
 .discounts-block {
     display: flex;
-    margin-left: 200px;
-    flex-wrap: wrap;
+    margin-left: 50px;
     padding-top: 300px;
+}
+
+.discounts-header {
+    font-family: "Work Sans",sans-serif;
+    font-size: 25px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #333;
+    font-weight: 700;
+    text-transform: none;
+    font-weight: 700;
+    text-align: center;
 }
 
 .discount-row {
@@ -479,6 +496,16 @@ footer a:hover {
 .item-text-link {
     color: black;
     text-decoration: none;
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #333;
+    font-weight: 400;
+    text-transform: none;
+    text-decoration: none;
+    display: block;
+    margin: 0;
+    word-break: break-word;
 }
 
 .item-text-link:hover {
@@ -503,6 +530,183 @@ footer a:hover {
     font-size: 20px;
 }
 
+.itm-btn {
+    background-color: black;
+    color: white;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.itm-btn:hover {
+    transition: .6s;
+    background-color: rgba(251, 158, 158, 0.72);
+    color: black;
+    text-decoration: underline;
+}
+
+.itm-btn:not(:hover) {
+    transition: .6s;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+}
+
+
+.sort-container {
+    float: left;
+}
+
+.sort_header {
+    font-family: "Work Sans",sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #333;
+    font-weight: 700;
+    text-transform: none;
+    font-weight: 700;
+    flex: 1;
+    text-align: left;
+}
+
+.responsiveFacets_sectionHeadWrapper {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.responsiveFacets_overrideButtonStyle {
+    border: 0;
+    background: 0 0;
+}
+
+.responsiveFacets_sectionTitle {
+    font-family: "Work Sans",sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #333;
+    font-weight: 700;
+    text-transform: none;
+    font-weight: 700;
+    flex: 1;
+    text-align: center;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+.responsiveFacets_sectionCaret {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+}
+
+.responsiveFacets_sectionContent  {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: inherit;
+    font-style: inherit;
+    text-indent: 0;
+    text-decoration: none;
+    white-space: normal;
+    margin: 0;
+    padding: 0;
+    height: initial;
+    border: 0;
+    background: 0 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.responsiveFacets_sectionItemCheckbox {
+    content: '';
+    background: #fff;
+    height: 17px;
+    width: 17px;
+    border: 1px solid #d0d5da;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 8px;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.responsiveProductListPage_sort {
+    margin-left:60px;
+    margin-bottom: 30px;
+}
+
+.responsiveSort_label {
+    font-size: 20px;
+    color: #333;
+    font-family: Roboto;
+    height: 40px;
+    line-height: 40px;
+    padding-right: 16px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.responsiveSort_selectSVG {
+    pointer-events: none;
+    position: absolute;
+    margin-left: 160px;
+    margin-top: 8px;
+}
+
+.responsiveSort_select {
+    box-sizing: border-box;
+    font-family: "Work Sans",sans-serif;
+    font-size: 16px;
+    line-height: 14px;
+    border: 1px solid #8c8c8c;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 8px;
+    min-height: 24px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    font-family: "Work Sans",sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #333;
+    font-weight: 400;
+    text-transform: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 20%;
+    min-height: 0;
+    height: 40px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-right: 19.2px;
+    background-image: none;
+    border-radius: inherit;
+}
+
+
+  
+
+
+
 
 /* СТИЛИ СТРАНИЦЫ КОНТАКТЫ */
 
@@ -513,6 +717,276 @@ footer a:hover {
 .contacts-content {
     text-align: center;
 }
+
+.helpCentre_searchBar{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding-top: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    border: 1px solid #c4c4c4;
+}
+
+.helpCentre_section {
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 16px;
+}
+
+.helpCentre_sectionTitle, .helpCentre_noResultsDivider {
+    font-family: "Work Sans",sans-serif;
+    font-size: 20px;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: #333;
+    font-weight: 400;
+    text-transform: none;
+    margin-top: 0;
+    margin-bottom: 16px;
+    text-transform: capitalize;
+    outline: 0;
+}
+
+.helpCentre_accordion {
+    margin-top: 16px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #c4c4c4;
+    box-shadow: 0 2px 5px rgba(51,51,51,.1);
+    transition: max-height .15s ease-out;
+    overflow: hidden;
+}
+
+.helpCentre_menu {
+    flex-basis: 100%;
+    align-self: flex-start;
+    float: left;
+    margin-right: 20px;
+    width: 30%;
+    margin-top: 30px;
+}
+
+.helpCentre_menuTitle {
+    font-family: "Work Sans",sans-serif;
+    font-size: 20px;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: #333;
+    font-weight: 400;
+    text-transform: none;
+    margin-left: 25px;
+    padding-top: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    text-transform: capitalize;
+    position: relative;
+}
+
+.helpCentre_menuList {
+    background-color: #fff;
+    list-style: none;
+    margin-top: 10px;
+    border: 1px solid #c4c4c4;
+    margin-left: 25px;
+    box-shadow: 0 2px 5px rgba(51,51,51,.1);
+}
+
+.helpCentre_menuItem {
+    font-family: "Work Sans",sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+    letter-spacing: .3px;
+    color: #333;
+    font-weight: 400;
+    display: block;
+    color: #333;
+    background-color: #fff;
+    padding-top: 5.33333px;
+    padding-right: 8px;
+    padding-bottom: 5.33333px;
+    padding-left: 8px;
+    text-decoration: none;
+    text-transform: inherit;
+    text-align: left;
+    border-top: 0;
+}
+
+.helpCentre_menuItem:hover {
+    color: #6c757d;
+}
+
+.helpCentre_accordionTitleWrapper {
+    border: 0;
+    display: flex;
+    flex-wrap: no-wrap;
+    align-items: center;
+    justify-content: space-between;
+    color: #333;
+    padding-top: 10px;
+    padding-right: 8px;
+    padding-bottom: 10px;
+    padding-left: 8px;
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    text-align: left;
+    width: 100%;
+}
+
+.helpCentre_searchInput_label {
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: inherit;
+    font-style: inherit;
+    text-indent: 0;
+    text-decoration: none;
+    white-space: normal;
+    margin: 0;
+    padding: 0;
+    height: initial;
+    border: 0;
+    background: 0 0;
+    list-style: none;
+    vertical-align: baseline;
+    border-collapse: collapse;
+    border-spacing: 0;
+    content: '';
+    content: none;
+    quotes: none;
+    box-sizing: border-box;
+}
+
+.helpCentre_searchInput::placeholder {
+    font-family: "Work Sans",sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: #333;
+    font-weight: 400;
+    text-transform: none;
+}
+
+.helpCentre_searchInput {
+    width: inherit;
+    background: inherit;
+    height: auto;
+    flex-basis: 100%;
+    padding-top: 0;
+    padding-right: 8px;
+    padding-bottom: 0;
+    padding-left: 8px;
+    border: 0;
+    margin: 0;
+    outline: 0;
+    box-shadow: none;
+}
+
+.helpCentre_cs_cards {
+    text-align: center;
+}
+
+.helpCentre_row-cs-title {
+    font-family: "Work Sans",sans-serif;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -.5px;
+    color: #333;
+    font-weight: 600;
+    padding-top: 0;
+    margin-bottom: 24px;
+}
+
+.csCard_row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.csCard_wrapper {
+    flex: 1;
+    width: 50%;
+}
+
+.first-child {
+    margin-left: 300px;
+}
+
+.last-child {
+    margin-right: 300px;
+}
+
+.csCard_svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    pointer-events: none;
+    height: 64px;
+    width: 64px;
+    margin-bottom: 16px;
+    margin-top: 16px;
+}
+
+.csCard-liveChat, .csCard-phone {
+    background-color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #c4c4c4;
+    border-radius: 6px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 16px;
+    min-height: 180px;
+    width: 50%;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+    top: 0;
+    display: inline-block;
+    transition: box-shadow .1s ease-in-out,top,.1s ease-in-out;
+    box-shadow: 0 0.8px 3.2px rgba(204,204,204,.84), 0 0.8px 3.2px rgba(204,204,204,.77);
+}
+
+.telegram-csCard {
+    background-color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #c4c4c4;
+    border-radius: 6px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 16px;
+    min-height: 180px;
+    width: 50%;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+    top: 0;
+    display: inline-block;
+    transition: box-shadow .1s ease-in-out,top,.1s ease-in-out;
+    box-shadow: 0 0.8px 3.2px rgba(204,204,204,.84), 0 0.8px 3.2px rgba(204,204,204,.77);
+}
+
+.csCard_cardAsLink {
+    text-decoration: none;
+    color: #333;
+}
+
+
+
 
 
 
