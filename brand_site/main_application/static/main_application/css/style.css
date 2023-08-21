@@ -221,8 +221,6 @@ body {
     text-decoration: underline;
 }
 
-.responsive-widgets {}
-
 .widgets-block {
     display: flex;
     background-color: rgb(255, 241, 241);
