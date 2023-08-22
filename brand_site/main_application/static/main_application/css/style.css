@@ -603,7 +603,7 @@ footer a:hover {
 
 .sort_header {
     font-family: "Work Sans",sans-serif;
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1.5;
     letter-spacing: 0;
     color: #333;
@@ -616,8 +616,12 @@ footer a:hover {
 
 .responsiveFacets_sectionHeadWrapper {
     position: relative;
-    width: 100%;
+    width: 300px;
     border-bottom: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
 .responsiveFacets_overrideButtonStyle {
@@ -627,7 +631,7 @@ footer a:hover {
 
 .responsiveFacets_sectionTitle {
     font-family: "Work Sans",sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.5;
     letter-spacing: 0;
     color: #333;
@@ -655,6 +659,9 @@ footer a:hover {
 }
 
 .responsiveFacets_sectionContent  {
+    
+    width: 300px;
+
     font-size: 18px;
     line-height: 30px;
     font-weight: inherit;
@@ -670,7 +677,6 @@ footer a:hover {
     list-style: none;
     display: flex;
     flex-direction: column;
-    width: 300px;
 }
 
 .responsiveFacets_sectionItemCheckbox {
@@ -746,18 +752,23 @@ footer a:hover {
 }
 
 .sort-container-inform {
-    display: none; 
-    width: 100%;
+    display: block; 
+    width: 300px;
 }
 
-.sort-container-inform.show-menu {
-    display: block; 
+.sort-container-inform.hide-menu {
+    display: none; 
 }
 
 .rotate {
     transform: rotate(180deg);
 }
 
+.responsiveFacets_sectionItemValue {
+    font-size: 18px;
+    font-family: "Work Sans",sans-serif;
+    color: #333;
+}
 
   
 
@@ -792,6 +803,7 @@ footer a:hover {
     display: block;
     margin-top: 30px;
     margin-bottom: 16px;
+    width: 98%;
 }
 
 .helpCentre_sectionTitle, .helpCentre_noResultsDivider {
@@ -871,6 +883,12 @@ footer a:hover {
     text-transform: inherit;
     text-align: left;
     border-top: 0;
+}
+
+.helpCentre_accordionIcon {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
 }
 
 .helpCentre_menuItem:hover {
@@ -1039,6 +1057,10 @@ footer a:hover {
 .csCard_cardAsLink {
     text-decoration: none;
     color: #333;
+}
+
+.registrationAnswer.open-answer {
+    display: block; 
 }
 
 

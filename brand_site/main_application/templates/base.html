@@ -170,51 +170,72 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-          const menu = document.getElementById("mouse-menu");
-          const dropDownMenu = document.getElementById("drop-down");
-          const body = document.getElementsByTagName("body")[0];
-      
-          if (menu !== null) {
-            menu.addEventListener('mouseover', () => {
-              dropDownMenu.style.display = "block";
-              dropDownMenu.style.zIndex = "1";
-              dropDownMenu.style.backgroundColor = "#fafafa";
+            const menu = document.getElementById("mouse-menu");
+            const dropDownMenu = document.getElementById("drop-down");
+            const body = document.getElementsByTagName("body")[0];
+
+            if (menu !== null) {
+                menu.addEventListener('mouseover', () => {
+                dropDownMenu.style.display = "block";
+                dropDownMenu.style.zIndex = "1";
+                dropDownMenu.style.backgroundColor = "#fafafa";
             });
-          } else {
-            console.log('Error!');
-          }
-      
-          dropDownMenu.addEventListener('mouseleave', () => {
-            dropDownMenu.style.display = "none";
-          });
-      
-          menu.addEventListener('mouseleave', () => {
-            dropDownMenu.style.display = "none";
-          });
+
+            } else {
+                console.log('Error!');
+            }
+        
+            dropDownMenu.addEventListener('mouseleave', () => {
+                dropDownMenu.style.display = "none";
+            });
+        
+            menu.addEventListener('mouseleave', () => {
+                dropDownMenu.style.display = "none";
+            });
+
+            const brandBtn = document.getElementById("btnBrand");
+            const pricedBtn = document.getElementById("btnPrice");
+            const discountBtn = document.getElementById("btnDiscount");
+
+            const sortContainer = document.querySelector(".sort-container-inform");
+            const sortContainerPrice = document.querySelector(".info-price");
+            const sortContainerDiscount = document.querySelector(".info-discount");
+
+            brandBtn.addEventListener('click', function() {
+                try {
+                    sortContainer.classList.toggle("hide-menu");
+                    this.classList.toggle("rotate");
+                } catch (error) {
+                    console.log('Произошла ошибка:', error);
+                }
+            
+            });
+            
+
+            pricedBtn.addEventListener('click', function() {
+                sortContainerPrice.classList.toggle("hide-menu");
+                this.classList.toggle("rotate");
+            });
+
+            discountBtn.addEventListener('click', function() {
+                sortContainerDiscount.classList.toggle("hide-menu");
+                this.classList.toggle("rotate");
+            });
+
+            const questionBtn = document.getElementById("getRegisterInfo");
+            const answerContainer = document.querySelector(".helpCentre_accordionContent");
+            const accordionIcon = document.getElementById("accordionIcon");
+
+            questionBtn.addEventListener('click', function() {
+                answerContainer.classList.toggle("open-answer");
+                let isExpanded = answerContainer.getAttribute("aria-hidden") === "false";
+                answerContainer.setAttribute("aria-hidden", isExpanded ? "true" : "false");
+                accordionIcon.classList.toggle("helpCentre_accordionIcon-open");
+                accordionIcon.classList.toggle("helpCentre_accordionIcon-close");
+            });
+
         });
 
-        const brandBtn = document.getElementById("btnBrand");
-        const pricedBtn = document.getElementById("btnPrice");
-        const discountBtn = document.getElementById("btnDiscount");
-
-        const sortContainer = document.querySelector(".sort-container-inform");
-        const sortContainerPrice = document.querySelector(".info-price");
-        const sortContainerDiscount = document.querySelector(".info-discount");
-
-        brandBtn.addEventListener('click', function() {
-            sortContainer.classList.toggle("show-menu");
-            this.classList.toggle("rotate");
-        });
-
-        pricedBtn.addEventListener('click', function() {
-            sortContainerPrice.classList.toggle("show-menu");
-            this.classList.toggle("rotate");
-        });
-
-        discountBtn.addEventListener('click', function() {
-            sortContainerDiscount.classList.toggle("show-menu");
-            this.classList.toggle("rotate");
-        });
 
 
 
