@@ -87,7 +87,10 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 20px;
-    border: 1px solid #f4f4f4;
+    border-top: 1px solid #f4f4f4;
+    border-left: 1px solid #f4f4f4;
+    border-right: 1px solid #f4f4f4;
+    border-bottom: 2px solid #f4f4f4;
 }
 
 .item-menu {
@@ -105,7 +108,7 @@ body {
 }
 
 .form-block {
-    margin-left: -150px;
+    margin-left: -350px;
 }
 
 .w-100 {
@@ -129,8 +132,13 @@ body {
     }
 
 .account-block {
-    position: relative;
-    margin-right: 40px;
+    position: absolute;
+    margin-left: 1005px;
+    padding: 10px;
+}
+
+.cart-block {
+    margin-right: 20px;
     padding: 10px;
 }
 
@@ -139,11 +147,20 @@ body {
     color: rgb(63, 63, 63);
     font-size: 20px;
     margin-left: 5px;
-    margin-top: 3px;
+}
+
+.cart {
+    text-decoration: none;
+    color: rgb(63, 63, 63);
+    font-size: 20px;
+    margin-left: 5px;
 }
 
 .account-block:hover {
-    transition: .6s;
+    background-color: #f4f4f4;
+}
+
+.cart-block:hover {
     background-color: #f4f4f4;
 }
 
@@ -157,7 +174,20 @@ body {
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     display: none;
-    width: 100%;
+    width: 148%;
+}
+
+.buttons-section-cart {
+    position: absolute;
+    margin-top: 10px;
+    margin-right: 42px;
+    right: 0;
+    padding: 10px;
+    background-color: #ffffff;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    display: none;
 }
 
 .buttons-section li {
@@ -213,6 +243,34 @@ body {
     width: 100%;
 }
 
+.cart-in {
+    background-color: #000;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #000;
+    font-family: "Work Sans",sans-serif;
+    font-size: 15px;
+    letter-spacing: .19px;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.33;
+    display: block;
+    transition: background-color .2s;
+    padding: 12.5px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.cart-in:hover {
+    background-color: rgb(255, 227, 231);
+    color: rgb(63, 63, 63);
+    text-decoration: underline;
+}
+
 .sign-in:hover {
     background-color: rgb(255, 227, 231);
     color: rgb(63, 63, 63);
@@ -249,6 +307,7 @@ body {
 }
   
 .responsiveFlyoutBasket_basketItemTitle {
+    word-break: break-word;
     margin: 0;
     margin-left: 12px;
     color: #333;
@@ -332,7 +391,7 @@ body {
 
 .brands-nav {
     /* margin-top: 100px; */
-    padding-top: 290px;
+    padding-top: 260px;
 }
 
 .brands-parahraph {
@@ -420,20 +479,14 @@ footer a:hover {
 /* СТИЛИ СТРАНИЦЫ БЛОГ */
 
 .post-wrapper {
-    margin-top: 300px;
+    margin-top: 250px;
     min-height: 100vh;
-}
-
-/* СТИЛИ СТРАНИЦЫ КОНТАКТЫ  */
-
-.contacts-block {
-    margin-top: -48px;
 }
 
 /* СТИЛИ КОСМЕТИКИ */
 
 .brandLogos {
-    padding-top: 280px;
+    padding-top: 250px;
 }
 
 .brandLogos_title {
@@ -509,7 +562,7 @@ footer a:hover {
 .discounts-block {
     display: flex;
     margin-left: 50px;
-    padding-top: 300px;
+    padding-top: 250px;
 }
 
 .discounts-header {
@@ -770,15 +823,10 @@ footer a:hover {
     color: #333;
 }
 
-  
-
-
-
-
 /* СТИЛИ СТРАНИЦЫ КОНТАКТЫ */
 
 .contacts-block {
-    margin-top: 300px;
+    margin-top: 250px;
 }
 
 .contacts-content {
@@ -828,6 +876,7 @@ footer a:hover {
     box-shadow: 0 2px 5px rgba(51,51,51,.1);
     transition: max-height .15s ease-out;
     overflow: hidden;
+    border-radius: 6px;
 }
 
 .helpCentre_menu {
@@ -909,7 +958,7 @@ footer a:hover {
     position: relative;
     cursor: pointer;
     background-color: transparent;
-    text-align: left;
+    text-align: center;
     width: 100%;
 }
 
@@ -1063,6 +1112,17 @@ footer a:hover {
     display: block; 
 }
 
+/* СТИЛИ АВТОРИЗАЦИИ */
+
+.auth-block {
+    margin-top: 290px;
+}
+
+/* СТИЛИ СТРАНИЦЫ С ДЕТАЛЯМИ КОРЗИНЫ */
+
+.cartMainBlock {
+    padding-top: 290px;
+}
 
 
 
