@@ -31,20 +31,24 @@
                         <path d="M12,10.5 C13.6568542,10.5 15,9.15685425 15,7.5 C15,5.84314575 13.6568542,4.5 12,4.5 C10.3431458,4.5 9,5.84314575 9,7.5 C9,9.15685425 10.3431458,10.5 12,10.5 Z M12,12.5 C9.23857625,12.5 7,10.2614237 7,7.5 C7,4.73857625 9.23857625,2.5 12,2.5 C14.7614237,2.5 17,4.73857625 17,7.5 C17,10.2614237 14.7614237,12.5 12,12.5 Z M5,21.5 L3,21.5 C3,17.6340068 7.02943725,14.5 12,14.5 C16.9705627,14.5 21,17.6340068 21,21.5 L19,21.5 C19,18.8641562 15.9603707,16.5 12,16.5 C8.03962935,16.5 5,18.8641562 5,21.5 Z"></path>
                     </svg>
                     <a href="#" class="account" id="acc-area">Мой аккаунт</a>
-                    <ul class="buttons-section" id="acc-drop-down">
-                        {% if user.is_authenticated %}
-                            <p>{{ user.first_name }}</p>
-                            <a href={% url 'users:logout' %} class="sign-in" data-context="login">Выйти</a>
-                        {% else %}
-                            <li>
-                                <a href={% url 'users:login' %} class="sign-in" data-context="login">Войти</a>
-                            </li>
-                            <li>
-                                <a href={% url 'users:registration_page' %} class="reg" data-context="login">Зарегистрироваться</a>
-                            </li>
-                        {% endif %}
-                        <hr>
-                    </ul>
+                    <div id="myModal">
+                        <ul class="buttons-section" id="acc-drop-down">
+                            {% if user.is_authenticated %}
+                                <p>{{ user.first_name }}</p>
+                                <a href={% url 'users:logout' %} class="sign-in" data-context="login">Выйти</a>
+                                <a href={% url 'users:profile_page' %} class="sign-in" style="margin-top:10px;">Профиль</a>
+                            {% else %}
+                                <li>
+                                    <a href={% url 'users:login' %} class="sign-in" data-context="login">Войти</a>
+                                </li>
+                                <li>
+                                    <a href={% url 'users:registration_page' %} class="reg" data-context="login">Зарегистрироваться</a>
+                                </li>
+                            {% endif %}
+                            <hr>
+                        </ul>
+                    </div>
+                        
                 </div>
 
                 <div class="cart-block" id="cart-menu">
@@ -56,6 +60,7 @@
                     <ul class="buttons-section-cart" id="cart-drop-down">
                         {% if cart|length > 0 %}
                             <p class="cartCondition">В корзине {{ total_items }} шт, $ {{ cart.get_total_price }}</p>
+                            <p class="responsiveFlyoutBasket_basketItemTitle">{{ product.name }}</p>
                         {% else %}
                         <p class="cartCondition">Корзина пустая</p>
                         {% endif %}
@@ -80,7 +85,7 @@
                             </ul>
                         </div> {% endcomment %}
                         <li>
-                            <a href={% url 'cart:cart_detail' %} class="cart-in" data-context="login">Перейти в корзину</a>
+                            <a href={% url 'cart:cart_detail' %} class="cart-in">Перейти в корзину</a>
                         </li>
                     </ul>
                 </div>
@@ -269,8 +274,7 @@
                 answerContainer.setAttribute("aria-hidden", isExpanded ? "true" : "false");
                 accordionIcon.classList.toggle("helpCentre_accordionIcon-open");
                 accordionIcon.classList.toggle("helpCentre_accordionIcon-close");
-            });
-
+            });              
         });
 
 
