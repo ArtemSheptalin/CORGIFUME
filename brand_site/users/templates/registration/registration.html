@@ -7,20 +7,40 @@
         <a href="{% url 'main_page' %}">Обратно на главную</a>
     </li>
 </ul>
-<div class="container" style="max-width:600px">
-    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">All Books</h1>
-        <p class="lead">A range of wonderful programming books to help you learn JavaScript.</p>
-    </div>
-    <div class="py-5">
-        <div class="row">
-            <div class="col-12">
+<div class="profileSettings" style="margin-top:150px;">
+    <div class="formPlace">
+        <h1 style="text-align:center;">Зарегистрироваться</h1>
+        <div class="formContent">
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit">
+
+                    <div class="form-group">
+                        <label for="{{ form.phone_number.id_for_label }}" class="custom-label-class">Номер телефона:</label>
+                        {{ form.phone_number }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.email_field.id_for_label }}" class="custom-label-class">Email:</label>
+                        {{ form.email_field }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.first_name.id_for_label }}" class="custom-label-class">Имя:</label>
+                        {{ form.first_name }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.password1.id_for_label }}" class="custom-label-class">Введите пароль:</label>
+                        {{ form.password1 }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.password2.id_for_label }}" class="custom-label-class">Повторите пароль:</label>
+                        {{ form.password2 }}
+                    </div>
+
+                    <button type="submit" class="changeFormBtn">Регистрация</button>
                 </form>
-            </div>
         </div>
     </div>
 </div>

@@ -34,7 +34,13 @@
                     <div id="myModal">
                         <ul class="buttons-section" id="acc-drop-down">
                             {% if user.is_authenticated %}
-                                <p>{{ user.first_name }}</p>
+
+                                {% if request.user.profile.first_name %}
+                                    <p class="welcomeParagraph">{{ profile.first_name }} {{ profile.last_name }}</p>
+                                {% else %}
+                                    <p class="welcomeParagraph">{{ request.user.first_name }}</p>
+                                {% endif %}
+
                                 <a href={% url 'users:logout' %} class="sign-in" data-context="login">Выйти</a>
                                 <a href={% url 'users:profile_page' %} class="sign-in" style="margin-top:10px;">Профиль</a>
                             {% else %}
@@ -274,7 +280,34 @@
                 answerContainer.setAttribute("aria-hidden", isExpanded ? "true" : "false");
                 accordionIcon.classList.toggle("helpCentre_accordionIcon-open");
                 accordionIcon.classList.toggle("helpCentre_accordionIcon-close");
-            });              
+            });    
+            
+            $('#cartBtnId').click(function(e) {
+                e.preventDefault();
+                var form = $(this);
+
+                $.ajax({
+                    type:form.attr('method'),
+                    url:form.attr('action'),
+                    data:form.serialize(),
+                    success:function(response) {
+                        if (data.status === 'success') {
+                            console.log('123'); 
+                        } else {
+                            alert('Error!');
+                        }
+                    },
+                    error: function() {
+                        alert('Error!');
+                    }            
+                });
+            });
+
+
+
+
+
+
         });
 
 

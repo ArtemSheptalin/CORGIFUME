@@ -2,270 +2,147 @@
 {% block content %}
 
 
-<div class="profileBlock" style="margin-top:280px">
-    <main class="profile-container">
-        <section class="personal-info">
-            <h2>1. Личная информация:</h2>
-            <div class="personal-details">
-                <div class="personal-detail">
-                    <span class="detail-label">Имя и фамилия:</span>
-                    <span class="detail-value">{{ profile }}</span>
-                </div>
-                <div class="personal-detail">
-                    <span class="detail-label">Адрес доставки:</span>
-                    <span class="detail-value">{{ profile }}</span>
-                    <button class="edit-button-small">Изменить</button>
-                    <button class="delete-button">Удалить</button>
-                </div>
-                <div class="personal-detail">
-                    <span class="detail-label">Дата рождения:</span>
-                    <span class="detail-value">{{ profile }}</span>
-                </div>
-                <div class="personal-detail">
-                    <span class="detail-label">Контактные данные:</span>
-                    <span class="detail-value hidden">+7 (123) 456-7890</span>
-                    <button class="show-phone">Показать номер</button>
-                    <span class="detail-value hidden">ivanov@example.com</span>
-                    <button class="show-email">Показать email</button>
+<div class="profileBlock">
+    <div class="accountHeader">
+        <div class="welcomeMessages">
+            <h2 class="welcomeMessage">Мой аккаунт</h2>
+            {% if profile.first_name %}
+                <p class="welcomeParagraph">Добро пожаловать, {{ profile.first_name }} {{ profile.last_name }}</p>
+            {% else %}
+                <p class="welcomeParagraph">Добро пожаловать, {{ request.user.first_name }} {{ profile.last_name }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+
+    <div class="privateInfo">
+        <h2 class="privateInfoHeader">Личная информация:</h2>
+        <ul class="privateInfoUl">
+            {% if profile.first_name %}
+                <li class="privateInfoList">Имя и фамилия: {{ profile.first_name }}</li>
+            {% else %}
+                <li class="privateInfoList">Имя и фамилия: {{ request.user.first_name }}</li>
+            {% endif %}
+            
+            {% if profile.date_of_birth %}
+                <li class="privateInfoList">Дата рождения: {{ profile.date_of_birth }}</li>
+            {% else %}
+                <li class="privateInfoList">Дата рождения: не указано</li>
+            {% endif %}
+
+            {% if profile.address %}
+                <li class="privateInfoList">Адреса доставки: {{ profile.address }}</li>
+            {% else %}
+                <li class="privateInfoList">Адреса доставки: не указано</li>
+            {% endif %}
+            <li class="privateInfoList">Контактные данные: {{ request.user.phone_number }}</li>
+        </ul>
+    </div>
+    <hr>
+
+    <div class="paymentsBlock">
+        <div class="paymentsInfo">
+            <div class="paymentsHeader">
+                <h2>Платёжные данные:</h2>
+                {% if profile.yandex_pay == 0 %}
+                    <p>Яндекс Pay: не добавлена</p>
+                {% else %}
+                    <p>Яндекс Pay: {{ profile.yandex_pay }}</p>
+                {% endif %}
+
+                {% if profile.tinkoff_pay == 0 %}
+                    <p>Tinkoff Pay: не добавлена</p>
+                {% else %}
+                    <p>Tinkoff Pay: {{ profile.tinkoff_pay }}</p>
+                {% endif %}
+
+                {% if profile.card_field == 0 %}
+                    <p>Сохраненная карта: не добавлена</p>
+                {% else %}
+                    <p>Сохраненная карта: {{ profile.formatted_card }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="accountContent">
+        <div class="profileOrders">
+            <div class="ordersBlock">
+                <div class="ordersHeader">
+                    <h2 class='ordersTitle'>Ваши заказы</h2> 
+                    {% if orders %}
+                        {% for order in orders %}
+                            <p class="ordersParagraph">Номер заказа: {{ order.order_number }}</p>
+                            <p class="ordersParagraph">Статус заказа: {{ order.status }}</p>
+                            <p class="ordersParagraph">Дата заказа: {{ order.order_date }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p class="ordersParagraph">У вас пока нет активных заказов</p> 
+                    {% endif %}
+
+            
                 </div>
             </div>
-        </section>
-  
-  
-        <section class="order-history">
-            <h2>2. История заказов:</h2>
-            <ul class="order-list">
-                <!-- Пример 1: Создан заказ -->
-                <li class="order-item">
-                    <div class="order-info">
-                        <p class="order-number">Заказ № <span class="order-number-value">12345</span></p>
-                        <p class="order-date">Дата заказа: 2023-08-15</p>
-                        <div class="order-progress">
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 25%;"></div>
-                            </div>
-                            <p class="order-status">Статус: Создан</p>
-                        </div>
-                    </div>
-                    <button class="details-button">Подробности заказа</button>
-                </li>
-  
-                <!-- Пример 2: Принят заказ -->
-                <li class="order-item">
-                    <div class="order-info">
-                        <p class="order-number">Заказ № <span class="order-number-value">54321</span></p>
-                        <p class="order-date">Дата заказа: 2023-08-10</p>
-                        <div class="order-progress">
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 50%;"></div>
-                            </div>
-                            <p class="order-status">Статус: Принят</p>
-                        </div>
-                    </div>
-                    <button class="details-button">Подробности заказа</button>
-                </li>
-  
-                <!-- Пример 3: Доставлен заказ -->
-                <li class="order-item">
-                    <div class="order-info">
-                        <p class="order-number">Заказ № <span class="order-number-value">98765</span></p>
-                        <p class="order-date">Дата заказа: 2023-08-05</p>
-                        <div class="order-progress">
-                            <div class="progress-bar">
-                                <div class="progress" style="width: 100%;"></div>
-                            </div>
-                            <p class="order-status">Статус: Доставлен</p>
-                        </div>
-                    </div>
-                    <button class="details-button">Подробности заказа</button>
-                </li>
-            </ul>
-        </section>
-  
-        <!-- Модальное окно для подробностей о заказе -->
-        <div id="order-details-modal" class="modal">
-            <div class="modal-content">
-                <span class="close">×</span>
-                <h2>Подробности заказа</h2>
-                <p class="order-details-content">
-                    Содержимое заказа для Заказа №12345:<br>
-                    - Товар 1: $10.00<br>
-                    - Товар 2: $20.00<br>
-                    - Товар 3: $15.00<br>
-                    Сумма заказа: $45.00
+        </div>
+    </div>
+    <hr>
+
+    <div class="favoriteBlock">
+        <div class="favoriteInfo">
+            <div class="favoriteHeader">
+                <h2>Избранное</h2>
+                {% if favorites %}
+                    {% for favorite in favorites %}
+                        <p>{{ favorite.item }}</p>
+                    {% endfor %}
+                {% else %}
+                        <p>В настоящий момент у вас нет понравившихся товаров...</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="loyalBlock">
+        <div class="loyalInfo">
+            <div class="loyalText">
+                <div class="loyalHeader">
+                    <h2>Программа лояльности</h2>
+                    <p>Добро пожаловать в программу лояльности Corgifume, где каждый клиент оценен и награжден за свою страсть к миру ароматов. Мы создали эту программу, чтобы вы могли наслаждаться не только лучшими парфюмами, но и уникальными привилегиями, которые отражают вашу преданность миру ароматов.</p>
+                </div>
+                <div class="loyalList">
+                    <ul class="loyalUl">
+                        <li class="loyalLink">Ваши текущие бонусы: {{ profile.current_bonuses }}</li>
+                        <li class="loyalLink">Предстоящие: {{ profile.future_bonuses }}</li>
+                        <li class="loyalLink">Ваши текущие Арома-баллы: {{ profile.aroma_balls }}</li>
+                        <li class="loyalLink">Ваш текущий уровень: {{ profile.loyal_status }}</li>
+                    </ul>
+                </div>
+                <div class="loyalpriviliges">
+                    <p class="priviligesHeader">Ваши текущие привилегии:</p>
+                    <p class="priviligesParagraph">В настоящий момент у вас нету привилегий в магазине...</p>
+                    <a href="#" class="priviligesInfo">Подробнее о программе лояльности</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <hr>
+
+    <div class="settingsBlock">
+        <div class="settingsInfo">
+            <div class="settingsHeader">
+                <h2>Настройки:</h2>
+                <p class="profileSettings">Изменение профиля: 
+                    <a href={% url 'users:edit-profile' %}>Настроить профиль</a>
+                </p>
+                <p class="passwordChange">Изменение пароля: 
+                    <a href={% url 'users:password_change_lk' %}>Изменить пароль</a>
                 </p>
             </div>
         </div>
-  
-        <section class="payment-info">
-            <h2>3. Платежные данные:</h2>
-            <ul>
-                <li>
-                    <strong>Яндекс Pay:</strong>
-                    <span class="payment-status connected">Подключено</span>
-                    <button class="edit-button-small">Изменить</button>
-                </li>
-                <li>
-                    <strong>Tinkoff Pay:</strong>
-                    <span class="payment-status connected">Подключено</span>
-                    <button class="edit-button-small">Изменить</button>
-                </li>
-                <li>
-                    <strong>Сохраненная карта:</strong>
-                    <span class="payment-card">**** **** **** 1234</span>
-                    <button class="edit-button-small">Изменить</button>
-                    <button class="delete-button">Удалить</button>
-                </li>
-            </ul>
-        </section>
-  
-        <section class="favorite-info">
-            <h2>4. Избранное:</h2>
-            <ul class="favorites-list">
-                <li class="favorite-item">
-                    <div class="favorite-image">
-                        <div class="image-placeholder">Фото товара</div>
-                    </div>
-                    <div class="favorite-details">
-                        <h3>Парфюм "Название 1"</h3>
-                        <p>Размер флакона: 50 мл</p>
-                        <p>Цена: $50.00</p>
-                        <button class="add-to-cart-button">Добавить в корзину</button>
-                        <button class="remove-from-favorites-button">Убрать из избранного</button>
-                    </div>
-                </li>
-                <li class="favorite-item">
-                    <div class="favorite-image">
-                        <div class="image-placeholder">Фото товара</div>
-                    </div>
-                    <div class="favorite-details">
-                        <h3>Парфюм "Название 2"</h3>
-                        <p>Размер флакона: 30 мл</p>
-                        <p>Цена: $35.00</p>
-                        <button class="add-to-cart-button">Добавить в корзину</button>
-                        <button class="remove-from-favorites-button">Убрать из избранного</button>
-                    </div>
-                </li>
-            </ul>
-        </section>
-  
-        <section class="notifications">
-            <h2>5. Уведомления:</h2>
-            <ul>
-                <li>
-                    <label for="emailNotifications">Получать уведомления по электронной почте:</label>
-                    <input type="checkbox" id="emailNotifications" class="email-checkbox">
-                    <span class="custom-checkbox"></span>
-                </li>
-            </ul>
-        </section>
-  
-  
-  
-  
-        <section class="loyalty-program">
-            <h2>6. Программа лояльности</h2>
-            <p>Добро пожаловать в программу лояльности Corgifume, где каждый клиент оценен и награжден за свою страсть к миру ароматов. Мы создали эту программу, чтобы вы могли наслаждаться не только лучшими парфюмами, но и уникальными привилегиями, которые отражают вашу преданность миру ароматов.</p>
-  
-            <!-- Добавлено количество бонусов -->
-            <div class="loyalty-bonus">
-                <p>Ваши текущие бонусы: <span id="loyalty-bonus-count">1000</span></p>
-            </div>
-  
-            <div class="upcoming-bonus">
-                <p>Предстоящие : <span id="upcoming-bonus-count">500</span></p>
-            </div>
-  
-  
-            <div class="loyalty-progress">
-                <p>Ваши текущие Арома-баллы: <span id="loyalty-points">55</span></p>
-                <div class="progress-bar">
-                    <div class="progress" id="loyalty-progress"></div>
-                    <div class="level-markers">
-                        <div class="level-marker" style="left: 20%;"></div>
-                        <div class="level-marker" style="left: 40%;"></div>
-                        <div class="level-marker" style="left: 60%;"></div>
-                        <div class="level-marker" style="left: 80%;"></div>
-                    </div>
-                </div>
-                <p>Ваш текущий уровень: <span id="current-level">Знаток</span></p>
-                <p id="next-level-info">Вам нужно набрать 5 Арома-баллов для достижения следующего уровня.</p>
-                <p>Ваши текущие привилегии:</p>
-                <ul id="privileges"><li>20% к дополнительным бонусам при совершении покупок на сайте.</li><li>Дополнительная скидка 7% на заказ в течение 7 дней до и 7 дней после дня рождения.</li></ul>
-            </div>
-  
-            <p><a href="#" id="loyalty-details-link">Подробнее о программе лояльности</a></p>
-        </section>
-  
-          <!-- Модальное окно для подробностей о программе лояльности -->
-          <div id="loyalty-details-modal" class="modal">
-              <div class="modal-content">
-                  <span class="close">×</span>
-                  <h2>Программа лояльности Corgifume</h2>
-                  <p>Добро пожаловать в программу лояльности Corgifume, где каждый клиент оценен и награжден за свою страсть к миру ароматов. Мы создали эту программу, чтобы вы могли наслаждаться не только лучшими парфюмами, но и уникальными привилегиями, которые отражают вашу преданность миру ароматов.</p>
-                  <h3>Бонусы при Покупке в Corgifume:</h3>
-                  <p>При каждой покупке в магазине Corgifume, вы зарабатываете бонусы в зависимости от суммы вашей покупки. Основной принцип начисления бонусов заключается в том, что за каждые 100 рублей, потраченные на покупки, начисляется 1 бонус.</p>
-                  <!-- Добавьте информацию о бонусах и уровнях лояльности здесь -->
-              </div>
-          </div>
-  
-          <section class="security-settings">
-              <h2>7. Настройки безопасности:</h2>
-              <ul>
-                  <li>
-                      <strong>Изменение пароля:</strong>
-                      <button class="edit-button-small">Изменить пароль</button>
-                  </li>
-                  <li>
-                      <strong>Двухфакторная аутентификация:</strong>
-                      <button class="edit-button-small">Подключить двухфакторную аутентификацию</button>
-                  </li>
-              </ul>
-          </section>
-  
-          <section class="viewed-products">
-              <h2>8. История просмотров и желаемых товаров:</h2>
-              <ul class="product-list">
-                  <li class="product-item">
-                      <img src="product1.jpg" alt="Товар 1">
-                      <h3>Товар 1</h3>
-                      <p class="product-price">$19.99</p>
-                  </li>
-                  <li class="product-item">
-                      <img src="product2.jpg" alt="Товар 2">
-                      <h3>Товар 2</h3>
-                      <p class="product-price">$24.99</p>
-                  </li>
-                  <li class="product-item">
-                      <img src="product3.jpg" alt="Товар 3">
-                      <h3>Товар 3</h3>
-                      <p class="product-price">$29.99</p>
-                  </li>
-                  <li class="product-item">
-                      <img src="product4.jpg" alt="Товар 4">
-                      <h3>Товар 4</h3>
-                      <p class="product-price">$14.99</p>
-                  </li>
-                  <li class="product-item">
-                      <img src="product5.jpg" alt="Товар 5">
-                      <h3>Товар 5</h3>
-                      <p class="product-price">$39.99</p>
-                  </li>
-              </ul>
-          </section>
-  
-          <section class="support">
-              <h2>10. Служба Поддержки:</h2>
-              <div class="support-buttons">
-                  <button class="support-button">Онлайн чат</button>
-                  <button class="support-button">Написать на почту</button>
-                  <button class="support-button">Написать в Телеграм</button>
-                  <button class="support-button">Мои Обращения</button>
-              </div>
-              <p>Ссылка на страницу поддержки: <a href="#">Перейти</a></p>
-          </section>
-  
-      </main>
+    </div>
 </div>
 
 

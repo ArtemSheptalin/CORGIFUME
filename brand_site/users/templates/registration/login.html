@@ -1,21 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="auth-block">
-    <h1>Авторизация</h1>
-    <hr>
+{% load widget_tweaks %}
 
-    {% if form.errors %}
-        <p>{{ form.errors.error }}</p>
-    {% endif %}
+<div class="profileSettings" style="margin-top:250px;">
+    <div class="formPlace">
+        <h1 style="text-align:center;">Авторизация</h1>
+        <div class="formContent">
+                <form action="{% url 'users:login' %}" method="post">
+                    {% csrf_token %}
 
-    <form action="{% url 'users:login' %}" method="post">
-    {{ form }}
-    {% csrf_token %}
-    <button type="submit" class="btn btn-success">Войти</button>
-    </form>
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}" class="custom-label-class">Номер телефона:</label>
+                        {{ form.username|add_class:"registrationFormDes" }}
+                    </div>
 
-    <a href="{% url 'users:password_reset' %}">Забыли пароль?</a>
-    <a href="{% url 'main_page' %}">Обратно на главную</a>
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}" class="custom-label-class">Пароль:</label>
+                        {{ form.password|add_class:"registrationFormDes" }}
+                    </div>
+
+                    <button type="submit" class="changeFormBtn">Войти</button>
+                    <div class="reverseLinks">
+                        <a href="{% url 'users:password_reset_lk' %}" class="loginLinks">Забыли пароль?</a>
+                        <a href="{% url 'main_page' %}" class="loginLinks">Обратно на главную</a>
+                    </div>
+                </form>
+        </div>
+    </div>
 </div>
     
         

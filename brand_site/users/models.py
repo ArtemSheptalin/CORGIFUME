@@ -3,6 +3,7 @@ from django.utils.translation import gettext as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 from product.models import Product
+import random
 
 class CustomAccountManager(BaseUserManager):
 
@@ -33,15 +34,24 @@ class CustomAccountManager(BaseUserManager):
 class Profile(models.Model):
     user = models.OneToOneField('NewUser', on_delete=models.CASCADE, related_name='user_profile')
     # Личные данные
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    address = models.CharField(max_length=200)
-    date_of_birth = models.DateField()
+    first_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    date_of_birth = models.CharField(null=True, blank=True)
     # Программа лояльности
     current_bonuses = models.IntegerField(default=0)
     future_bonuses = models.IntegerField(default=0)
     aroma_balls = models.IntegerField(default=0)
     loyal_status = models.CharField(default='Новичок')
+    # платёжные данные
+    yandex_pay = models.BigIntegerField(default=0) 
+    tinkoff_pay = models.BigIntegerField(default=0)
+    card_field = models.BigIntegerField(default=0)
+
+    def formatted_card(self):
+        card = str(self.card_field)
+        formatted_card = ' '.join(card[i:i+4] for i in range(0, len(card), 4))
+        return formatted_card
 
 
 class NewUser(AbstractBaseUser, PermissionsMixin):
@@ -75,12 +85,17 @@ class Favorite(models.Model):
 
 class Order(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='orders')
-    order_date = models.DateField()
+    order_number = models.IntegerField(default=random.randint(100000, 999999))
+    order_date = models.CharField()
+    product = models.ManyToManyField(Product)
     status = models.CharField(max_length=100, choices=(
         ('processing', 'В обработке'),
         ('created', 'Создан'),
         ('accepted', 'Принят'),
         ('completed', 'Доставлено')
     ), default='processing')
-
+    shipping_address = models.CharField(null=True)
+    order_price = models.IntegerField(default=0)
+    name = models.CharField(null=True)
+    phone = models.CharField(null=True)
 
