@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% block title %}Каталог{% endblock %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+            <main class="page">
+                <div data-observ></div>
+                <div class="catalog">
+                    <div class="catalog__container">
+                        <aside class="catalog__aside">
+                            <div class="catalog__crumbs crumbs">
+                                <div class="crumbs__item">
+                                    <a href={% url 'main_page' %}>Главная </a>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                        <path d="M7.5 15.5L12.5 10.5L7.5 5.5" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <div class="crumbs__item select"><a href="#">Каталог</a></div>
+                            </div>
+                            <div class="catalog__filter filter">
+                                <form action="#" class="filter__body">
+                                    <div class="filter__title">
+                                        <p>Найдено</p>
+                                        <p class="found">{{ total_query_count }} товаров</p>
+                                    </div>
+                                    <div class="filter__title-mob">
+                                        <p>Фильтр</p>
+                                        <div class="filter__button-close">
+                                            <img src={% static "images/button-close.svg" %} alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="search filter__search" data-da=".catalog__head, 950, first">
+                                        <div class="search__body">
+                                            <input type="text" name="search" id="search-header" class="search__input text" placeholder="Поиск по сайт" />
+                                            <button class="search__icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path
+                                                        d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
+                                                        stroke="#667085"
+                                                        stroke-width="1.66667"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                    ></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <form action="{% url 'catalog' %}" method='GET'>
+                                        <div class="_open filter-menu filter__menu">
+                                            <div class="filter-menu__title">Бренд <img src={% static "images/select-str.svg" %} alt="" /></div>
+                                            <div class="filter-menu__body checkbox">
+                                                {% for br in brands %}
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="brand{{ forloop.counter }}" name="brand" value="{{ br }}" class="filter-menu__checkbox-input" /> 
+                                                    <label for="brand{{ forloop.counter }}" class="filter-menu__checkbox-label">{{ br }}</label>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                        <div class="_open filter-menu filter__menu">
+                                            <div class="filter-menu__title">Объем <img src={% static "images/select-str.svg" %} alt="" /></div>
+                                            <div class="filter-menu__body checkbox">
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="price1" name="mls" value="30" class="filter-menu__checkbox-input" /> 
+                                                    <label for="price1" class="filter-menu__checkbox-label">до 30 мл</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="price2" name="mls" value="50" class="filter-menu__checkbox-input" /> 
+                                                    <label for="price2" class="filter-menu__checkbox-label">от 31 до 50</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="price3" name="mls" value="75" class="filter-menu__checkbox-input" /> 
+                                                    <label for="price3" class="filter-menu__checkbox-label">от 51 до 75</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="price4" name="mls" value="100" class="filter-menu__checkbox-input" /> 
+                                                    <label for="price4" class="filter-menu__checkbox-label">от 76 до 100</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="price5" name="mls" value="101" class="filter-menu__checkbox-input" /> 
+                                                    <label for="price5" class="filter-menu__checkbox-label">свыше 101</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="_open filter-menu filter__menu">
+                                            <div class="filter-menu__title">Тип товара <img src={% static "images/select-str.svg" %} alt="" /></div>
+                                            <div class="filter-menu__body checkbox">
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="parfum1" name="parfum" value="Одеколон" class="filter-menu__checkbox-input" /> 
+                                                    <label for="parfum1" class="filter-menu__checkbox-label">Одеколон</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="parfum2" name="parfum" value="Туалетная вода" class="filter-menu__checkbox-input" /> 
+                                                    <label for="parfum2" class="filter-menu__checkbox-label">Туалетная вода</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="parfum3" name="parfum" value="Парфюмированная вода" class="filter-menu__checkbox-input" /> 
+                                                    <label for="parfum3" class="filter-menu__checkbox-label">Парфюмированная вода</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="parfum4" name="parfum" value="Парфюм" class="filter-menu__checkbox-input" /> 
+                                                    <label for="parfum4" class="filter-menu__checkbox-label">Парфюм</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="parfum5" name="parfum" value="Наборы" class="filter-menu__checkbox-input" /> 
+                                                    <label for="parfum5" class="filter-menu__checkbox-label">Наборы</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="parfum6" name="parfum" value="Гель для душа" class="filter-menu__checkbox-input" /> 
+                                                    <label for="parfum6" class="filter-menu__checkbox-label">Гель для душа</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="parfum7" name="parfum" value="Диффузоры" class="filter-menu__checkbox-input" /> 
+                                                    <label for="parfum7" class="filter-menu__checkbox-label">Диффузоры</label>
+                                                </div>
+                                                <div class="filter-menu__item">
+                                                    <input type="checkbox" id="parfum9" name="parfum" value="Дымка для волос" class="filter-menu__checkbox-input" /> 
+                                                    <label for="parfum9" class="filter-menu__checkbox-label">Дымка для волос</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="_open filter-menu filter__menu">
+                                            <div class="filter-menu__title">Цена <img src={% static "images/select-str.svg" %} alt="" /></div>
+                                            <div class="filter-menu__body filter-menu__body-range">
+                                                <div class="range">
+                                                    <div class="range__row-input">
+                                                        <p>от</p>
+                                                        <div class="range__item-input">
+                                                            <input type="text" name="superscroll1" value="0" class="range__min-input" />
+                                                            <p class="range__currency">RUB</p>
+                                                        </div>
+                                                        <p>до</p>
+                                                        <div class="range__item-input">
+                                                            <input type="text" name="superscroll2" value="99 999" class="range__max-input" />
+                                                            <p class="range__currency">RUB</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="range__slider">
+                                                        <div class="slider-range"></div>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+
+                                        <div class="filter__button-row">
+                                            <button type="submit" class="button filter__button">ПРИМЕНИТЬ</button> 
+                                            <a href="{% url 'catalog' %}" class="button white button-reset-range filter__button filter__button-reset">СБРОСИТЬ</a>
+                                        </div>
+
+                                    </form>         
+                            </div>
+                        </aside>
+                        <div class="catalog__content">
+                            <div class="catalog__head">
+                                <div class="catalog__sort sort">
+                                    <div class="sort__title">Сортировка</div>
+                                    <div class="select sort__body">
+                                        <input class="select__input" type="hidden" name="" />
+                                        <div class="select__head-mob">Сортировка</div>
+                                        <div class="select__head">Сначала популярные</div>
+                                        <ul class="select__list" data-da=".catalog__head, 650, last">
+                                            <li class="select__item">Популярное</li>
+                                            <li class="select__item">С лучшей оценкой</li>
+                                            <li class="select__item">По отзывам</li>
+                                            <li class="select__item">Сначала дорогие</li>
+                                            <li class="select__item">Сначала дешевые</li>
+                                            <li class="select__item">Новинки</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="catalog__navigation navigation">
+                                    <div class="navigation__item navigation__prev">
+                                        {% if page_obj.has_previous %}
+                                        <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}{% if selected_ml %}mls={{ selected_ml|join:'&mls=' }}&{% endif %}{% if selected_parfums %}parfum={{ selected_parfums|join:'&parfum=' }}&{% endif %}{% if selected_min_price %}superscroll1={{ selected_min_price }}&{% endif %}{% if selected_max_price %}superscroll2={{ selected_max_price }}&{% endif %}page={{ page_obj.previous_page_number }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M15.8332 9.99984H4.1665M4.1665 9.99984L9.99984 15.8332M4.1665 9.99984L9.99984 4.1665" stroke="#667085" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                
+                                    {% for num in page_obj.paginator.page_range %}
+                                        {% if num == page_obj.number %}
+                                            <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}page={{ num }}{% if selected_ml %}&mls={{ selected_ml|join:'&mls=' }}{% endif %}{% if selected_parfums %}&parfum={{ selected_parfums|join:'&parfum=' }}{% endif %}{% if selected_min_price %}&superscroll1={{ selected_min_price }}{% endif %}{% if selected_max_price %}&superscroll2={{ selected_max_price }}{% endif %}" class="navigation__item">{{ num }}</a>
+                                        {% else %}
+                                            {% if num == 1 or num == page_obj.paginator.num_pages %}
+                                                <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}page={{ num }}{% if selected_ml %}&mls={{ selected_ml|join:'&mls=' }}{% endif %}{% if selected_parfums %}&parfum={{ selected_parfums|join:'&parfum=' }}{% endif %}{% if selected_min_price %}&superscroll1={{ selected_min_price }}{% endif %}{% if selected_max_price %}&superscroll2={{ selected_max_price }}{% endif %}" class="navigation__item">{{ num }}</a>
+                                            {% else %}
+                                                    {% if num == page_obj.number|add:"0" or num == page_obj.number|add:"-1" or num == page_obj.number|add:"1" or num == page_obj.number|add:"2" %}
+                                                    <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}page={{ num }}{% if selected_ml %}&mls={{ selected_ml|join:'&mls=' }}{% endif %}{% if selected_parfums %}&parfum={{ selected_parfums|join:'&parfum=' }}{% endif %}{% if selected_min_price %}&superscroll1={{ selected_min_price }}{% endif %}{% if selected_max_price %}&superscroll2={{ selected_max_price }}{% endif %}" class="navigation__item">{{ num }}</a>
+                                                    {% else %}
+                                                        {% if num == page_obj.number|add:"2" or num == page_obj.number|add:"3" %}
+                                                            <div class="navigation__item">...</div>
+                                                        {% endif %}
+                                                    {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                
+                                
+                                
+                                
+                                    <div class="navigation__item navigation__next">
+                                        {% if page_obj.has_next %}
+                                            <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}{% if selected_ml %}mls={{ selected_ml|join:'&mls=' }}&{% endif %}{% if selected_parfums %}parfum={{ selected_parfums|join:'&parfum=' }}&{% endif %}{% if selected_min_price %}superscroll1={{ selected_min_price }}&{% endif %}{% if selected_max_price %}superscroll2={{ selected_max_price }}&{% endif %}page={{ page_obj.next_page_number }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                    <path d="M15.8332 9.99984H4.1665M4.1665 9.99984L9.99984 15.8332M4.1665 9.99984L9.99984 4.1665" stroke="#667085" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="catalog__button-filter">Фильтр</div>
+                            </div>
+
+                            
+                                <div class="catalog__row">
+                                    {% for product in page_obj %}
+                                    <div class="card catalog__card">
+                                        <div class="card__body">
+                                            {% for image in product.image.all %}
+                                                {% if forloop.counter == 1 %}
+                                                <picture>
+                                                    <source srcset={% static image  %} type="image/webp">
+                                                    <img src={% static image  %} alt="" class="card__img">
+                                                </picture>
+                                                {% endif %}
+                                            {% endfor %}  
+                                            <h3 class="card__title" style="display: inline;">{{ product.name }}</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star-two.svg" %} alt="" /> <img src={% static "images/star-trans.svg" %} alt="" />
+                                            </div>
+                                            <div class="card__recommendation">{{ product.brand }} {{ product.ml }} мл.</div>
+                                            <div class="card__recommendation">
+                                                {{ product.image.first|split_last }}
+                                                
+                                                {% if product.tester %}
+                                                  (Тестер)
+                                                {% endif %}
+                                              </div>
+                                              
+                                            <div class="card__price">{{ product.price }} RUB</div>
+                                            <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            
+                                
+                                <div class="catalog__bottom">
+                                    <div class="catalog__navigation navigation">
+                                        <div class="navigation__item navigation__prev">
+                                            {% if page_obj.has_previous %}
+                                            <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}{% if selected_ml %}mls={{ selected_ml|join:'&mls=' }}&{% endif %}{% if selected_parfums %}parfum={{ selected_parfums|join:'&parfum=' }}&{% endif %}{% if selected_min_price %}superscroll1={{ selected_min_price }}&{% endif %}{% if selected_max_price %}superscroll2={{ selected_max_price }}&{% endif %}page={{ page_obj.previous_page_number }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path d="M15.8332 9.99984H4.1665M4.1665 9.99984L9.99984 15.8332M4.1665 9.99984L9.99984 4.1665" stroke="#667085" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    
+                                        {% for num in page_obj.paginator.page_range %}
+                                            {% if num == page_obj.number %}
+                                                <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}page={{ num }}{% if selected_ml %}&mls={{ selected_ml|join:'&mls=' }}{% endif %}{% if selected_parfums %}&parfum={{ selected_parfums|join:'&parfum=' }}{% endif %}{% if selected_min_price %}&superscroll1={{ selected_min_price }}{% endif %}{% if selected_max_price %}&superscroll2={{ selected_max_price }}{% endif %}" class="navigation__item">{{ num }}</a>
+                                            {% else %}
+                                                {% if num == 1 or num == page_obj.paginator.num_pages %}
+                                                    <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}page={{ num }}{% if selected_ml %}&mls={{ selected_ml|join:'&mls=' }}{% endif %}{% if selected_parfums %}&parfum={{ selected_parfums|join:'&parfum=' }}{% endif %}{% if selected_min_price %}&superscroll1={{ selected_min_price }}{% endif %}{% if selected_max_price %}&superscroll2={{ selected_max_price }}{% endif %}" class="navigation__item">{{ num }}</a>
+                                                {% else %}
+                                                        {% if num == page_obj.number|add:"0" or num == page_obj.number|add:"-1" or num == page_obj.number|add:"1" or num == page_obj.number|add:"2" %}
+                                                        <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}page={{ num }}{% if selected_ml %}&mls={{ selected_ml|join:'&mls=' }}{% endif %}{% if selected_parfums %}&parfum={{ selected_parfums|join:'&parfum=' }}{% endif %}{% if selected_min_price %}&superscroll1={{ selected_min_price }}{% endif %}{% if selected_max_price %}&superscroll2={{ selected_max_price }}{% endif %}" class="navigation__item">{{ num }}</a>
+                                                        {% else %}
+                                                            {% if num == page_obj.number|add:"2" or num == page_obj.number|add:"3" %}
+                                                                <div class="navigation__item">...</div>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+    
+                                    
+                                    
+                                    
+                                    
+                                        <div class="navigation__item navigation__next">
+                                            {% if page_obj.has_next %}
+                                                <a href="?{% if selected_brands %}brand={{ selected_brands|join:'&brand=' }}&{% endif %}{% if selected_ml %}mls={{ selected_ml|join:'&mls=' }}&{% endif %}{% if selected_parfums %}parfum={{ selected_parfums|join:'&parfum=' }}&{% endif %}{% if selected_min_price %}superscroll1={{ selected_min_price }}&{% endif %}{% if selected_max_price %}superscroll2={{ selected_max_price }}&{% endif %}page={{ page_obj.next_page_number }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                        <path d="M15.8332 9.99984H4.1665M4.1665 9.99984L9.99984 15.8332M4.1665 9.99984L9.99984 4.1665" stroke="#667085" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="_overlay-bg popup-remove" data-popup="popup-remov">
+                    <div class="popup-remove__body">
+                        <div class="button-close popup-remove__button-close"><img src={% static "images/button-close.svg" %} alt="" /></div>
+                        <div class="popup-remove__title">Удаление товара</div>
+                        <p>Удалить выбранный товар? Отменить действие будет невозможно.</p>
+                        <div class="popup-remove__button-row">
+                            <div class="button white button-close popup-remove__button">Оставить</div>
+                            <div class="button button-close popup-remove__button">УДАЛИТЬ</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+{% endblock %}

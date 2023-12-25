@@ -1,57 +1,144 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}Изменение профиля{% endblock %}
 {% load static %}
 {% block content %}
 
+<div class="entrance">
+    <div class="entrance__row registration">
+        <div class="entrance__img">
+            <picture>
+                <source srcset={% static "images/entrance-img.webp" %} type="image/webp" />
+                <img src={% static "images/entrance-img.png" %} alt="" />
+            </picture>
+        </div>
+        <div class="entrance__body">
+            <div class="entrance__content">
+                <form method="POST" class="entrance__form form-ent">
+                    {% csrf_token %}
+                    <h1 class="form-ent__title">Редактирование профиля</h1>
+                    <div class="form-ent__body">
 
-<div class="profileSettings" style="margin-top:280px;">
-    <div class="formPlace">
-        <h1 style="text-align:center;">Настройка профиля</h1>
-        <div class="formContent">
-            <form method="post">
-                {% csrf_token %}
-    
-                <div class="form-group">
-                    <label for="{{ form.first_name.id_for_label }}" class="custom-label-class">Имя:</label>
-                    {{ form.first_name }}
-                </div>
-    
-                <div class="form-group">
-                    <label for="{{ form.last_name.id_for_label }}" class="custom-label-class">Фамилия:</label>
-                    {{ form.last_name }}
-                </div>
+                        {% comment %} <div class="form-ent__name"> {% endcomment %}
+                            <div class="form-ent__item">
+                                <label for="name" class="delivery__label">Имя</label> 
+                                {{ form.first_name|add_class:"delivery__input" }}
+                            </div>
+                        {% comment %} </div> {% endcomment %}
 
-                <div class="form-group">
-                    <label for="{{ form.date_of_birth.id_for_label }}" class="custom-label-class">Дата рождения:</label>
-                    {{ form.date_of_birth }}
-                </div>
+                        <div class="form-ent__item">
+                            <label for="surname" class="delivery__label">Фамилия</label> 
+                            {{ form.last_name|add_class:"delivery__input" }}
+                        </div>
+                        
+                        <div class="form-ent__item">
+                            <label for="email" class="delivery__label">E-mail</label> 
+                            {{ form.email_field|add_class:"delivery__input" }}
+                        </div>
 
-                <div class="form-group">
-                    <label for="{{ form.address.id_for_label }}" class="custom-label-class">Адрес:</label>
-                    {{ form.address }}
-                </div>
+                        <div class="form-ent__item">
+                            <label for="{{ form.date_of_birth.id_for_label }}" class="delivery__label">Дата рождения</label> 
+                            {{ form.date_of_birth|add_class:"delivery__input" }}
+                        </div>
 
-                <div class="form-group">
-                    <label for="{{ form.yandex_pay.id_for_label }}" class="custom-label-class">Yandex Pay:</label>
-                    {{ form.yandex_pay }}
-                </div>
+                        <div class="form-ent__item">
+                            <label for="city" class="delivery__label">Город</label> 
+                            {{ form.city|add_class:"delivery__input" }}
+                        </div>
 
-                <div class="form-group">
-                    <label for="{{ form.tinkoff_pay.id_for_label }}" class="custom-label-class">Tinkoff Pay:</label>
-                    {{ form.tinkoff_pay }}
-                </div>
+                        <div class="form-ent__item">
+                            <label for="index" class="delivery__label">Индекс</label> 
+                            {{ form.index|add_class:"delivery__input" }}
+                        </div>
 
-                <div class="form-group">
-                    <label for="{{ form.card_field.id_for_label }}" class="custom-label-class">Привязанная карта:</label>
-                    {{ form.card_field }}
-                </div>
-                
-    
-                <button type="submit" class="changeFormBtn">Сохранить</button>
-            </form>
-    
+                        <div class="form-ent__item">
+                            <label for="street" class="delivery__label">Улица</label>
+                            {{ form.street|add_class:"delivery__input" }}
+                        </div>
+
+                        <div class="form-ent__item">
+                            <label for="house" class="delivery__label">Дом</label>
+                            {{ form.house|add_class:"delivery__input" }}
+                        </div>
+
+                        <div class="form-ent__item">
+                            <label for="body" class="delivery__label">Корпус</label> 
+                            {{ form.corp|add_class:"delivery__input" }}
+                        </div>
+
+                        <div class="form-ent__item">
+                            <label for="flat" class="delivery__label">Кв.</label> 
+                            {{ form.room|add_class:"delivery__input" }}
+                        </div>
+                        <div class="item-info__button-row">
+                            <button type="submit" class="button item-info__button-save">Внести изменения</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    
-
 </div>
+
+{% comment %} <form class="item-info__form" method="POST">
+    {% csrf_token %}
+
+    <div class="delivery__row-input">
+        <label for="name" class="delivery__label">Имя</label> 
+        {{ form.first_name|add_class:"delivery__input" }}
+    </div>
+
+    <div class="delivery__row-input">
+        <label for="surname" class="delivery__label">Фамилия</label> 
+        {{ form.last_name|add_class:"delivery__input" }}
+    </div>
+
+    <div class="delivery__row-input">
+        <label for="email" class="delivery__label">E-mail</label> 
+        {{ form.email_field|add_class:"delivery__input" }}
+    </div>
+
+    <div class="delivery__row-input">
+        <label for="{{ form.date_of_birth.id_for_label }}" class="delivery__label">Дата рождения</label> 
+        {{ form.date_of_birth|add_class:"delivery__input" }}
+    </div>
+    
+    <div class="delivery__row-input">
+        <label for="city" class="delivery__label">Город</label> 
+        {{ form.city|add_class:"delivery__input" }}
+    </div>
+
+    <div class="delivery__row-input">
+        <label for="index" class="delivery__label">Индекс</label> 
+        {{ form.index|add_class:"delivery__input" }}
+    </div>
+    
+    <div class="item-info__row">
+        <div class="delivery__row-input">
+            <label for="street" class="delivery__label">Улица</label>
+            {{ form.street|add_class:"delivery__input" }}
+        </div>
+
+        <div class="delivery__row-input">
+            <label for="body" class="delivery__label">Корпус</label> 
+            {{ form.corp|add_class:"delivery__input" }}
+        </div>
+
+        <div class="delivery__item-two">
+            <div class="delivery__row-input">
+                <label for="house" class="delivery__label">Дом</label> 
+                {{ form.house|add_class:"delivery__input" }}
+            </div>
+
+            <div class="delivery__row-input">
+                <label for="flat" class="delivery__label">Кв.</label> 
+                {{ form.room|add_class:"delivery__input" }}
+            </div>
+        </div>
+    </div> 
+
+    <div class="item-info__button-row">
+        <button type="submit" class="button item-info__button-save">Внести изменения</button>
+    </div>
+</form> {% endcomment %}
 {% endblock %}

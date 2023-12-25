@@ -1,0 +1,25 @@
+services:
+  web-app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./brand_site:/brand_site
+    environment:
+      - DB_HOST=database
+      - DB_NAME=corgifume_db
+      - DB_USER=postgres
+      - DB_PASS=postgres
+    command: >
+      sh -c "python3 manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - database
+  
+  database:
+    image: postgres:14.6-alpine
+    environment:
+      - POSTGRES_DB=corgifume_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  

@@ -1,14 +1,17 @@
 from typing import Any, Dict
-from django.shortcuts import render
+from django.db import models
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, DetailView, FormView, UpdateView
-from .forms import NewUserForm, ProfileForm
+from .forms import NewUserForm, ProfileForm, ProfileChangeForm
 from .models import NewUser, Profile, Order, Favorite
 from product.models import Product
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordResetForm
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
@@ -26,60 +29,86 @@ class RegForm(CreateView):
     def get_initial(self, *args, **kwargs):
         initial = super().get_initial(**kwargs)
         initial['phone_number'] = ''
+        initial['email_field'] = ''
         return initial
 
     def form_valid(self, form):
         response = super().form_valid(form)
         new_user = form.instance
 
-        profile = Profile.objects.create(user=new_user, first_name=form.cleaned_data['first_name'], user_id=new_user.id)
+        Profile.objects.create(user=new_user, first_name=form.cleaned_data['first_name'], user_id=new_user.id)
         # order = Order.objects.create(profile=profile, profile_id=profile.id)
         return response
 
 
-class ProfileView(TemplateView):
-    model = Profile
+class ShowProfile(FormView):
     template_name = 'profile.html'
+    form_class = ProfileForm
+    success_url = '/'
+    model = Profile
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         data = super().get_context_data(**kwargs)
         user = self.request.user
-        product = Product.objects.all() 
-        profile = Profile.objects.get(user_id=user.id)
-        orders = Order.objects.filter(profile_id=profile.id)
-        favorites = Favorite.objects.filter(user_id=user.id)
-
-        data['product'] = product
+        profile = Profile.objects.get(user=user.id)
         data['profile'] = profile
-        data['orders'] = orders
-        data['favorites'] = favorites
-        data['user'] = user
         return data
-
-
-class EditProfile(FormView):
-    template_name = 'edit_profile.html'
-    form_class = ProfileForm
-
-    def get_success_url(self):
-        return reverse_lazy('users:profile_page')
-
-    def form_valid(self, form):
-        user = self.request.user
-        profile = get_object_or_404(Profile, user_id=user.id)
-        form.instance.pk = profile.pk 
-        form.instance.user = user 
-        form.save()
-        return redirect(self.get_success_url())
-    
 
     def get_initial(self, *args, **kwargs):
         initial = super().get_initial(**kwargs)
-        initial['yandex_pay'] = ''
-        initial['tinkoff_pay'] = ''
-        initial['card_field'] = ''
+        user = self.request.user
+        profile = Profile.objects.get(user=user.id) 
+        
+        initial['last_name'] = profile.last_name
+        
+        initial['first_name'] = profile.first_name
+        
+        initial['phone_number'] = user.phone_number
+
+        initial['email_field'] = user.email_for_reset
+        
+        initial['date_of_birth'] = profile.date_of_birth
+
+        initial['city'] = profile.city
+
+        initial['index'] = profile.index
+
+        initial['street'] = profile.street
+
+        initial['house'] = profile.house
+
+        initial['corp'] = profile.corp
+
+        initial['room'] = profile.room
+
         return initial
 
+
+class EditProfile(UpdateView):
+    template_name = 'edit_profile.html'
+    form_class = ProfileChangeForm
+    success_url = '/'
+    model = Profile
+
+    # мы возвращаем профиль пользователя, связанный с текущим залогиненным пользователем.
+    # это необходимо, так как метод предоставляет сам объект для использования в представлении.
+    # а в ссылке мы всего лишь ссылаемся на него pk=user.pk.
+    def get_object(self):
+        return self.request.user.user_profile
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        user = self.request.user
+        user.email_for_reset = form.cleaned_data['email_field']
+        user.save()
+        form.save()
+        return super().form_valid(form)
+
+    def get_initial(self, *args, **kwargs):
+        initial = super().get_initial(**kwargs)
+        user = self.request.user
+        initial['email_field'] = user.email_for_reset
+        return initial
+    
 
 class PasswordChange(LoginRequiredMixin, PasswordChangeView):
     template_name = 'change-password.html'
@@ -101,10 +130,27 @@ class PasswordSuccessView(TemplateView):
 
 class PasswordReset(PasswordResetView):
     template_name = 'password-forgot.html'
+    form_class = PasswordResetForm
+
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        if not NewUser.objects.filter(email_for_reset=email).exists():
+            return redirect('users:error_message') 
+        return redirect('users:password-reset-info')
 
 
-class PasswordResetSuccessView(TemplateView):
-    template_name = 'password-reset-info.html'
+class ErrorMessage(TemplateView):
+    template_name = 'not-exists-email.html'
+
+
+class QuestionView(TemplateView):
+    template_name = 'question.html'
+
+    
+
+        
+    
+    
     
 
 

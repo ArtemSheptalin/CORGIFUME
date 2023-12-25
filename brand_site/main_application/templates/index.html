@@ -1,0 +1,643 @@
+{% extends 'base.html' %}
+{% block title %}Главная{% endblock %}
+{% load static %}
+{% block content %}
+            <main class="page">
+                <div data-observ></div>
+                <div class="about">
+                    <div class="wrapper2">
+                        <input type="radio" name="point" id="slide1" checked>
+                        <input type="radio" name="point" id="slide2">
+                        <input type="radio" name="point" id="slide3">
+                        <input type="radio" name="point" id="slide4">
+                        <div class="slider">
+                            <div class="slides slide1"></div>
+                            <div class="slides slide2"></div>
+                            <div class="slides slide3"></div>
+                            <div class="slides slide4"></div>
+                        </div>	
+                        <div class="controls">
+                            <label for="slide1"></label>
+                            <label for="slide2"></label>
+                            <label for="slide3"></label>
+                            <label for="slide4"></label>
+                        </div>
+                    </div>
+                    {% comment %} <div class="about__img">
+                        <picture>
+                            <source srcset={% static 'images/about-img.webp' %} type="image/webp" />
+                            <img src={% static 'images/about-img.png' %} alt="" class="veb" />
+                        </picture>
+                        <picture>
+                            <source srcset={% static 'images/about-img-mob.webp' %} type="image/webp" />
+                            <img src={% static 'images/about-img-mob.png' %} alt="" class="mob" />
+                        </picture>
+                    </div> {% endcomment %}
+                    <div class="about__container">
+                        <div class="about__title">Дополнительная <span>скидка 5%</span> + доставка на следующий день</div>
+                        <div class="about__body">
+                            <p class="about__text">Украсьте свою коллекцию красоты со скидкой 30% на выбранную парфюмерию</p>
+                            <a href="#" class="button about__button">КУПИТЬ СЕЙЧАС</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="top">
+                    <div class="top__container">
+                        <div class="top__header">
+                            <div class="tab-title top__title active">
+                                <h2><span>Топ этого сезона</span> <span class="mob">Лучшее</span></h2>
+                            </div>
+                            <div class="tab-title top__title"><h2>Подарок</h2></div>
+                            <div class="tab-title top__title">
+                                <h2>Новинки <span>и тенденции</span></h2>
+                            </div>
+                        </div>
+                        <div class="top__body">
+                            <div class="card-slider tab-body active">
+                                <div class="card-slider__swiper">
+                                    <div class="swiper-wrapper card-slider__wrapper">
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                                    <img src={% static 'images/top-card-img1.png' %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img2.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img3.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img4.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-pagination card-slider__pagination"></div>
+                                </div>
+                            </div>
+                            <div class="card-slider tab-body">
+                                <div class="card-slider__swiper">
+                                    <div class="swiper-wrapper card-slider__wrapper">
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img4.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img3.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img2.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img1.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-pagination card-slider__pagination"></div>
+                                </div>
+                            </div>
+                            <div class="card-slider tab-body">
+                                <div class="card-slider__swiper">
+                                    <div class="swiper-wrapper card-slider__wrapper">
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img1.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img2.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img3.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static 'images/top-card-img4.webp' %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                                <div class="card__row-star">
+                                                    <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star.svg"%} alt="" /> <img src={% static "images/star-two.svg"%} alt="" />
+                                                    <img src={% static "images/star-trans.svg"%} alt="" />
+                                                </div>
+                                                <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                                <div class="card__price">1590 RUB</div>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-pagination card-slider__pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="center">
+                    <div class="center__container">
+                        <h2 class="center__title">В центре внимания</h2>
+                        <div class="center-slider">
+                            <div class="swiper-wrapper center-slider__wrapper">
+                                <div class="swiper-slide center-slider__slide">
+                                    <picture>
+                                        <source srcset={% static "images/center-img1.webp" %} type="image/webp" />
+                                        <img src={% static "images/center-img1.png" %} alt="" class="center-slider__img" />
+                                    </picture>
+                                </div>
+                                <div class="swiper-slide center-slider__slide">
+                                    <picture>
+                                        <source srcset={% static "images/center-img2.webp" %} type="image/webp" />
+                                        <img src={% static "images/center-img2.png" %} alt="" class="center-slider__img" />
+                                    </picture>
+                                </div>
+                                <div class="swiper-slide center-slider__slide">
+                                    <picture>
+                                        <source srcset={% static "images/center-img3.webp" %} type="image/webp" />
+                                        <img src={% static "images/center-img3.png" %} alt="" class="center-slider__img" />
+                                    </picture>
+                                </div>
+                                <div class="swiper-slide center-slider__slide">
+                                    <picture>
+                                        <source srcset={% static "images/center-img2.webp" %} type="image/webp" />
+                                        <img src={% static "images/center-img2.png" %} alt="" class="center-slider__img" />
+                                    </picture>
+                                </div>
+                                <div class="swiper-slide center-slider__slide">
+                                    <picture>
+                                        <source srcset={% static "images/center-img1.webp" %} type="image/webp" />
+                                        <img src={% static "images/center-img1.png" %} alt="" class="center-slider__img" />
+                                    </picture>
+                                </div>
+                                <div class="swiper-slide center-slider__slide">
+                                    <picture>
+                                        <source srcset={% static "images/center-img2.webp" %} type="image/webp" />
+                                        <img src={% static "images/center-img2.png" %} alt="" class="center-slider__img" />
+                                    </picture>
+                                </div>
+                                <div class="swiper-slide center-slider__slide">
+                                    <picture>
+                                        <source srcset={% static "images/center-img3.webp" %} type="image/webp" />
+                                        <img src={% static "images/center-img3.png" %} alt="" class="center-slider__img" />
+                                    </picture>
+                                </div>
+                                <div class="swiper-slide center-slider__slide">
+                                    <picture>
+                                        <source srcset={% static "images/center-img2.webp" %} type="image/webp" />
+                                        <img src={% static "images/center-img2.png" %} alt="" class="center-slider__img" />
+                                    </picture>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination center-slider__pagination"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="best">
+                    <div class="best__container">
+                        <h2 class="best__title">Бестселлеры</h2>
+                        <div class="best__slider">
+                            <div class="card-slider">
+                                <div class="card-slider__swiper">
+                                    <div class="swiper-wrapper card-slider__wrapper">
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img1.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img1.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug%} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img2.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img3.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img4.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="button white best__button">Посмотреть все</a>
+                                    <div class="swiper-pagination card-slider__pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="best__grid">
+                            <div class="swiper-slide card card-slider__slide" data-da=".slider-grid-best__wrapper, 700, first">
+                                <div class="card__body">
+                                    <picture>
+                                        <source srcset={% static "images/best-grid-img1.webp" %} type="image/webp" />
+                                        <img src={% static "images/best-grid-img1.png" %} alt="" class="card__img" />
+                                    </picture>
+                                    <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                    <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                    <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide card card-slider__slide" data-da=".slider-grid-best__wrapper, 700, 2">
+                                <div class="card__body">
+                                    <picture>
+                                        <source srcset={% static "images/best-grid-img2.webp" %} type="image/webp" />
+                                        <img src={% static "images/best-grid-img2.png" %} alt="" class="card__img" />
+                                    </picture>
+                                    <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                    <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                    <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="best__slider-grid">
+                            <div class="card-slider">
+                                <div class="slider-grid">
+                                    <div class="swiper-wrapper card-slider__wrapper slider-grid-best__wrapper">
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img1.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img1.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img2.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img3.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img4.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img1.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img1.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img2.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img3.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide card card-slider__slide">
+                                            <div class="card__body">
+                                                <picture>
+                                                    <source srcset={% static "images/top-card-img4.webp" %} type="image/webp" />
+                                                    <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                                </picture>
+                                                <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                                <p>Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                                <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-pagination slider-grid__pagination"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reviews">
+                    <div class="reviews__container">
+                        <h2 class="reviews__title">О нас говорят</h2>
+                        <div class="reviews__row">
+                            <div class="reviews__button-slider reviews__button-slider-prev">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#667085" /></svg>
+                            </div>
+                            <div class="reviews__slider">
+                                <div class="swiper-wrapper reviews__wrapper">
+                                    <div class="swiper-slide reviews__slide slide-reviews">
+                                        <div class="card__row-star slide-reviews__row-star">
+                                            <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star-two.svg" alt="" /> <img src="images/star-trans.svg" alt="" />
+                                        </div>
+                                        <div class="slide-reviews__title">Доставка была моментальной</div>
+                                        <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                        <div class="slide-reviews__info">
+                                            <div class="slide-reviews__name">Александра</div>
+                                            <p class="slide-reviews__time">10 часов назад</p>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide reviews__slide slide-reviews">
+                                        <div class="card__row-star slide-reviews__row-star">
+                                            <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star-two.svg" alt="" /> <img src="images/star-trans.svg" alt="" />
+                                        </div>
+                                        <div class="slide-reviews__title">Доставка была моментальной</div>
+                                        <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                        <div class="slide-reviews__info">
+                                            <div class="slide-reviews__name">Александра</div>
+                                            <p class="slide-reviews__time">10 часов назад</p>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide reviews__slide slide-reviews">
+                                        <div class="card__row-star slide-reviews__row-star">
+                                            <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star-two.svg" alt="" /> <img src="images/star-trans.svg" alt="" />
+                                        </div>
+                                        <div class="slide-reviews__title">Доставка была моментальной</div>
+                                        <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                        <div class="slide-reviews__info">
+                                            <div class="slide-reviews__name">Александра</div>
+                                            <p class="slide-reviews__time">10 часов назад</p>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide reviews__slide slide-reviews">
+                                        <div class="card__row-star slide-reviews__row-star">
+                                            <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star-two.svg" alt="" /> <img src="images/star-trans.svg" alt="" />
+                                        </div>
+                                        <div class="slide-reviews__title">Доставка была моментальной</div>
+                                        <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                        <div class="slide-reviews__info">
+                                            <div class="slide-reviews__name">Александра</div>
+                                            <p class="slide-reviews__time">10 часов назад</p>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide reviews__slide slide-reviews">
+                                        <div class="card__row-star slide-reviews__row-star">
+                                            <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star-two.svg" alt="" /> <img src="images/star-trans.svg" alt="" />
+                                        </div>
+                                        <div class="slide-reviews__title">Доставка была моментальной</div>
+                                        <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                        <div class="slide-reviews__info">
+                                            <div class="slide-reviews__name">Александра</div>
+                                            <p class="slide-reviews__time">10 часов назад</p>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide reviews__slide slide-reviews">
+                                        <div class="card__row-star slide-reviews__row-star">
+                                            <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star-two.svg" alt="" /> <img src="images/star-trans.svg" alt="" />
+                                        </div>
+                                        <div class="slide-reviews__title">Доставка была моментальной</div>
+                                        <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                        <div class="slide-reviews__info">
+                                            <div class="slide-reviews__name">Александра</div>
+                                            <p class="slide-reviews__time">10 часов назад</p>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide reviews__slide slide-reviews">
+                                        <div class="card__row-star slide-reviews__row-star">
+                                            <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star-two.svg" alt="" /> <img src="images/star-trans.svg" alt="" />
+                                        </div>
+                                        <div class="slide-reviews__title">Доставка была моментальной</div>
+                                        <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                        <div class="slide-reviews__info">
+                                            <div class="slide-reviews__name">Александра</div>
+                                            <p class="slide-reviews__time">10 часов назад</p>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide reviews__slide slide-reviews">
+                                        <div class="card__row-star slide-reviews__row-star">
+                                            <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star.svg" alt="" /> <img src="images/star-two.svg" alt="" /> <img src="images/star-trans.svg" alt="" />
+                                        </div>
+                                        <div class="slide-reviews__title">Доставка была моментальной</div>
+                                        <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                        <div class="slide-reviews__info">
+                                            <div class="slide-reviews__name">Александра</div>
+                                            <p class="slide-reviews__time">10 часов назад</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination reviews__pagintion"></div>
+                                <p class="reviews__text">Средний рейтинг нашего магазина <span>4.7 / 5</span> из <span>250</span> оставивших отзывов</p>
+                            </div>
+                            <div class="reviews__button-slider reviews__button-slider-next">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#667085" /></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="_overlay-bg popup-remove" data-popup="popup-remov">
+                    <div class="popup-remove__body">
+                        <div class="button-close popup-remove__button-close">
+                            <img src={% static "images/button-close.svg" %} alt="" />
+                        </div>
+                        <div class="popup-remove__title">Удаление товара</div>
+                        <p>Удалить выбранный товар? Отменить действие будет невозможно.</p>
+                        <div class="popup-remove__button-row">
+                            <div class="button white button-close popup-remove__button">Оставить</div>
+                            <div class="button button-close popup-remove__button">УДАЛИТЬ</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            {% endblock %}

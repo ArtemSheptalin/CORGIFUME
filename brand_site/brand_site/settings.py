@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-q$r=j&1bk35r_jz$#%=_ft_vxh8p50#ot*hz%^o*=3z!3d$10v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dbd8-46-138-80-254.ngrok-free.app']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'product.apps.ProductConfig',
     'order.apps.OrderConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -84,13 +85,23 @@ WSGI_APPLICATION = "brand_site.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "corgifume_db",
+        "NAME": "corgi_db",
         "USER": "postgres",
         "PASSWORD": "postgres",
         "HOST": "localhost",
         "PORT": "5432",
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.environ.get('DB_NAME'),
+#         "USER": os.environ.get('DB_USER'),
+#         "PASSWORD": os.environ.get('DB_PASS'),
+#         "HOST": os.environ.get('DB_HOST'),
+#     }
+# }
 
 
 # Password validation
@@ -129,13 +140,9 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-# STATICFILES_DIRS = [
-#     BASE_DIR / "static",
-# ]
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -148,3 +155,9 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 CART_SESSION_ID = 'cart'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://dbd8-46-138-80-254.ngrok-free.app',
+]
+
+

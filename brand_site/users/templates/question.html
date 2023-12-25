@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Задайте Ваш вопрос{% endblock %}
+{% block content %}
+<form action="#" class="item-support__form">
+    <p>Опишите свою проблему, и мы поможем вам:</p>
+    <div class="item-support__select">
+        <div class="sort__body suppor-select">
+            <input class="support-select__input" type="hidden" name="" />
+            <div class="support-select__head">Категория</div>
+            <ul class="support-select__list">
+                <li class="support-select__item">Категория 1</li>
+                <li class="support-select__item">Категория 2</li>
+                <li class="support-select__item">Категория 3</li>
+                <li class="support-select__item">Категория 4</li>
+                <li class="support-select__item">Категория 5</li>
+                <li class="support-select__item">Категория 6</li>
+            </ul>
+        </div>
+    </div>
+    <textarea name="quest" id="quest" class="item-support__textarea"></textarea> <button class="button item-suppor__button-submit">Отправить вопрос</button>
+</form>
+{% endblock %}

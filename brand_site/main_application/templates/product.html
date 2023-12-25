@@ -1,0 +1,628 @@
+{% extends 'base.html' %}
+{% block title %}Карточка товара{% endblock %}
+{% load static %}
+{% block content %}
+            <main class="page">
+                <div data-observ></div>
+                <div class="crumbs">
+                    <div class="crumbs__container">
+                        <div class="crumbs__item">
+                            <a href={% url 'main_page' %}>Главная </a>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                <path d="M7.5 15.5L12.5 10.5L7.5 5.5" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="crumbs__item">
+                            <a href={% url 'catalog' %}>Каталог </a>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                <path d="M7.5 15.5L12.5 10.5L7.5 5.5" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="crumbs__item select">
+                            <a href="#">{{ product.name }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="presentation">
+                    <div class="presentation__container">
+                        <div class="presentation__row">
+                            <div class="presentation__display">
+                                <div class="presentation__slider">
+                                    <div class="swiper-wrapper presentation__wrapper">
+                                        {% for image in product.image.all %}
+                                            {% if forloop.counter == 1 %}
+                                            <picture>
+                                                <source srcset={% static image  %} type="image/webp">
+                                                <img src={% static image  %} alt="" class="card__img">
+                                            </picture>
+                                            {% endif %}
+                                          
+                                        <div class="swiper-slide presentation__slide">
+                                            {% if forloop.counter == 2 %}
+                                            <picture>
+                                                <source srcset={% static image  %} type="image/webp">
+                                                <img src={% static image  %} alt="" class="card__img">
+                                            </picture>
+                                            {% endif %}
+                                        </div>
+                                        {% comment %} <div class="swiper-slide presentation__slide">
+                                            {% if forloop.counter == 3 %}
+                                            <picture>
+                                                <source srcset={% static image  %} type="image/webp">
+                                                <img src={% static image  %} alt="" class="card__img">
+                                            </picture>
+                                            {% endif %}
+                                        </div>  {% endcomment %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                
+                                <div class="swiper-pagination presentation__pagination"></div>
+                                <div class="presentation__about">
+                                    <h4>Описание</h4>
+                                    <p>{{ product.description }}</p>
+                                </div>
+                            </div>
+                            <div class="presentation__body">
+                                <div class="presentation__head">
+                                    <h1 class="presentation__title">{{ product.name }}</h1>
+                                    <div class="presentation__price">{{ product.price }} RUB</div>
+                                    
+                                </div>
+                                <div class="presentation__rating">
+                                    <div class="card__row-star">
+                                        <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                    </div>
+                                    <p>(3.5 рейтинг) • 18 оценок</p>
+                                </div>
+                                <ul class="description presentation__description">
+                                    <li class="description__item">
+                                        <p class="description__title">Категория</p>
+                                        <p>{{ product.category }}</p>
+                                    </li>
+                                    {% comment %} <li class="description__item">
+                                        <p class="description__title">Производство</p>
+                                        <p>Франция</p>
+                                    </li>
+                                    <li class="description__item">
+                                        <p class="description__title">Торговый дом</p>
+                                        <p>Marc-Antoine Barro</p>
+                                    </li>
+                                    <li class="description__item">
+                                        <p class="description__title">Парфюмер</p>
+                                        <p>Quentin Bisch</p>
+                                    </li> {% endcomment %}
+                                    <li class="description__item">
+                                        <p class="description__title">Год создания</p>
+                                        <p>{{ product.year }}</p>
+                                    </li>
+                                    {% comment %} <li class="description__item">
+                                        <p class="description__title">Назначение</p>
+                                        <p>{{ product.category }}</p>
+                                    </li> {% endcomment %}
+                                    {% comment %} <li class="description__item">
+                                        <p class="description__title">Семейство</p>
+                                        <p>Парфюмерная вода</p>
+                                    </li> {% endcomment %}
+                                    <li class="description__item">
+                                        <p class="description__title">Верхние ноты</p>
+                                        <p>{{ product.upper_notes }}</p>
+                                    </li>
+                                    <li class="description__item">
+                                        <p class="description__title">Средние ноты</p>
+                                        <p>{{ product.medium_notes }}</p>
+                                    </li>
+                                    <li class="description__item">
+                                        <p class="description__title">Базовые ноты</p>
+                                        <p>{{ product.lower_notes }}</p>
+                                    </li>
+                                </ul>
+                                <div class="presentation__volume volume">
+                                    <div class="volume__title">Объем</div>
+                                    <div class="volume__row">
+                                        {% for prod in products %}
+                                            {% if forloop.counter == 1 %}
+                                                <div class="volume__item">
+                                                    <input type="radio" checked="checked" id="volume1" name="volume" value="50мл" class="volume__input" /> 
+                                                    <label for="volume1" class="volume__label">{{ prod }} МЛ</label>
+                                                </div>
+                                            {% endif %}
+                                            {% if forloop.counter == 2 %}
+                                                <div class="volume__item">
+                                                    <input type="radio" id="volume2" name="volume" value="120мл" class="volume__input" /> 
+                                                    <label for="volume2" class="volume__label">{{ prod }} МЛ</label>
+                                                </div>
+                                            {% endif %}
+                                            {% if forloop.counter == 3 %}
+                                                <div class="volume__item">
+                                                    <input type="radio" id="volume3" name="volume" value="120мл" class="volume__input" /> 
+                                                    <label for="volume3" class="volume__label">{{ prod }} МЛ</label>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% comment %} <div class="volume__item">
+                                            <input type="radio" id="volume3" name="volume" disabled="disabled" value="280мл" class="volume__input" /> 
+                                            <label for="volume3" class="volume__label">280 МЛ</label>
+                                        </div>  {% endcomment %}
+                                    </div>
+                                </div>
+                                {% comment %} <div class="quantity presentation__quantity">
+                                    <div class="quantity__title">Количество</div>
+                                    <div class="quantity__row">
+                                        <button class="quantity__number-minus" type="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                <path d="M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                        <input type="number" min="1" value="1" readonly="readonly" class="quantity__input" />
+                                        <button class="quantity__number-plus" type="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div> {% endcomment %}
+                                <div class="presentation__button-row">
+                                    <form action="{% url 'add_cart' %}" method="POST" class="CardForm">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="card_product_id" value="{{ product.id }}" id="{{ product.id }}">
+                                        <input type="submit" value="ДОБАВИТЬ В КОРЗИНУ" class="button card__button" style="width:100%;height:100%;">
+                                    </form>
+
+                                    <a href="#" class="button white presentation__button-bye">КУПИТЬ СЕЙЧАС</a>
+                                </div>
+                                <p class="presentation__delivery">Бесплатная доставка от 5 000 RUB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rewiews-prod">
+                    <div class="rewiews-prod__container">
+                        <h2 class="rewiews-prod__title">{{ product.name }} - Отзывы</h2>
+                        <p class="reviews__text rewiews-prod__text">
+                            <span>4.5</span> средний рейтинг на основе <span>102</span> отзывов</p>
+                        <div class="reviews__slider rewiews-prod__slider">
+                            <div class="swiper-wrapper reviews__wrapper rewiews-prod__wrapper">
+                                <div class="swiper-slide reviews__slide slide-reviews">
+                                    <div class="card__row-star slide-reviews__row-star">
+                                        <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                    </div>
+                                    <div class="slide-reviews__title">Доставка была моментальной</div>
+                                    <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                    <div class="slide-reviews__info">
+                                        <div class="slide-reviews__name">Александра</div>
+                                        <p class="slide-reviews__time">10 часов назад</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide reviews__slide slide-reviews">
+                                    <div class="card__row-star slide-reviews__row-star">
+                                        <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                    </div>
+                                    <div class="slide-reviews__title">Доставка была моментальной</div>
+                                    <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                    <div class="slide-reviews__info">
+                                        <div class="slide-reviews__name">Александра</div>
+                                        <p class="slide-reviews__time">10 часов назад</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide reviews__slide slide-reviews">
+                                    <div class="card__row-star slide-reviews__row-star">
+                                        <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                    </div>
+                                    <div class="slide-reviews__title">Доставка была моментальной</div>
+                                    <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                    <div class="slide-reviews__info">
+                                        <div class="slide-reviews__name">Александра</div>
+                                        <p class="slide-reviews__time">10 часов назад</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide reviews__slide slide-reviews">
+                                    <div class="card__row-star slide-reviews__row-star">
+                                        <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                    </div>
+                                    <div class="slide-reviews__title">Доставка была моментальной</div>
+                                    <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                    <div class="slide-reviews__info">
+                                        <div class="slide-reviews__name">Александра</div>
+                                        <p class="slide-reviews__time">10 часов назад</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide reviews__slide slide-reviews">
+                                    <div class="card__row-star slide-reviews__row-star">
+                                        <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                    </div>
+                                    <div class="slide-reviews__title">Доставка была моментальной</div>
+                                    <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                    <div class="slide-reviews__info">
+                                        <div class="slide-reviews__name">Александра</div>
+                                        <p class="slide-reviews__time">10 часов назад</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide reviews__slide slide-reviews">
+                                    <div class="card__row-star slide-reviews__row-star">
+                                        <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                    </div>
+                                    <div class="slide-reviews__title">Доставка была моментальной</div>
+                                    <p class="slide-reviews__text">Откройте для себя новый аромат современной женственности с новым Sì Eau De Parfum Intense от Giorgio Armani!</p>
+                                    <div class="slide-reviews__info">
+                                        <div class="slide-reviews__name">Александра</div>
+                                        <p class="slide-reviews__time">10 часов назад</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="button white rewiews-prod__button">Посмотреть все</a>
+                            <div class="swiper-pagination reviews__pagintion"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="products">
+                    <div class="products__container">
+                        <h2 class="products__title">Похожие товары</h2>
+                        <div class="card-slider">
+                            <div class="card-slider__swiper">
+                                <div class="swiper-wrapper card-slider__wrapper">
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img1.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img2.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img3.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img4.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination card-slider__pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="products">
+                    <div class="products__container">
+                        <h2 class="products__title">С этим товаром покупают</h2>
+                        <div class="card-slider">
+                            <div class="card-slider__swiper">
+                                <div class="swiper-wrapper card-slider__wrapper">
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img1.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img2.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img3.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img4.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img1.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img2.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img3.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img4.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination card-slider__pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="products">
+                    <div class="products__container">
+                        <h2 class="products__title">Другие товары бренда</h2>
+                        <div class="card-slider">
+                            <div class="card-slider__swiper">
+                                <div class="swiper-wrapper card-slider__wrapper">
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img2.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img3.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img4.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img1.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img2.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img3.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img3.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img2.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img2.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide card card-slider__slide">
+                                        <div class="card__body">
+                                            <picture>
+                                                <source srcset={% static 'images/top-card-img4.webp' %} type="image/webp" />
+                                                <img src={% static "images/top-card-img4.png" %} alt="" class="card__img" />
+                                            </picture>
+                                            <h3 class="card__title">Эксклюзивный специальный мини подарочный набор</h3>
+                                            <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
+                                            <div class="card__row-star">
+                                                <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star.svg" %}  alt="" /> <img src={% static "images/star-two.svg" %}  alt="" /> <img src={% static "images/star-trans.svg" %}  alt="" />
+                                            </div>
+                                            <div class="card__recommendation">Рекомендуемая цена 2900 RUB</div>
+                                            <div class="card__price">1590 RUB</div>
+                                            <a href="#" class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination card-slider__pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="_overlay-bg popup-remove" data-popup="popup-remov">
+                    <div class="popup-remove__body">
+                        <div class="button-close popup-remove__button-close">
+                            <img src={% static "images/button-close.svg" %} alt="" />
+                        </div>
+                        <div class="popup-remove__title">Удаление товара</div>
+                        <p>Удалить выбранный товар? Отменить действие будет невозможно.</p>
+                        <div class="popup-remove__button-row">
+                            <div class="button white button-close popup-remove__button">Оставить</div>
+                            <div class="button button-close popup-remove__button">УДАЛИТЬ</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+{% endblock %}

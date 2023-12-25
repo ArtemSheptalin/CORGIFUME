@@ -1,33 +1,76 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load widget_tweaks %}
+{% block title %}Авторизация{% endblock %}
+{% load static %}
+{% block content %}
+    <body>
+        <div class="wrapper">
+            <header class="header"></header>
+            <main class="page">
+                <div data-observ></div>
+                <div class="entrance">
+                    <div class="entrance__row">
+                        <div class="entrance__img">
+                            <picture>
+                                <source srcset={% static "images/entrance-img.webp" %} type="image/webp" />
+                                <img src={% static "images/entrance-img.png" %} alt="" />
+                            </picture>
+                        </div>
+                        <div class="entrance__body">
+                            <div class="entrance__content">
+                                <div class="entrance__question">
+                                    <p>У вас нет аккаунта?</p>
+                                    <a href={% url 'users:registration_page' %}>Регистрация</a>
+                                </div>
+                                <form action={% url 'users:login' %} method="POST" class="entrance__form form-ent" id="form-registration">
+                                    {% csrf_token %}
+                                    <h1 class="form-ent__title">Добро пожаловать</h1>
+                                    <div class="form-ent__body">
 
-<div class="profileSettings" style="margin-top:250px;">
-    <div class="formPlace">
-        <h1 style="text-align:center;">Авторизация</h1>
-        <div class="formContent">
-                <form action="{% url 'users:login' %}" method="post">
-                    {% csrf_token %}
+                                        <div class="form-ent__item">
+                                            <label for="{{ form.username.id_for_label }}" class="form-ent__label">Номер телефона</label> 
+                                            {{ form.username|attr:"placeholder:Введите ваш телефон"|add_class:"form-ent__input tel _req" }}
+                                            <div class="form-ent__icon-error">
+                                                <img src={% static "images/error-icon-input.svg" %} alt="" /></div>
+                                            <p class="form-ent__error-text">Введите номер телефона!</p> 
+                                            <div class="form-ent__icon-ok">
+                                                <img src={% static "images/ok-icon-input.svg" %} alt="" />
+                                            </div>
+                                        </div>
 
-                    <div class="form-group">
-                        <label for="{{ form.username.id_for_label }}" class="custom-label-class">Номер телефона:</label>
-                        {{ form.username|add_class:"registrationFormDes" }}
+                                        <div class="form-ent__item">
+                                            <label for="{{ form.password.id_for_label }}" class="form-ent__label">Пароль</label> 
+                                            {{ form.password|attr:"placeholder:Введите пароль"|add_class:"_req form-ent__input password _ok" }}
+                                            <div class="form-ent__icon-ok">
+                                                <img src={% static "images/ok-icon-input.svg" %} alt="" /></div>
+                                            <div class="form-ent__icon-error">
+                                                <img src={% static "images/error-icon-input.svg" %} alt="" /></div>
+                                            <p class="form-ent__error-text">Введите пароль!</p> 
+                                        </div>
+                                        
+                                        <div class="form-ent__item form-ent__item-checkbox">
+                                            <input type="checkbox" id="remember" name="remember" value="remember" placeholder="" class="filter-menu__checkbox-input" /> <label for="remember" class="filter-menu__checkbox-label"></label>
+                                            <p class="form-ent__text">Запомнить меня</p>
+                                            <a href={% url 'users:password_reset_lk' %} class="form-ent__forget-password">Забыли пароль?</a>
+                                        </div>
+                                        <button type="submit" class="button form-ent__button-submit">Войти</button>
+                                        <a href="#" class="button form-ent__button-vk white">
+                                            <img src={% static "images/vk-icon.svg" %} alt="" />
+                                            <p>Войти через VK</p>
+                                        </a>
+                                        <div class="form-ent__telegramm">
+                                            <p>Вы можете связаться с нами в</p>
+                                            <a href="#">Telegram</a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="entrance__footer">© 2023 CORGIFUME</div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.password.id_for_label }}" class="custom-label-class">Пароль:</label>
-                        {{ form.password|add_class:"registrationFormDes" }}
-                    </div>
-
-                    <button type="submit" class="changeFormBtn">Войти</button>
-                    <div class="reverseLinks">
-                        <a href="{% url 'users:password_reset_lk' %}" class="loginLinks">Забыли пароль?</a>
-                        <a href="{% url 'main_page' %}" class="loginLinks">Обратно на главную</a>
-                    </div>
-                </form>
+                </div>
+            </main>
         </div>
-    </div>
-</div>
-    
-        
+    </body>
 {% endblock %}
+

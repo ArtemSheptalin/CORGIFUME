@@ -1,322 +1,301 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сайт парфюмерии</title>
-    <link rel="stylesheet" href="{% static 'main_application/css/style.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script> {% endcomment %}
-</head>
-<body>
-
-    <div class="upper-menu-block">
-        <header>
-            <div class="menu-wrapper">
-
-                <div class="item-menu">
-                    <a href={% url 'main_page' %} class="logo-menu">CORGIFUME</a>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="shortcut icon" href={% static 'favicon.ico' %} type="image/x-icon" />
+        <link rel="stylesheet" href={% static 'css/style.min.css' %} />
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header class="header">
+                <div class="bonus header__bonus" style="margin-top: 0px;">
+                    <div class="bonus__container">
+                        <p>Получи 300 бонусов на первый заказ по промокоду START300</p>
+                        <div class="bonus__button-close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
-        
-                <div class="item-menu form-block">
-                    <form class="w-100 me-3" role="search">
-                        <input type="text" id="header-search-input" name="search" class="headerSearch_input " data-search="" autocomplete="off" autocorrect="off" placeholder="Введите слово для поиска" data-component-tracked-focused="">
-                    </form>
-                    
-                </div>
-        
-                <div class="item-menu account-block" id="acc-mouse-menu">
-                    <svg class="responsiveAccountHeader_accountIcon" width="24px" height="24px" viewBox="0 0 24 24" style="margin-top:-4px;">
-                        <path d="M12,10.5 C13.6568542,10.5 15,9.15685425 15,7.5 C15,5.84314575 13.6568542,4.5 12,4.5 C10.3431458,4.5 9,5.84314575 9,7.5 C9,9.15685425 10.3431458,10.5 12,10.5 Z M12,12.5 C9.23857625,12.5 7,10.2614237 7,7.5 C7,4.73857625 9.23857625,2.5 12,2.5 C14.7614237,2.5 17,4.73857625 17,7.5 C17,10.2614237 14.7614237,12.5 12,12.5 Z M5,21.5 L3,21.5 C3,17.6340068 7.02943725,14.5 12,14.5 C16.9705627,14.5 21,17.6340068 21,21.5 L19,21.5 C19,18.8641562 15.9603707,16.5 12,16.5 C8.03962935,16.5 5,18.8641562 5,21.5 Z"></path>
-                    </svg>
-                    <a href="#" class="account" id="acc-area">Мой аккаунт</a>
-                    <div id="myModal">
-                        <ul class="buttons-section" id="acc-drop-down">
+                <div class="header__top top-header">
+                    <div class="top-header__container">
+                        <a href={% url 'main_page' %}  class="logo top-header__logo">
+                            <img src={% static 'images/logo.svg' %} alt="Логотип" />
+                        </a>
+                        <nav class="your-menu menu top-header__menu">
+                            <ul class="menu__list">
+                                <li class="menu__item"><a href={% url 'catalog' %} class="menu__link">Каталог</a></li>
+                                <li class="menu__item"><a href={% url 'brands' %} class="menu__link">Бренды</a></li>
+                                <li class="menu__item"><a href={% url 'about_us' %} class="menu__link">О нас</a></li>
+                                <li class="menu__item"><a href="#" class="menu__link">Блог</a></li>
+                            </ul>
+                            <div class="menu__row">
+                                <div class="menu__left-link"><a href="#">Условия пользования </a><a href="#">Политика конфиденциальности </a><a href="#">Информация о файлах coockie </a><a href="#">Индивидуальные предложения</a></div>
+                                <div class="menu__right-link"><a href={% url 'about_us' %}>О нас </a>
+                                    <a href="#">Каталог товаров </a>
+                                    <a href="#">Партнерство </a>
+                                    <a href="#">Скидка студентам</a></div>
+                            </div>
+                            <div class="menu__button-row"><a href="#" class="button menu__button">Регистрация </a><a href="#" class="button white menu__button">Авторизоваться</a></div>
+                        </nav>
+                        <div class="search top-header__search your-class" data-da=".top-header__icon-row, 620, first">
+                            <div class="search__button-open">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
+                                        stroke="#0A0103"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                            <div class="search__row">
+                                <form action="#" class="search__body">
+                                    <input type="text" name="search" id="search-header" class="search__input text" placeholder="Поиск по сайту" />
+                                    <button class="search__icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path
+                                                d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
+                                                stroke="#667085"
+                                                stroke-width="1.66667"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="top-header__user user">
                             {% if user.is_authenticated %}
-
-                                {% if request.user.profile.first_name %}
-                                    <p class="welcomeParagraph">{{ profile.first_name }} {{ profile.last_name }}</p>
-                                {% else %}
-                                    <p class="welcomeParagraph">{{ request.user.first_name }}</p>
-                                {% endif %}
-
-                                <a href={% url 'users:logout' %} class="sign-in" data-context="login">Выйти</a>
-                                <a href={% url 'users:profile_page' %} class="sign-in" style="margin-top:10px;">Профиль</a>
+                            <a href={% url 'users:profile' %} class="user__item">
+                                <img src={% static "images/user-icon.svg" %} alt="" class="user__icon" />
+                                <p>Мой аккаунт</p>
+                            </a>
                             {% else %}
-                                <li>
-                                    <a href={% url 'users:login' %} class="sign-in" data-context="login">Войти</a>
-                                </li>
-                                <li>
-                                    <a href={% url 'users:registration_page' %} class="reg" data-context="login">Зарегистрироваться</a>
-                                </li>
+                            <a href={% url 'users:login' %} class="user__item">
+
+                                <img src={% static "images/user-icon.svg" %} alt="" class="user__icon" />
+                                <p>Мой аккаунт</p>
+                            </a>
                             {% endif %}
-                            <hr>
+                            <div class="user__item user__open-basket">
+                                <img src={% static "images/shopping-icon.svg" %} alt="" class="user__icon" />
+                                <p>Моя корзина</p>
+                            </div>
+                        </div>
+                        <div class="top-header__icon-row">
+                            <button class="your-menu header__burger icon-menu"><span></span> <span class="two"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-header header__bottom">
+                    <div class="bottom-header__container">
+                        <div class="bottom-header__row" >
+                            <div class="bottom-header__item">
+                                <img src= {% static "images/box-icon.svg" %} alt="" />
+                                <p>Беслатная доставка на заказы от 5000 рублей</p>
+                            </div>
+                            <div class="bottom-header__item">
+                                <img src={% static "images/clock-icon.svg" %} alt="" />
+                                {% comment %} <p>Первоначальная доставка на 12 месяцев от 1500 руб</p> {% endcomment %}
+                                <p>Экспресс доставка день в день при выборе опции</p>
+                            </div>
+                            <div class="bottom-header__item">
+                                <img src={% static "images/coin-icon.svg" %} alt="" />
+                                {% comment %} <p>Скидка 20% на первый заказ</p> {% endcomment %}
+                                <p>Лучшая программа лояльности</p>
+                            </div>
+                            <div class="bottom-header__item">
+                                <img src={% static "images/thumbs-icon.svg" %} alt="" />
+                                <p>Присоединяйтесь к нашим партнерам</p>
+                            </div>
+                        </div>
+                        <div class="bottom-header__row" aria-hidden="true">
+                            <div class="bottom-header__item">
+                                <img src={% static "images/box-icon.svg" %} alt="" />
+                                <p>Беслатная доставка на заказы от 5000 рублей</p>
+                            </div>
+                            <div class="bottom-header__item">
+                                <img src={% static "images/clock-icon.svg" %} alt="" />
+                                <p>Первоначальная доставка на 12 месяцев от 1500 руб</p>
+                            </div>
+                            <div class="bottom-header__item">
+                                <img src={% static "images/coin-icon.svg"%} alt="" />
+                                <p>Скидка 20% на первый заказ</p>
+                            </div>
+                            <div class="bottom-header__item">
+                                <img src={% static "images/thumbs-icon.svg" %} alt="" />
+                                <p>Присоединяйтесь к нашим партнерам</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+         {% comment %}КОРЗИНА{% endcomment %}
+                <div class="card-basket">
+                    <div class="card-basket__button-close">
+                        <img src={% static "images/button-close.svg" %} alt="" />
+                    </div>
+                    <div class="card-basket__title">Корзина</div>
+                    {% if cart|length == 0 %}
+                    
+                    <div class="card-basket__body prod-tab">
+                        <div class="prod-tab__body">
+                            <p style="margin-top:20px;">В настоящий момент в корзине нет товаров...</p>
+                        </div>
+                    </div>
+
+                    
+                    {% else %}
+                    
+                    
+
+                    {% for item in cart %}  
+                    <div class="card-basket__head">
+                        <div class="card-basket__point" id="productAmount_{{item.product.id}}">{{ item.quantity }} шт.</div>
+                        <div class="card-basket__remove" data-type="popup-remov">Сбросить</div>
+                    </div>
+                        <div class="card-basket__body prod-tab">
+                            <div class="prod-tab__body">
+                                <div class="prod-tab__name">
+                                    <picture>
+                                        <source srcset={% static item.product.image.first %} type="image/webp" />
+                                        <img src={% static item.product.image.first %} alt="" class="prod-tab__img" />
+                                    </picture>
+                                    <div class="prod-tab__about">
+                                        <h3>{{ item.product.name }}</h3>
+                                        <p class="prod-tab__category">{{ item.product.category }}</p>
+                                        <p class="prod-tab__category">{{ item.product.ml }} мл.</p>
+                                        <div class="price">{{ item.product.price }} RUB</div>
+                                            <div class="quantity__row">
+                                                
+                                                <form action="{% url 'remove_cart' %}" method="post" class="removeCartClass">
+                                                    {% csrf_token %}
+                                                    {{ item.update_quantity_form.quantity }}
+                                                    {{ item.update_quantity_form.update }}
+                                                    <input type="hidden" name="product_id" value="{{ item.product.id }}" id="remove_{{item.product.id}}">
+                                                    <input type="submit" value="-" class="quantity__number-minus"> 
+                                                </form>
+                                                                                            
+                                                <span class="quantity__input" id="quantityID_{{item.product.id}}">{{ item.quantity }}</span>
+                                                                                            
+                                                <form action="{% url 'add_certain' %}" method="post" class="addCartClass">
+                                                    {% csrf_token %}
+                                                    {{ item.update_quantity_form.quantity }}
+                                                    {{ item.update_quantity_form.update }}
+                                                    <input type="hidden" name="product_id" value="{{ item.product.id }}" id="add_{{item.product.id}}">
+                                                    <input type="submit" value="+" class="quantity__number-plus"> 
+                                                 </form>
+                                            </div>
+                                        {% comment %} </div> {% endcomment %}
+                                    </div>
+                                    {% comment %} <div class="card-basket__remove">
+                                        <img src={% static "images/button-remove.svg" %} alt="" />
+                                        <div data-type="popup-remov"></div>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="_overlay-bg popup-remove" data-popup="popup-remov">
+                            <div class="popup-remove__body">
+                                <div class="button-close popup-remove__button-close"><img src="images/button-close.svg" alt="" /></div>
+                                <div class="popup-remove__title">Удаление товара</div>
+                                <p>Удалить выбранный товар? Отменить действие будет невозможно.</p>
+                                <div class="popup-remove__button-row">
+                                    <div class="button white button-close popup-remove__button">Оставить</div>
+                                    
+                                    <form action="{% url 'delete_product' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                        <input type="submit" value="УДАЛИТЬ" class="button button-close popup-remove__button">
+                                    </form>
+                                </div>
+                            </div>
+                        </div> 
+                    {% endfor %}
+                    {% comment %} {% endwith %} {% endcomment %}
+                    <div class="card-basket__bottom">
+                        <div class="card-basket__result">
+                            <p>Итого ({{ cart.get_total_len }} позиций)</p>
+                            <p class="card-basket__result-price">{{ cart.get_total_price }} РУБ</p>
+                        </div>
+                        <div class="card-basket__button-row">
+                            <a href={% url 'cart:cart_detail' %} class="button white card-basket__button">В КОРЗИНУ</a>
+                            <a href={% url 'order:order-create' %} class="button card-basket__button">ОФОРМИТЬ ЗАКАЗ</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </header>
+            {% block content %}
+            {% endblock %}
+            <footer class="footer">
+                <div class="footer__container">
+                    <div class="footer__top">
+                        <div class="footer__body">
+                            <a href="#" class="footer__logo"><img src="images/logo.svg" alt="" /></a>
+                            <p class="footer__vip">Подпишитесь на нашу электронную рассылку, чтобы получать VIP-предложения и оповещения о новых продуктах.</p>
+                            <a href="#" class="button footer__button">ПОДПИСАТЬСЯ</a>
+                            <div class="footer__text">Подписываясь, вы соглашаетесь с нашей Политикой конфиденциальности и даете согласие на получение обновлений от нашей компании.</div>
+                        </div>
+                        <div class="footer__row">
+                            <div class="footer__item">
+                                <div class="footer__title-list">Информация о компании</div>
+                                <ul class="footer__list">
+                                    <li class="footer__li"><a href="#">Условия пользования</a></li>
+                                    <li class="footer__li"><a href="#">Политика конфиденциальности</a></li>
+                                    <li class="footer__li"><a href="#">Информация о файлах coockie</a></li>
+                                    <li class="footer__li"><a href="#">Индивидуальные предложения</a></li>
+                                </ul>
+                            </div>
+                            <div class="footer__item">
+                                <div class="footer__title-list">Компания</div>
+                                <ul class="footer__list">
+                                    <li class="footer__li"><a href="#">О нас</a></li>
+                                    <li class="footer__li"><a href="#">Каталог товаров</a></li>
+                                    <li class="footer__li"><a href="#">Партнерство</a></li>
+                                    <li class="footer__li"><a href="#">Скидка студентам</a></li>
+                                    <li class="footer__li"><a href="#">Блог</a></li>
+                                </ul>
+                            </div>
+                            <div class="footer__item">
+                                <div class="footer__title-list">Связаться с нами</div>
+                                <ul class="footer__list">
+                                    <li class="footer__li">
+                                        <a href="#">
+                                            <img src={% static "images/tg.svg" %} alt="" style="margin-left:2px;"/>
+                                            <p>Telegram</p>
+                                        </a>
+                                    </li>
+                                    <li class="footer__li">
+                                        <a href="#">
+                                            <img src={% static "images/mail.svg" %} alt="" style="margin-left:2px;"/>
+                                            <p>info@corgifume.com</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bot footer__bottom">
+                        <div class="footer-bot__protected">© 2023 CORGIFUME. Все права защищены.</div>
+                        <ul class="footer-bot__list">
+                            <li class="footer-bot__li"><a href="#">Политика конфиденциальности</a></li>
+                            <li class="footer-bot__li"><a href="#">Условия использования</a></li>
+                            <li class="footer-bot__li"><a href="#">Настройки файлов cookie</a></li>
                         </ul>
                     </div>
-                        
                 </div>
-
-                <div class="cart-block" id="cart-menu">
-                    <svg class="responsiveFlyoutBasket_icon responsiveFlyoutBasket_icon-basket" width="24" height="24" viewBox="0 0 24 24" style="margin-top:-4px;">
-                        <path d="M6.57412994,10 L17.3932043,10 L13.37,4.18336196 L15.0021928,3 L19.8438952,10 L21,10 C21.5522847,10 22,10.4477153 22,11 C22,11.5522847 21.5522847,12 21,12 L17.5278769,19.8122769 C17.2068742,20.534533 16.4906313,21 15.7002538,21 L8.29974618,21 C7.50936875,21 6.79312576,20.534533 6.47212308,19.8122769 L3,12 C2.44771525,12 2,11.5522847 2,11 C2,10.4477153 2.44771525,10 3,10 L4.11632272,10 L9,3 L10.6274669,4.19016504 L6.57412994,10 Z M5.18999958,12 L8.29999924,19 L15.6962585,19 L18.8099995,12 L5.18999958,12 Z"></path>
-                    </svg>
-                    <a href="#" class="cart" id="cart-area">Корзина</a>
-                    {% with total_items=cart|length %}
-                    <ul class="buttons-section-cart" id="cart-drop-down">
-                        {% if cart|length > 0 %}
-                            <p class="cartCondition">В корзине {{ total_items }} шт, $ {{ cart.get_total_price }}</p>
-                            <p class="responsiveFlyoutBasket_basketItemTitle">{{ product.name }}</p>
-                        {% else %}
-                        <p class="cartCondition">Корзина пустая</p>
-                        {% endif %}
-                        {% endwith %} 
-                        <hr>
-                        {% comment %} <div class="responsiveFlyoutBasket_basketScroll" data-scroll="">
-                            <ul class="responsiveFlyoutBasket_basketItemsList" aria-label="Your Items" data-js-element="responsiveFlyoutBasket_basketItemsList">
-                                <li class="responsiveFlyoutBasket_basketItem">
-                                    <a href="https://www.lookfantastic.ru/first-aid-beauty-kp-bump-eraser-body-scrub-with-10-aha-226g/12208246.html" class="responsiveFlyoutBasket_basketItemLink">
-                                        <span class="responsiveFlyoutBasket_basketItemImageColumn">
-                                            <img src="https://static.thcdn.com//productimg/70/70/12208246-1365068781065464.jpg" alt="" role="presentation" width="70" height="70">
-                                        </span>
-                                        <span class="responsiveFlyoutBasket_basketItemInfo">
-                                            <p class="responsiveFlyoutBasket_basketItemTitle">Кислотный скраб для тела First Aid Beauty, 226 мл</p>
-                                            <p class="responsiveFlyoutBasket_basketItemPrice">
-                                            156€
-                                            </p>
-                                            <p class="responsiveFlyoutBasket_basketItemQuantity">Количество:&nbsp;1</p>
-                                        </span>      
-                                    </a>
-                                </li>
-                            </ul>
-                        </div> {% endcomment %}
-                        <li>
-                            <a href={% url 'cart:cart_detail' %} class="cart-in">Перейти в корзину</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        
-            <div class="categories-link">
-                <ul>
-                    <li>
-                        <a href="">САМОЕ ЖЕЛАННОЕ</a>
-                    </li>
-                    <li>
-                        <a href={% url 'brands' %}>Бренды</a>
-                    </li>
-                    <li>
-                        <a href="">Новинки</a>
-                    </li>
-                    <li>
-                        <a href="">Beauty Box</a>
-                    </li>
-                    <li>
-                        <a href="">Кожа</a>
-                    </li>
-                    <li>
-                        <a href="">Волосы</a>
-                    </li>
-                    <li>
-                        <a href={% url 'cosmetics' %}>Косметика</a>
-                    </li>
-                    <li>
-                        <a href="">Тело</a>
-                    </li>
-                    <li>
-                        <a href="">Приборы</a>
-                    </li>
-                    <li>
-                        <a href={% url 'contacts' %}>Контакты</a>
-                    </li>
-                    <li>
-                        <a href={% url 'discounts' %}>Акции</a>
-                    </li>
-                    <li>
-                        <a href={% url 'blog' %}>Блог</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="responsive-widgets">
-                <div class="widgets-block" style="padding: 2px;">
-                    <div class="widget">
-                        <a href="#" class="widget-link">
-                            <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <path class="responsiveUsp_icon_svg-fill" d="M17.874 26a4.002 4.002 0 0 1-7.748 0H9.047V12.022H24v1.999L28 14l3 5 .023 7.028-1.153-.01A4.002 4.002 0 0 1 22.126 26h-4.252zM23 16v4h6v-1l-2-3h-4zm-9 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                            </svg>
-                            Бесплатный cамовывоз с Boxberry для заказов от 3,400 рублей
-                        </a>
-                    </div>
-
-                    <div class="widget">
-                        <a href="#" class="widget-link">
-
-                            <svg width="39" height="40" xmlns="http://www.w3.org/2000/svg">
-                                <path class="responsiveUsp_icon_svg-fill" d="M21.45 28c3.23 0 5.85-2.686 5.85-6s-2.62-6-5.85-6c-3.23 0-5.85 2.686-5.85 6s2.62 6 5.85 6zm0 2c-4.308 0-7.8-3.582-7.8-8s3.492-8 7.8-8 7.8 3.582 7.8 8-3.492 8-7.8 8z"></path>
-                                <path class="responsiveUsp_icon_svg-fill" d="M15.732 26.782c-3.43-.84-5.982-4.006-5.982-7.782 0-4.418 3.492-8 7.8-8 2.814 0 5.28 1.529 6.652 3.82l-1.662 1.047C21.482 14.098 19.61 13 17.55 13c-3.23 0-5.85 2.686-5.85 6 0 2.792 1.875 5.197 4.485 5.836l-.453 1.946zM22.425 18h1.95l-3.9 8h-1.95z"></path>
-                            </svg>
-                            Пригласите друга и получите 1300 рублей за каждого приглашённогo
-                        </a>
-                    </div>
-
-                    <div class="widget">
-                        <a href="#" class="widget-link">
-                            <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <path class="responsiveUsp_icon_svg-fill" d="M17.874 26a4.002 4.002 0 0 1-7.748 0H9.047V12.022H24v1.999L28 14l3 5 .023 7.028-1.153-.01A4.002 4.002 0 0 1 22.126 26h-4.252zM23 16v4h6v-1l-2-3h-4zm-9 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                            </svg>
-                            Скидка 25% на первый заказ по коду: НОВЫЙ25
-                        </a>
-                    </div>
-                    <div class="widget">
-                        <a href="#" class="widget-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-8 -8 40 40">
-                                <path class="responsiveUsp_icon_svg-fill" d="M8.58123535,17.3666782 L8.57536766,17.3724713 L4,12.8552083 L5.38991989,11.4829397 L9.21683579,15.2612558 L19.6100801,5 L21,6.37226867 L9.22270348,18 L8.58123535,17.3666782 Z"></path>
-                            </svg>
-                            Скачайте приложение
-                            </a>
-                    </div>
-                </div>
-            </div>
-        </header>
-    </div>
-
-    {% block content %}
-    {% endblock %}
-
-    <hr class="featurette-divider fine-line">
-    <footer>
-        <nav>
-            <a href={%url 'main_page' %}>© 2023 CORGIFUME</a>
-            <a href={% url 'main_page' %}>Главная</a>
-            <a href="#">Категории</a>
-            <a href={% url 'blog' %}>Блог</a>
-            <a href={% url 'contacts' %}>Контакты</a>
-        </nav>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const accMenu = document.getElementById("acc-mouse-menu");
-            const cartMenu = document.getElementById("cart-menu");
-            const dropDownAccMenu = document.getElementById("acc-drop-down");
-            const dropDownCartMenu = document.getElementById("cart-drop-down");
-            const body = document.getElementsByTagName("body")[0];
-
-            if (accMenu !== null) {
-                accMenu.addEventListener('mouseover', () => {
-                dropDownAccMenu.style.display = "block";
-                dropDownAccMenu.style.zIndex = "1";
-                dropDownAccMenu.style.backgroundColor = "#fafafa";
-            });
-
-            } else {
-                console.log('Error!');
-            }
-        
-            dropDownAccMenu.addEventListener('mouseleave', () => {
-                dropDownAccMenu.style.display = "none";
-            });
-        
-            accMenu.addEventListener('mouseleave', () => {
-                dropDownAccMenu.style.display = "none";
-            });
-
-            if (cartMenu !== null) {
-                cartMenu.addEventListener('mouseover', () => {
-                dropDownCartMenu.style.display = "block";
-                dropDownCartMenu.style.zIndex = "1";
-                dropDownCartMenu.style.backgroundColor = "#fafafa";
-            });
-
-            } else {
-                console.log('Error!');
-            }
-
-            dropDownCartMenu.addEventListener('mouseleave', () => {
-                dropDownCartMenu.style.display = "none";
-            });
-        
-            cartMenu.addEventListener('mouseleave', () => {
-                dropDownCartMenu.style.display = "none";
-            });
-
-            const brandBtn = document.getElementById("btnBrand");
-            const pricedBtn = document.getElementById("btnPrice");
-            const discountBtn = document.getElementById("btnDiscount");
-
-            const sortContainer = document.querySelector(".sort-container-inform");
-            const sortContainerPrice = document.querySelector(".info-price");
-            const sortContainerDiscount = document.querySelector(".info-discount");
-
-            brandBtn.addEventListener('click', function() {
-                try {
-                    sortContainer.classList.toggle("hide-menu");
-                    this.classList.toggle("rotate");
-                } catch (error) {
-                    console.log('Произошла ошибка:', error);
-                }
-            
-            });
-            
-
-            pricedBtn.addEventListener('click', function() {
-                sortContainerPrice.classList.toggle("hide-menu");
-                this.classList.toggle("rotate");
-            });
-
-            discountBtn.addEventListener('click', function() {
-                sortContainerDiscount.classList.toggle("hide-menu");
-                this.classList.toggle("rotate");
-            });
-
-            const questionBtn = document.getElementById("getRegisterInfo");
-            const answerContainer = document.querySelector(".helpCentre_accordionContent");
-            const accordionIcon = document.getElementById("accordionIcon");
-
-            questionBtn.addEventListener('click', function() {
-                answerContainer.classList.toggle("open-answer");
-                let isExpanded = answerContainer.getAttribute("aria-hidden") === "false";
-                answerContainer.setAttribute("aria-hidden", isExpanded ? "true" : "false");
-                accordionIcon.classList.toggle("helpCentre_accordionIcon-open");
-                accordionIcon.classList.toggle("helpCentre_accordionIcon-close");
-            });    
-            
-            $('#cartBtnId').click(function(e) {
-                e.preventDefault();
-                var form = $(this);
-
-                $.ajax({
-                    type:form.attr('method'),
-                    url:form.attr('action'),
-                    data:form.serialize(),
-                    success:function(response) {
-                        if (data.status === 'success') {
-                            console.log('123'); 
-                        } else {
-                            alert('Error!');
-                        }
-                    },
-                    error: function() {
-                        alert('Error!');
-                    }            
-                });
-            });
-
-
-
-
-
-
-        });
-
-
-
-
-
-
-
-
-      </script>
-      
+            </footer>
+        </div>
+        <script src={% static 'js/app.min.js' %}></script>
+        <script src={% static 'js/vendors.min.js' %}></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src={% static 'js/ajax.js' %}></script>            
 </body>
+</html>

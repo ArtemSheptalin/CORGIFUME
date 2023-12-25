@@ -1,56 +1,65 @@
 from django.contrib.auth.forms import forms, UserCreationForm
 from .models import NewUser
-from .validators import check_phone_number, check_email
 from django.utils.translation import gettext_lazy as _
-import re
 from .models import Profile
 
 
-
 class NewUserForm(UserCreationForm):
-    password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput(attrs={'class': 'registrationFormDes', 'required': 'true'}))
-    password2 = forms.CharField(label=_("Password"), widget=forms.PasswordInput(attrs={'class': 'registrationFormDes', 'required': 'true'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'registrationFormDes', 'required': 'true', 'placeholder': 'Придумайте пароль'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'registrationFormDes', 'required': 'true', 'placeholder': 'Повторите ваш пароль'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Введите ваше имя'}))
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Номер телефона'}))
 
     class Meta:
         model = NewUser
         fields = [
             'phone_number', 
-            'email_field', 
             'first_name', 
             'password1', 
             'password2'
         ]
 
-        widgets = {
-            'phone_number': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-            'email_field': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-            'first_name': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-        }
-
 
 class ProfileForm(forms.ModelForm):
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Номер телефона'}))
+    email_field = forms.EmailField()
 
     class Meta:
         model = Profile
         fields = [
             'first_name',
             'last_name',
-            'address',
             'date_of_birth',
-            'yandex_pay',
-            'tinkoff_pay',
-            'card_field',
+            'city',
+            'room',
+            'index',
+            'house',
+            'corp',
+            'street',
         ]
 
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-            'last_name': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-            'address': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-            'date_of_birth': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-            'yandex_pay': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-            'tinkoff_pay': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-            'card_field': forms.TextInput(attrs={'class': 'registrationFormDes'}),
-        }
+
+class ProfileChangeForm(forms.ModelForm):
+    email_field = forms.EmailField(max_length=50)
+    
+    class Meta:
+        model = Profile
+        fields = [
+            'first_name',
+            'last_name',
+            'date_of_birth',
+            'city',
+            'room',
+            'index',
+            'house',
+            'corp',
+            'street',
+        ]
+
+
+
+    
+
 
         
 

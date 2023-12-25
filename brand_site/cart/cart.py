@@ -24,6 +24,11 @@ class Cart(object):
             self.cart[product_id]['quantity'] += quantity
         self.save()
     
+    def delete_all_certain_products(self, product):
+        product_id = str(product.id)
+        del self.cart[product_id]
+        self.save()
+    
 
     def remove(self, product, quantity=1):
         product_id = str(product.id)
@@ -51,7 +56,7 @@ class Cart(object):
             cart[str(product.id)]['product'] = product
 
         for item in cart.values():
-            item['price'] = Decimal(item['price'])
+            item['price'] = Decimal(item.get('price', 0)) 
             item['total_price'] = item['price'] * item['quantity']
             yield item
     
@@ -61,8 +66,27 @@ class Cart(object):
 
     def get_total_price(self):
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+    
+    def get_total_len(self):
+        total_len = 0
+        for item in self.cart.values():
+            total_len += item['quantity']
+        return total_len
+    
+    def get_product_quantity(self, prod_id):
+        products = self.cart.items()
+        count = 0
+        for product in products:
+            if int(product[0]) == int(prod_id):
+                count = product[1]['quantity']
+                print(count)
+                break 
+        return int(count)
 
 
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
         self.save()
+
+    def get_content(self):
+        return self.cart.items()

@@ -1,150 +1,430 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}Изменение профиля{% endblock %}
+{% load static %}
 {% block content %}
+            <main class="page">
+                <div data-observ></div>
+                <div class="office">
+                    <div class="office__container">
+                        <div class="crumbs office__crumbs">
+                            <div class="crumbs__item">
+                                <a href={% url 'main_page' %}>Главная </a>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M7.5 15.5L12.5 10.5L7.5 5.5" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div class="crumbs__item select"><a href="#">Личный кабинет</a></div>
+                        </div>
+                        <div class="office__head">
+                            <div class="office__user">
+                                <img src={% static "images/user-img.svg" %} alt="" class="office__icon" />
+                                {% if profile.first_name %}
+                                <div class="office__greeting">Здравствуйте, {{ profile.first_name }}!</div>
+                                {% else %}
+                                <div class="office__greeting">Здравствуйте!</div>
+                                {% endif %}
+                            </div>
+                            <a class="button office__button-exit" href={% url 'users:logout' %} data-da=".office__menu, 720, last">Выйти</a>
+                        </div>
+                        <div class="office__row">
+                            <div class="office__menu">
+                                <p class="office__management">Управление учетной записью</p>
+                                <div class="office__item-menu tab-title">Личная информация</div>
+                                <div class="office__item-menu tab-title">Платежные данные</div>
+                                <div class="office__item-menu tab-title">Заказы</div>
+                                <div class="office__item-menu tab-title">Программа лояльности</div>
+                                <div class="office__item-menu tab-title">Служба поддержки</div>
+                            </div>
+                            <div class="office__body">
+                                <div class="office__item-body tab-body item-info">
+                                    <div class="office__body-title">
+                                        <p>Личная информация</p>
+                                        <div class="office__button-back">Назад</div>
+                                    </div>
 
+                                    <form class="item-info__form" method="POST">
+                                        {% csrf_token %}
 
-<div class="profileBlock">
-    <div class="accountHeader">
-        <div class="welcomeMessages">
-            <h2 class="welcomeMessage">Мой аккаунт</h2>
-            {% if profile.first_name %}
-                <p class="welcomeParagraph">Добро пожаловать, {{ profile.first_name }} {{ profile.last_name }}</p>
-            {% else %}
-                <p class="welcomeParagraph">Добро пожаловать, {{ request.user.first_name }} {{ profile.last_name }}</p>
-            {% endif %}
-        </div>
-    </div>
-    <hr>
+                                        <div class="delivery__row-input">
+                                            <label for="name" class="delivery__label">Имя</label> 
+                                            {{ form.first_name|add_class:"delivery__input" }}
+                                        </div>
 
-    <div class="privateInfo">
-        <h2 class="privateInfoHeader">Личная информация:</h2>
-        <ul class="privateInfoUl">
-            {% if profile.first_name %}
-                <li class="privateInfoList">Имя и фамилия: {{ profile.first_name }}</li>
-            {% else %}
-                <li class="privateInfoList">Имя и фамилия: {{ request.user.first_name }}</li>
-            {% endif %}
-            
-            {% if profile.date_of_birth %}
-                <li class="privateInfoList">Дата рождения: {{ profile.date_of_birth }}</li>
-            {% else %}
-                <li class="privateInfoList">Дата рождения: не указано</li>
-            {% endif %}
+                                        <div class="delivery__row-input">
+                                            <label for="surname" class="delivery__label">Фамилия</label> 
+                                            {{ form.last_name|add_class:"delivery__input" }}
+                                        </div>
+                                        
+                                        <div class="delivery__row-input">
+                                            <label for="phone" class="delivery__label">Номер телефона</label> 
+                                            {{ form.phone_number|add_class:"delivery__input tel" }}
+                                        </div>
 
-            {% if profile.address %}
-                <li class="privateInfoList">Адреса доставки: {{ profile.address }}</li>
-            {% else %}
-                <li class="privateInfoList">Адреса доставки: не указано</li>
-            {% endif %}
-            <li class="privateInfoList">Контактные данные: {{ request.user.phone_number }}</li>
-        </ul>
-    </div>
-    <hr>
+                                        <div class="delivery__row-input">
+                                            <label for="email" class="delivery__label">E-mail</label> 
+                                            {{ form.email_field|add_class:"delivery__input" }}
+                                        </div>
 
-    <div class="paymentsBlock">
-        <div class="paymentsInfo">
-            <div class="paymentsHeader">
-                <h2>Платёжные данные:</h2>
-                {% if profile.yandex_pay == 0 %}
-                    <p>Яндекс Pay: не добавлена</p>
-                {% else %}
-                    <p>Яндекс Pay: {{ profile.yandex_pay }}</p>
-                {% endif %}
+                                        <div class="delivery__row-input">
+                                            <label for="{{ form.date_of_birth.id_for_label }}" class="delivery__label">Дата рождения</label> 
+                                            {{ form.date_of_birth|add_class:"delivery__input" }}
+                                        </div>
+                                        
+                                        <div class="delivery__row-input">
+                                            <label for="city" class="delivery__label">Город</label> 
+                                            {{ form.city|add_class:"delivery__input" }}
+                                        </div>
 
-                {% if profile.tinkoff_pay == 0 %}
-                    <p>Tinkoff Pay: не добавлена</p>
-                {% else %}
-                    <p>Tinkoff Pay: {{ profile.tinkoff_pay }}</p>
-                {% endif %}
+                                        <div class="delivery__row-input">
+                                            <label for="street" class="delivery__label">Улица</label>
+                                            {{ form.street|add_class:"delivery__input" }}
+                                        </div>
 
-                {% if profile.card_field == 0 %}
-                    <p>Сохраненная карта: не добавлена</p>
-                {% else %}
-                    <p>Сохраненная карта: {{ profile.formatted_card }}</p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <hr>
+                                        <div class="delivery__row-input">
+                                            <label for="index" class="delivery__label">Индекс</label> 
+                                            {{ form.index|add_class:"delivery__input" }}
+                                        </div>
+                                        
+                                        <div class="item-info__row">
 
-    <div class="accountContent">
-        <div class="profileOrders">
-            <div class="ordersBlock">
-                <div class="ordersHeader">
-                    <h2 class='ordersTitle'>Ваши заказы</h2> 
-                    {% if orders %}
-                        {% for order in orders %}
-                            <p class="ordersParagraph">Номер заказа: {{ order.order_number }}</p>
-                            <p class="ordersParagraph">Статус заказа: {{ order.status }}</p>
-                            <p class="ordersParagraph">Дата заказа: {{ order.order_date }}</p>
-                        {% endfor %}
-                    {% else %}
-                        <p class="ordersParagraph">У вас пока нет активных заказов</p> 
-                    {% endif %}
+                                            <div class="delivery__row-input">
+                                                <label for="body" class="delivery__label">Корпус</label> 
+                                                {{ form.corp|add_class:"delivery__input" }}
+                                            </div>
 
-            
+                                            <div class="delivery__item-two">
+                                                <div class="delivery__row-input">
+                                                    <label for="house" class="delivery__label">Дом</label> 
+                                                    {{ form.house|add_class:"delivery__input" }}
+                                                </div>
+
+                                                <div class="delivery__row-input">
+                                                    <label for="flat" class="delivery__label">Кв.</label> 
+                                                    {{ form.room|add_class:"delivery__input" }}
+                                                </div>
+                                            </div>
+                                        </div> 
+
+                                        <div class="item-info__button-row" >
+                                            <a href={% url 'users:password_change_lk' %} class="button item-info__button-save">Поменять пароль</a>
+                                        
+                                            <a href={% url 'users:edit_profile' pk=user.pk %} class="button item-info__button-save left-button">Изменить профиль</a>
+                                        </div>
+                                    </form>
+                                    
+                                </div>
+                                <div class="office__item-body tab-body item-payment">
+                                    <div class="office__body-title">
+                                        <p>Платежные данные</p>
+                                        <div class="office__button-back">Назад</div>
+                                    </div>
+                                    <div class="item-payment__row">
+                                        <div class="checkbox-del delivery__checkbox-item">
+                                            <img src={% static "images/payment.svg" %} alt="" />
+                                            <div class="checkbox-del__body">
+                                                <div class="checkbox-del__bank">Tinkoff</div>
+                                                <div class="checkbox-del__term">Срок истечения 06/2024</div>
+                                                <div class="checkbox-del__button-row">
+                                                    <div class="checkbox-del__button">Изменить</div>
+                                                    <div class="checkbox-del__button-remove">Удалить</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="checkbox-del delivery__checkbox-item">
+                                            <img src={% static "images/mastercard.svg" %} alt="" />
+                                            <div class="checkbox-del__body">
+                                                <div class="checkbox-del__bank">ЮMoney</div>
+                                                <div class="checkbox-del__term">Срок истечения 06/2024</div>
+                                                <div class="checkbox-del__button-row">
+                                                    <div class="checkbox-del__button">Изменить</div>
+                                                    <div class="checkbox-del__button-remove">Удалить</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="checkbox-del delivery__checkbox-item">
+                                            <img src={% static "images/mastercard.svg" %} alt="" />
+                                            <div class="checkbox-del__body">
+                                                <div class="checkbox-del__bank">Сбербанк</div>
+                                                <div class="checkbox-del__term">Срок истечения 06/2024</div>
+                                                <div class="checkbox-del__button-row">
+                                                    <div class="checkbox-del__button">Изменить</div>
+                                                    <div class="checkbox-del__button-remove">Удалить</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="checkbox-del delivery__checkbox-item">
+                                            <img src={% static "images/mastercard.svg" %} alt="" />
+                                            <div class="checkbox-del__body">
+                                                <div class="checkbox-del__bank">Сбербанк</div>
+                                                <div class="checkbox-del__term">Срок истечения 06/2024</div>
+                                                <div class="checkbox-del__button-row">
+                                                    <div class="checkbox-del__button">Изменить</div>
+                                                    <div class="checkbox-del__button-remove">Удалить</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-info__button-row"><button class="button item-info__button-save">Добавить способ оплаты</button></div>
+                                    </div>
+                                </div>
+                                <div class="office__item-body tab-body item-orders">
+                                    <div class="office__body-title">
+                                        <p>Заказы</p>
+                                        <div class="office__button-back">Назад</div>
+                                    </div>
+                                    <div class="item-orders__body">
+                                        <div class="item-orders__top">
+                                            <div class="item-orders__item">Номер заказа</div>
+                                            <div class="item-orders__item">Дата заказа</div>
+                                            <div class="item-orders__item delivery">Дата доставки</div>
+                                            <div class="item-orders__item remained">Осталось</div>
+                                            <div class="item-orders__item cost">Стоимость</div>
+                                            <div class="item-orders__item status">Статус</div>
+                                            <div class="item-orders__item details">Подробности</div>
+                                        </div>
+                                        <div class="item-orders__line">
+                                            <div class="item-orders__item">#3066</div>
+                                            <div class="item-orders__item">22.07.2012</div>
+                                            <div class="item-orders__item delivery">22.07.2012</div>
+                                            <div class="item-orders__item remained">16 ч.</div>
+                                            <div class="item-orders__item cost">5 000 RUB</div>
+                                            <div class="item-orders__item">
+                                                <div class="active item-orders__status-ok">Принят</div>
+                                                <div class="item-orders__status-not">Отказано</div>
+                                                <div class="item-orders__status-created">Создан</div>
+                                            </div>
+                                            <div class="item-orders__item details">Подробности</div>
+                                        </div>
+                                        <div class="item-orders__line">
+                                            <div class="item-orders__item">#3066</div>
+                                            <div class="item-orders__item">22.07.2012</div>
+                                            <div class="item-orders__item delivery">22.07.2012</div>
+                                            <div class="item-orders__item remained">22 ч.</div>
+                                            <div class="item-orders__item cost">5 000 RUB</div>
+                                            <div class="item-orders__item">
+                                                <div class="active item-orders__status-ok">Принят</div>
+                                                <div class="item-orders__status-not">Отказано</div>
+                                                <div class="item-orders__status-created">Создан</div>
+                                            </div>
+                                            <div class="item-orders__item details">Подробности</div>
+                                        </div>
+                                        <div class="item-orders__line">
+                                            <div class="item-orders__item">#3066</div>
+                                            <div class="item-orders__item">22.07.2012</div>
+                                            <div class="item-orders__item delivery">22.07.2012</div>
+                                            <div class="item-orders__item remained">5 д. 16 ч.</div>
+                                            <div class="item-orders__item cost">5 000 RUB</div>
+                                            <div class="item-orders__item">
+                                                <div class="item-orders__status-ok">Принят</div>
+                                                <div class="item-orders__status-not">Отказано</div>
+                                                <div class="active item-orders__status-created">Создан</div>
+                                            </div>
+                                            <div class="item-orders__item details">Подробности</div>
+                                        </div>
+                                        <div class="item-orders__line">
+                                            <div class="item-orders__item">#3066</div>
+                                            <div class="item-orders__item">22.07.2012</div>
+                                            <div class="item-orders__item delivery">22.07.2012</div>
+                                            <div class="item-orders__item remained">5 д. 16 ч.</div>
+                                            <div class="item-orders__item cost">5 000 RUB</div>
+                                            <div class="item-orders__item">
+                                                <div class="item-orders__status-ok">Принят</div>
+                                                <div class="active item-orders__status-not">Отказано</div>
+                                                <div class="item-orders__status-created">Создан</div>
+                                            </div>
+                                            <div class="item-orders__item details">Подробности</div>
+                                        </div>
+                                    </div>
+                                    <div class="item-orders__button-row"><a href="#" class="button item-orders__button">Экспортировать таблицу</a></div>
+                                </div>
+                                <div class="office__item-body tab-body item-loyalty">
+                                    <div class="office__body-title">
+                                        <p>Программа лояльности</p>
+                                        <div class="office__button-back">Назад</div>
+                                    </div>
+                                    <div class="item-loyalty__body">
+                                        <div class="item-loyalty__title">Добро пожаловать в программу лояльности Corgifume, где каждый клиент оценен и награжден за свою страсть к миру ароматов.</div>
+                                        <div class="item-loyalty__item">
+                                            <div class="item-loyalty__row">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                                    <g clip-path="url(#clip0_412_4433)">
+                                                        <path
+                                                            d="M15.9834 31.9668C24.8108 31.9668 31.9668 24.8108 31.9668 15.9834C31.9668 7.15602 24.8108 0 15.9834 0C7.15602 0 0 7.15602 0 15.9834C0 24.8108 7.15602 31.9668 15.9834 31.9668Z"
+                                                            fill="#FEA048"
+                                                        />
+                                                        <path
+                                                            d="M15.9834 28.4187C22.8512 28.4187 28.4186 22.8512 28.4186 15.9835C28.4186 9.11566 22.8512 3.54822 15.9834 3.54822C9.1156 3.54822 3.54816 9.11566 3.54816 15.9835C3.54816 22.8512 9.1156 28.4187 15.9834 28.4187Z"
+                                                            fill="white"
+                                                        />
+                                                        <path
+                                                            d="M15.9834 28.7835C8.95336 28.7835 3.18341 23.0467 3.18341 15.9835C3.18341 8.95342 8.95336 3.18347 15.9834 3.18347C23.0135 3.18347 28.7834 8.95342 28.7834 15.9835C28.7834 23.0467 23.0466 28.7835 15.9834 28.7835ZM15.9834 3.91301C9.31813 3.91301 3.91294 9.31819 3.91294 15.9835C3.91294 22.6488 9.31813 28.0539 15.9834 28.0539C22.6487 28.0539 28.0539 22.6488 28.0539 15.9835C28.0539 9.31819 22.6487 3.91301 15.9834 3.91301Z"
+                                                            fill="#0C0103"
+                                                        />
+                                                        <path
+                                                            d="M16.7461 9.58341L18.3378 12.7668C18.4705 12.999 18.7026 13.1648 18.9679 13.2311L22.4829 13.7285C23.1461 13.828 23.4445 14.657 22.9471 15.1544L20.3938 17.6414C20.1948 17.8404 20.0953 18.1057 20.1616 18.371L20.7254 21.886C20.858 22.5492 20.1285 23.0798 19.5316 22.7482L16.3813 21.0901C16.1492 20.9575 15.8508 20.9575 15.6186 21.0901L12.4684 22.7482C11.8715 23.0798 11.142 22.5492 11.2746 21.886L11.8715 18.371C11.9047 18.1057 11.8383 17.8404 11.6394 17.6414L9.086 15.1544C8.58859 14.6901 8.85388 13.828 9.55025 13.7285L13.0653 13.2311C13.3306 13.1979 13.5627 13.0321 13.6953 12.7668L15.287 9.58341C15.5523 8.98652 16.4477 8.98652 16.7461 9.58341Z"
+                                                            fill="#FEA048"
+                                                        />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_412_4433"><rect width="32" height="32" fill="white" /></clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <p style="margin-left:5px;margin-top:5px;">Ваши текущие Арома-баллы:</p>
+                                                <p class="bold green" style="margin-top:5px;">1 000</p>
+                                            </div>
+                                             {% comment %} <div class="item-loyalty__row">
+                                                <p>Предстоящие:</p>
+                                                <p class="bold gray">500</p>
+                                            </div> {% endcomment %}
+                                            <div class="item-loyalty__row">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                                    <g clip-path="url(#clip0_412_4433)">
+                                                        <path
+                                                            d="M15.9834 31.9668C24.8108 31.9668 31.9668 24.8108 31.9668 15.9834C31.9668 7.15602 24.8108 0 15.9834 0C7.15602 0 0 7.15602 0 15.9834C0 24.8108 7.15602 31.9668 15.9834 31.9668Z"
+                                                            fill="#FEA048"
+                                                        />
+                                                        <path
+                                                            d="M15.9834 28.4187C22.8512 28.4187 28.4186 22.8512 28.4186 15.9835C28.4186 9.11566 22.8512 3.54822 15.9834 3.54822C9.1156 3.54822 3.54816 9.11566 3.54816 15.9835C3.54816 22.8512 9.1156 28.4187 15.9834 28.4187Z"
+                                                            fill="white"
+                                                        />
+                                                        <path
+                                                            d="M15.9834 28.7835C8.95336 28.7835 3.18341 23.0467 3.18341 15.9835C3.18341 8.95342 8.95336 3.18347 15.9834 3.18347C23.0135 3.18347 28.7834 8.95342 28.7834 15.9835C28.7834 23.0467 23.0466 28.7835 15.9834 28.7835ZM15.9834 3.91301C9.31813 3.91301 3.91294 9.31819 3.91294 15.9835C3.91294 22.6488 9.31813 28.0539 15.9834 28.0539C22.6487 28.0539 28.0539 22.6488 28.0539 15.9835C28.0539 9.31819 22.6487 3.91301 15.9834 3.91301Z"
+                                                            fill="#0C0103"
+                                                        />
+                                                        <path
+                                                            d="M16.7461 9.58341L18.3378 12.7668C18.4705 12.999 18.7026 13.1648 18.9679 13.2311L22.4829 13.7285C23.1461 13.828 23.4445 14.657 22.9471 15.1544L20.3938 17.6414C20.1948 17.8404 20.0953 18.1057 20.1616 18.371L20.7254 21.886C20.858 22.5492 20.1285 23.0798 19.5316 22.7482L16.3813 21.0901C16.1492 20.9575 15.8508 20.9575 15.6186 21.0901L12.4684 22.7482C11.8715 23.0798 11.142 22.5492 11.2746 21.886L11.8715 18.371C11.9047 18.1057 11.8383 17.8404 11.6394 17.6414L9.086 15.1544C8.58859 14.6901 8.85388 13.828 9.55025 13.7285L13.0653 13.2311C13.3306 13.1979 13.5627 13.0321 13.6953 12.7668L15.287 9.58341C15.5523 8.98652 16.4477 8.98652 16.7461 9.58341Z"
+                                                            fill="#FEA048"
+                                                        />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_412_4433"><rect width="32" height="32" fill="white" /></clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <p style="margin-left:5px;margin-top:5px;">Ваши текущие Бонусы:</p>
+                                                <p class="bold orange" style="margin-top:5px;">55</p>
+                                            </div> 
+                                        </div>
+                                        <div class="item-loyalty__row-estimation">
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Новичок</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="active item-loyalty__estimation">
+                                                <img src={% static "images/estimation2.svg" %} alt="" />
+                                                <p>Любитель</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Знаток</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Эксперт</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Мастер ароматов</p>
+                                            </div>
+                                        </div>
+                                        <div class="item-loyalty__item">
+                                            <div class="item-loyalty__row">
+                                                <p>Ваш текущий уровень:</p>
+                                                <p class="bold">Любитель</p>
+                                            </div>
+                                            <div class="item-loyalty__row">
+                                                <p>Вам нужно набрать <span class="bold">5 Арома-баллов</span> для достижения следующего уровня.</p>
+                                            </div>
+                                        </div>
+                                        <div class="item-loyalty__item">
+                                            <div class="item-loyalty__title-item">Ваши текущие привилегии:</div>
+                                            <p>20% к дополнительным бонусам при совершении покупок на сайте.</p>
+                                            <p>Дополнительная скидка 7% на заказ в течение 7 дней до и 7 дней после дня рождения.</p>
+                                        </div>
+                                        <div class="item-loyalty__button-row"><a href="#" class="button item-loyalty__button">Подробнее о программе лояльности</a></div>
+                                    </div>
+                                </div>
+                                <div class="office__item-body tab-body item-support">
+                                    <div class="office__body-title">
+                                        <p>Часто задаваемые вопросы</p>
+                                        <div class="office__button-back">Назад</div>
+                                    </div>
+                                    <div class="item-support__row">
+                                        <div class="item-support__body">
+                                            <div class="item-support__title">Часто задаваемые вопросы</div>
+                                            <p class="item-support__text">Если у Вас остались ещё вопросы, то напишите нам в <span>Telegram</span></p>
+                                        </div>
+                                        <div class="item-support__quest">
+                                            <div class="item-support__spoller">
+                                                <div class="item-support__title-spoller">
+                                                    <p>Почему такая приятная цена?</p>
+                                                    <img src={% static "images/select-str.svg" %} alt="" />
+                                                </div>
+                                                <div class="item-support__body-spoller">
+                                                    Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram
+                                                </div>
+                                            </div>
+                                            <div class="item-support__spoller">
+                                                <div class="item-support__title-spoller">
+                                                    <p>Почему такая приятная цена?</p>
+                                                    <img src={% static "images/select-str.svg" %} alt="" />
+                                                </div>
+                                                <div class="item-support__body-spoller">
+                                                    Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram
+                                                </div>
+                                            </div>
+                                            <div class="item-support__spoller">
+                                                <div class="item-support__title-spoller">
+                                                    <p>Почему такая приятная цена?</p>
+                                                    <img src={% static "images/select-str.svg" %} alt="" />
+                                                </div>
+                                                <div class="item-support__body-spoller">
+                                                    Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram
+                                                </div>
+                                            </div>
+                                            <div class="item-support__spoller">
+                                                <div class="item-support__title-spoller">
+                                                    <p>Почему такая приятная цена?</p>
+                                                    <img src={% static "images/select-str.svg" %} alt="" />
+                                                </div>
+                                                <div class="item-support__body-spoller">
+                                                    Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram
+                                                </div>
+                                            </div>
+                                            <div class="item-support__spoller">
+                                                <div class="item-support__title-spoller">
+                                                    <p>Почему такая приятная цена?</p>
+                                                    <img src={% static "images/select-str.svg" %} alt="" />
+                                                </div>
+                                                <div class="item-support__body-spoller">
+                                                    Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram Если у Вас остались ещё вопросы, то напишите нам в Telegram
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-support__button-row">
+                                        <a href="#" class="button white item-support__button">Онлайн чат </a><a href="#" class="button white item-support__button">Написать вопрос в Telegram </a>
+                                        <a href={% url 'users:question' %} class="button white item-support__button">Написать обращение </a>
+                                        <a href="#" class="button item-support__button">Мои обращения</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <hr>
-
-    <div class="favoriteBlock">
-        <div class="favoriteInfo">
-            <div class="favoriteHeader">
-                <h2>Избранное</h2>
-                {% if favorites %}
-                    {% for favorite in favorites %}
-                        <p>{{ favorite.item }}</p>
-                    {% endfor %}
-                {% else %}
-                        <p>В настоящий момент у вас нет понравившихся товаров...</p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <hr>
-
-    <div class="loyalBlock">
-        <div class="loyalInfo">
-            <div class="loyalText">
-                <div class="loyalHeader">
-                    <h2>Программа лояльности</h2>
-                    <p>Добро пожаловать в программу лояльности Corgifume, где каждый клиент оценен и награжден за свою страсть к миру ароматов. Мы создали эту программу, чтобы вы могли наслаждаться не только лучшими парфюмами, но и уникальными привилегиями, которые отражают вашу преданность миру ароматов.</p>
+                <div class="_overlay-bg popup-remove" data-popup="popup-remov">
+                    <div class="popup-remove__body">
+                        <div class="button-close popup-remove__button-close"><img src="images/button-close.svg" alt="" /></div>
+                        <div class="popup-remove__title">Удаление товара</div>
+                        <p>Удалить выбранный товар? Отменить действие будет невозможно.</p>
+                        <div class="popup-remove__button-row">
+                            <div class="button white button-close popup-remove__button">Оставить</div>
+                            <div class="button button-close popup-remove__button">УДАЛИТЬ</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="loyalList">
-                    <ul class="loyalUl">
-                        <li class="loyalLink">Ваши текущие бонусы: {{ profile.current_bonuses }}</li>
-                        <li class="loyalLink">Предстоящие: {{ profile.future_bonuses }}</li>
-                        <li class="loyalLink">Ваши текущие Арома-баллы: {{ profile.aroma_balls }}</li>
-                        <li class="loyalLink">Ваш текущий уровень: {{ profile.loyal_status }}</li>
-                    </ul>
-                </div>
-                <div class="loyalpriviliges">
-                    <p class="priviligesHeader">Ваши текущие привилегии:</p>
-                    <p class="priviligesParagraph">В настоящий момент у вас нету привилегий в магазине...</p>
-                    <a href="#" class="priviligesInfo">Подробнее о программе лояльности</a>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-    <hr>
-
-    <div class="settingsBlock">
-        <div class="settingsInfo">
-            <div class="settingsHeader">
-                <h2>Настройки:</h2>
-                <p class="profileSettings">Изменение профиля: 
-                    <a href={% url 'users:edit-profile' %}>Настроить профиль</a>
-                </p>
-                <p class="passwordChange">Изменение пароля: 
-                    <a href={% url 'users:password_change_lk' %}>Изменить пароль</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
+            </main>
 {% endblock %}
