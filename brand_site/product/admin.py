@@ -11,10 +11,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'image_show', 'price', 'available', 'created', 'uploaded']
-    list_filter = ['available', 'created', 'uploaded']
+    list_display = ['name', 'id', 'image_show', 'price', 'available', 'created']
+    list_filter = ['available', 'created']
     list_editable = ['price', 'available']
-    prepopulated_fields = {'slug': ('name', )}
+    # prepopulated_fields = {'id': ('name', )}
 
     def image_show(self, obj):
         if obj.image.first():
@@ -22,7 +22,6 @@ class ProductAdmin(admin.ModelAdmin):
         return "None"
 
     image_show.__name__ = "Картинка"
-
 
 admin.site.register(Image)
 

@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-q$r=j&1bk35r_jz$#%=_ft_vxh8p50#ot*hz%^o*=3z!3d$10v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dbd8-46-138-80-254.ngrok-free.app']
+# ALLOWED_HOSTS = ['8e15-46-138-86-206.ngrok-free.app']
 
 
 # Application definition
@@ -85,7 +85,7 @@ WSGI_APPLICATION = "brand_site.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "corgi_db",
+        "NAME": "rrr_db",
         "USER": "postgres",
         "PASSWORD": "postgres",
         "HOST": "localhost",
@@ -144,6 +144,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -156,8 +160,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 CART_SESSION_ID = 'cart'
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://dbd8-46-138-80-254.ngrok-free.app',
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://8e15-46-138-86-206.ngrok-free.app',
+# ]
 
 

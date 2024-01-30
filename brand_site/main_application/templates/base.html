@@ -12,10 +12,10 @@
     <body>
         <div class="wrapper">
             <header class="header">
-                <div class="bonus header__bonus" style="margin-top: 0px;">
+                <div class="bonus header__bonus" style="margin-top: 0px;" id="bonus__Header">
                     <div class="bonus__container">
                         <p>Получи 300 бонусов на первый заказ по промокоду START300</p>
-                        <div class="bonus__button-close">
+                        <div class="bonus__button-close" id="bonusID">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
@@ -84,13 +84,20 @@
                                 <p>Мой аккаунт</p>
                             </a>
                             {% endif %}
-                            <div class="user__item user__open-basket">
-                                <img src={% static "images/shopping-icon.svg" %} alt="" class="user__icon" />
-                                <p>Моя корзина</p>
-                            </div>
+                            <a href={% url 'cart:cart_detail' %} class="user__item">
+                                <img src={% static "images/shopping-icon.svg" %} alt="" class="user__icon"/>
+                                {% if total_len > 0 %}
+                                    <p id="icon_ID">Моя корзина ({{ total_len }})</p>
+                                {% else %}
+                                    <p id="icon_ID">Моя корзина</p>
+                                {% endif %}
+                            </a>
                         </div>
                         <div class="top-header__icon-row">
-                            <button class="your-menu header__burger icon-menu"><span></span> <span class="two"></span></button>
+                            <button class="your-menu header__burger icon-menu">
+                                <span></span> 
+                                <span class="two"></span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -141,19 +148,18 @@
                     <div class="card-basket__button-close">
                         <img src={% static "images/button-close.svg" %} alt="" />
                     </div>
-                    <div class="card-basket__title">Корзина</div>
-                    {% if cart|length == 0 %}
+                    <a href={% url 'cart:cart_detail' %} class="card-basket__title">Корзина</a>
+                    {% comment %} {% if cart|length == 0 %}
                     
-                    <div class="card-basket__body prod-tab">
+                    <div class="card-basket__body prod-tab" id="test">
                         <div class="prod-tab__body">
                             <p style="margin-top:20px;">В настоящий момент в корзине нет товаров...</p>
                         </div>
                     </div>
 
                     
+                    
                     {% else %}
-                    
-                    
 
                     {% for item in cart %}  
                     <div class="card-basket__head">
@@ -170,7 +176,7 @@
                                     <div class="prod-tab__about">
                                         <h3>{{ item.product.name }}</h3>
                                         <p class="prod-tab__category">{{ item.product.category }}</p>
-                                        <p class="prod-tab__category">{{ item.product.ml }} мл.</p>
+                                        <p class="prod-tab__category" id="ID_ml">{{ item.product.ml }} мл.</p>
                                         <div class="price">{{ item.product.price }} RUB</div>
                                             <div class="quantity__row">
                                                 
@@ -191,13 +197,8 @@
                                                     <input type="hidden" name="product_id" value="{{ item.product.id }}" id="add_{{item.product.id}}">
                                                     <input type="submit" value="+" class="quantity__number-plus"> 
                                                  </form>
-                                            </div>
-                                        {% comment %} </div> {% endcomment %}
-                                    </div>
-                                    {% comment %} <div class="card-basket__remove">
-                                        <img src={% static "images/button-remove.svg" %} alt="" />
-                                        <div data-type="popup-remov"></div>
-                                    </div> {% endcomment %}
+                                            </div> {% endcomment %}
+                                    {% comment %} </div>
                                 </div>
                             </div>
                         </div>
@@ -209,17 +210,17 @@
                                 <div class="popup-remove__button-row">
                                     <div class="button white button-close popup-remove__button">Оставить</div>
                                     
-                                    <form action="{% url 'delete_product' %}" method="POST">
+                                    <form action="{% url 'delete_product' %}" method="POST" id="lowerDelete">
                                         {% csrf_token %}
                                         <input type="hidden" name="product_id" value="{{ item.product.id }}">
                                         <input type="submit" value="УДАЛИТЬ" class="button button-close popup-remove__button">
                                     </form>
                                 </div>
                             </div>
-                        </div> 
-                    {% endfor %}
+                        </div>  {% endcomment %}
+                    {% comment %} {% endfor %} {% endcomment %}
                     {% comment %} {% endwith %} {% endcomment %}
-                    <div class="card-basket__bottom">
+                    {% comment %} <div class="card-basket__bottom">
                         <div class="card-basket__result">
                             <p>Итого ({{ cart.get_total_len }} позиций)</p>
                             <p class="card-basket__result-price">{{ cart.get_total_price }} РУБ</p>
@@ -230,7 +231,7 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
+                {% endif %} {% endcomment %}
             </header>
             {% block content %}
             {% endblock %}
@@ -293,9 +294,29 @@
                 </div>
             </footer>
         </div>
+        <script src={% static 'js/new.min.js' %}></script>
         <script src={% static 'js/app.min.js' %}></script>
-        <script src={% static 'js/vendors.min.js' %}></script>
+        {% comment %} <script src={% static 'js/vendors.min.js' %}></script> {% endcomment %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src={% static 'js/ajax.js' %}></script>            
+        <script src={% static 'js/ajax.js' %}></script>  
+        <script>
+            let bonusButton = document.getElementById("bonusID");
+            let bonusBlock = document.getElementById('bonus__Header');
+
+            let isHidden = localStorage.getItem('isHidden');
+
+            if (isHidden === 'true') {
+                bonusBlock.style.display = 'none';
+            }
+
+            bonusButton.addEventListener('click', function() {
+                bonusBlock.style.opacity = '0';
+                bonusBlock.style.transition = 'opacity 1.5s';
+                setTimeout(function() {
+                    bonusBlock.style.display = 'none';
+                    localStorage.setItem('isHidden', 'true');
+                }, 300);
+            });
+        </script>          
 </body>
 </html>

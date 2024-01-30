@@ -18,98 +18,86 @@
                         {% if cart|length == 0 %}
                         <p class="basket__title" style='margin-top:50px;text-align:center;'>В настоящий момент в корзине нет товаров...</p>
                         {% else %}    
-                        <div class="basket__head">
+                        <p class="basket__title" style='margin-top:50px;text-align:center;display:none;' id="cart__message">В настоящий момент в корзине нет товаров...</p>
+                        <div class="basket__head" id="cart__header">
                             <h2 class="basket__title">Корзина</h2>
-                            <form action="{% url 'clear-cart' %}" method="post">
+                            <form action="{% url 'clear-cart' %}" method="post" class="delete__all">
                                 {{ item.update_quantity_form.quantity }}
                                 {{ item.update_quantity_form.update }}
                                 <input type="submit" value="Очистить корзину" class="button white basket__button-clear"> 
                                 {% csrf_token %}
                             </form>
                         </div>
-                        <div class="prod-tab basket__tab-product">
+                        <div class="prod-tab basket__tab-product" id="cart__body">
                             <div class="prod-tab__head">
                                 <div class="prod-tab__row">
                                     <div class="prod-tab__name">Продукт</div>
                                     <div class="prod-tab__score">Объем</div>
-                                    <div class="prod-tab__score quantity">Количество</div>
+                                    <div class="prod-tab__score">Количество</div>
                                     <div class="prod-tab__score prod-tab__score-bonus">Бонусы при покупке</div>
                                     <div class="prod-tab__score prod-tab__price">Стоимость</div>
                                     <div class="prod-tab__remove"></div>
                                 </div>
                             </div>
-                            {% for item in cart %}
-                            <div class="prod-tab__body">
-                                <div class="prod-tab__row prod-tab__row-product">
-                                    <div class="prod-tab__name">
-                                        <picture>
-                                            <source srcset={% static item.product.image.first %} type="image/webp" />
-                                            <img src={% static item.product.image.first %} alt="" class="prod-tab__img" />
-                                        </picture>
-                                        <div class="prod-tab__about" style="margin-top: 85px;">
-                                            <h3>{{ item.product }}</h3>
-                                            <p class="prod-tab__category">{{ item.product.category }}</p>
-                                            <div class="quantity">
-                                                <div class="quantity__row">
-                                                    <button class="quantity__number-minus" type="button">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                                            <path d="M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                    </button>
-                                                    <button class="quantity__number-plus" type="button">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                                            <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
+                            {% for item in cart %}                                
+                                <div class="prod-tab__body" id="product_row__{{item.product.id}}">
+                                    <div class="prod-tab__row prod-tab__row-product">
+                                        <div class="prod-tab__name">
+                                            {% for image in images %}
+                                                {% if item.product.id == image.product.id %}
+                                                    <picture>
+                                                        <source srcset="{{ image }}" type="image/webp" />
+                                                        <img src={% static item.product.image %} alt="" class="prod-tab__img" />
+                                                    </picture>
+                                                {% endif %}
+                                            {% endfor %}
+                                            
+                                            <div class="prod-tab__about" style="margin-top:70px;">
+                                                <h3>{{ item.product }}</h3>
+                                                <p class="prod-tab__category">{{ item.product.category }}</p>
+                                                
                                             </div>
-                                            <div class="button white prod-tab__button-remove" data-type="popup-remov">Удалить</div>
                                         </div>
-                                    </div>
-                                    <div class="prod-tab__score">{{ item.product.ml }} мл</div>
-                                    {% comment %} <div class="prod-tab__score quantity"> {% endcomment %}
-                                        <div class="quantity__row">
+                                        <div class="prod-tab__score">{{ item.product.ml }} мл</div>
+                                            <div class="quantity__row" style="margin-top:220px;margin-left:20px;">
 
-                                            <form action="{% url 'remove_cart' %}" method="post" class="removeCartClass">
-                                                {% csrf_token %}
-                                                {{ item.update_quantity_form.quantity }}
-                                                {{ item.update_quantity_form.update }}
-                                                <input type="hidden" name="product_id" value="{{ item.product.id }}" id="remove_page_{{item.product.id}}">
-                                                <input type="submit" value="-" class="quantity__number-minus"> 
-                                            </form>
-                                                                                        
-                                            <span class="quantity__input" id="quantityID_{{item.product.id}}">{{ item.quantity }}</span>
-                                                                                        
-                                            <form action="{% url 'add_certain' %}" method="post" class="addCartClass">
-                                                {% csrf_token %}
-                                                {{ item.update_quantity_form.quantity }}
-                                                {{ item.update_quantity_form.update }}
-                                                <input type="hidden" name="product_id" value="{{ item.product.id }}" id="add_page_{{item.product.id}}">
-                                                <input type="submit" value="+" class="quantity__number-plus"> 
-                                             </form>
+                                                <form action="{% url 'remove_cart_second' %}" method="post" class="removeCartClass__second" style="margin-top:-125px;">
+                                                    {% csrf_token %}
+                                                    {{ item.update_quantity_form.quantity }}
+                                                    {{ item.update_quantity_form.update }}
+                                                    <input type="hidden" name="product_id" value="{{ item.product.id }}" id="remove_{{item.product.id}}">
+                                                    <input type="submit" value="-" class="quantity__number-minus"> 
+                                                </form>
+                                                                                            
+                                                <span class="quantity__input" id="quantityID_{{item.product.id}}" style="margin-top:-125px;">{{ item.quantity }}</span>
+                                                                                            
+                                                <form action="{% url 'add_certain' %}" method="post" class="addCartClass" style="margin-top:-125px;">
+                                                    {% csrf_token %}
+                                                    {{ item.update_quantity_form.quantity }}
+                                                    {{ item.update_quantity_form.update }}
+                                                    <input type="hidden" name="product_id" value="{{ item.product.id }}" id="add_{{item.product.id}}">
+                                                    <input type="submit" value="+" class="quantity__number-plus"> 
+                                                </form>
+                                        
+                                            </div>
+                                        {% comment %} </div> {% endcomment %}
+                                        <div class="prod-tab__score prod-tab__score-bonus">327</div>
+                                        <div class="prod-tab__score prod-tab__price prod-tab-price" id="item_total_price_{{ item.product.id }}">{{ item.total_price }} RUB</div>
+                                        
+                                        <div class="prod-tab__remove">
+                                            <a href="{% url 'delete_product' id=item.product.id %}" class="removeProductLink" name="product_id" value="{{ item.product.id }}" id="delete_{{item.product.id}}">
+                                                <img src="{% static 'images/button-remove.svg' %}" alt="" data-type="popup-remov">
+                                            </a>                                            
+                                        </div> 
 
-                                            {% comment %} <button class="quantity__number-plus" type="button">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                                    <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                            </button> {% endcomment %}
-
-                                        </div>
-                                    {% comment %} </div> {% endcomment %}
-                                    <div class="prod-tab__score prod-tab__score-bonus">327</div>
-                                    <div class="prod-tab__score prod-tab__price prod-tab-price">{{ item.total_price }} RUB</div>
-                                    <div class="prod-tab__remove">
-                                        <div class="prod-tab__button-remove">
-                                            <img src={% static "images/button-remove.svg" %} alt="" data-type="popup-remov" />
-                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                             {% endfor %}
                         <div class="basket__bot">
                             <div class="basket__result">
                                 <p>Предварительный итог:</p>
-                                <p class="basket__result-price">{{ cart.get_total_price }} RUB</p>
+                                <p class="basket__result-price" id="total_price">{{ cart.get_total_price }} RUB</p>
                             </div>
                             <div class="basket__result">
                                 <p>Начисление бонусов:</p>
@@ -140,24 +128,11 @@
                                     <p>1 020</p>
                                 </div>
                             </div>
-                            <div class="basket__button-row"><a href="#" class="button basket__button">ПЕРЕЙТИ К ОФОРМЛЕНИЮ</a></div>
+                            <div class="basket__button-row"><a href="{% url 'order:order-create' %}" class="button basket__button">ПЕРЕЙТИ К ОФОРМЛЕНИЮ</a></div>
                         </div>
                     </div>
                 </div>
-                <div class="_overlay-bg popup-remove" data-popup="popup-remov">
-                    <div class="popup-remove__body">
-                        <div class="button-close popup-remove__button-close"><img src="images/button-close.svg" alt="" /></div>
-                        <div class="popup-remove__title">Удаление товара</div>
-                        <p>Удалить выбранный товар? Отменить действие будет невозможно.</p>
-                        <div class="popup-remove__button-row">
-                            <div class="button white button-close popup-remove__button">Оставить</div>
-                            <form action="{% url 'clear-cart' %}" method="POST">
-                                {% csrf_token %}
-                                <input type="submit" value="УДАЛИТЬ" class="button button-close popup-remove__button">
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                
                 {% endif %}
             </main>
 {% endblock %}

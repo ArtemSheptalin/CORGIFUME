@@ -1,10 +1,12 @@
 from django.core.management.base import BaseCommand
-from django.core.files import File
 from typing import Any
-import os
 import openpyxl
 import re
 from ...models import *
+import time
+import os
+from django.core.files import File
+
 
 
 class Command(BaseCommand):
@@ -13,176 +15,154 @@ class Command(BaseCommand):
 
         # Получить пути к файлам
 
-        price_file_path = f'/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/prices.xlsx'
+        data_path = f'/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/price_corg.xlsx'
        
-        base_path = f'/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/brands'
+        # Объединить файлы
 
-        # Распарсить прайс лист
+        workbook1 = openpyxl.load_workbook(data_path)
+        sheet1 = workbook1.active
 
-        workbook2 = openpyxl.load_workbook(price_file_path)
-        sheet2 = workbook2.active
-        for column in sheet2.iter_rows(min_row=1, values_only=True):
-            product_name = column[1]
-            product_price = column[2]
-            current_color = column[3]
+        for column in sheet1.iter_rows(min_row=2, values_only=True):
+            article = column[0]
+            product_full = column[1]
+            product_name = column[2]
+            product_brand = column[3]
+            product_country = column[4]
+            product_category = column[5]
+            product_year = column[6]
+            product_description = column[8]
+            product_notes = column[9]
+            product_size = column[10]
+            helped_photo = column[11]
+            product_photos = column[13]  
+            inner_article = column[20]          
+            tester = True if re.search(r'\bTESTER\b', product_full) else False
+            product_price = column[22]    
 
-            # Выкидывает ошибку, если дошел до конца файла, так как там None
+            cleaned_helped_photo = []
+            res = []
 
-            if re.search(r'\bTESTER\b', product_name):
-                tester = True
-            else:
-                tester = False
+            try:
+                if product_category == 'Мужской':
+
+                    product_category = Category.objects.get(name='Для мужчин')
+                
+                elif product_category == 'Женский':
+                    product_category = Category.objects.get(name='Для женщин')
+                
+                else:
+                    product_category = Category.objects.get(name='Унисекс')
+            except Exception:
+                product_category = Category.objects.get(name='Унисекс')
+
+            try:
+                if 'edt' in product_full:
+                    product_type = 'Туалетная вода'
+                elif 'edp' in product_full:
+                    product_type = 'Парфюмерная вода'
+                elif 'edc' in product_full:
+                    product_type = 'Одеколон'
+                elif 'parfume' in product_full:
+                    product_type = 'Парфюм'
+                elif 'b/spray' in product_full:
+                    product_type = 'Спрей для тела'
+                elif 'b/cream' or 'b/lotion' in product_full:
+                    product_type = 'Лосьон для тела'
+                elif 'sh/g' in product_full:
+                    product_type = 'Гель для душа'
+                elif 'deo stick' or 'deo' in product_full:
+                    product_type = 'Дезодорант'
+                elif 'af/sh' in product_full:
+                    product_type = 'Лосьон после бритья'
+                elif 'soap' in product_full:
+                    product_type = 'Мыло'
+                elif 'candle' in product_full:
+                    product_type = 'Свеча'
+                elif 'shampoo' in product_full:
+                    product_type = 'Шампунь'
+                elif 'пробник' in product_full:
+                    product_type = 'Пробник'
+                else:
+                    product_type = ''
+
+            except Exception:
+                product_type = ''
+
+            try:
+                ml = int(product_size.replace('мл', '').replace('\xa0', '').strip())
+            except Exception as _e:
+                ml = 0
+
+            try:
+                brand = product_brand
+            except Exception as _e:
+                brand = 'None'
+
+            try:
+                price = product_price
+            except Exception as _e:
+                price = 0.0
             
-            for brand_name in os.listdir(base_path):
+            try:
+                cleaned_helped_photo = [helped_photo]
+            except Exception as _e:
+                helped_photo = ['']
+            
+            try:
+                notes = product_notes.capitalize().replace(',', ', ')
+            except Exception:
+                notes = ''
+            
+            try:
+                inner_article = inner_article.replace(' ', '')
+            except Exception:
+                inner_article = ''
+            
+            try:
+                product = Product.objects.create(
+                    category=product_category,
+                    full_name=product_full,
+                    name=product_name,
+                    notes=notes,
+                    year=product_year,
+                    country=product_country,
+                    description=product_description,
+                    brand=brand,
+                    ml=ml,
+                    tester=tester,
+                    article=article,
+                    inner_article=inner_article,
+                    price=price,
+                    parfum_type=product_type,
+                )
+                
+                cleaned_product_photos = product_photos.split(',')
+                all_cleaned_photos = cleaned_helped_photo + cleaned_product_photos
 
-                # Проверяем, есть ли папка и является ли папка директорией 
+                for photo in all_cleaned_photos:
+                    final_image = photo.replace('\xa0', '\u00A0').split('/')[-1]
+                    res.append(final_image)
 
-                card_path = f"{base_path}/{brand_name}"
+                cleaned_photos = list(set(res))
+
+                for image_instance in cleaned_photos:
+
+                    image_path = f"/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/main_application/static/images/!ALL_IMAGES/{image_instance}"
+
+                    with open(image_path, 'rb') as f:
+                        image_file = File.open(f)
+
+                        image = Image(product=product)
+                        image.image.save(image_instance, image_file)
+                        image.save()
+
+                print(f"Done with {product_full}!\n\n")
                     
-                if os.path.exists(card_path) and os.path.isdir(card_path):
-    
-                    
-                    # Проверить, нужна ли нам эта карточка и есть ли она она в прайс листе
-                     
-                    for dirname in os.listdir(card_path):
-                                            
-                        if brand_name in product_name and dirname.upper() in product_name:
+            except Exception as _e:
+                print(f"ОШИБКА:\n{_e}\n")
+                
 
-                            # Проверяем, есть ли xlsx файл и фото в папке
+            time.sleep(3)
 
-                            excel_file = f'{card_path}/{dirname}/{dirname}.xlsx'
-                            file_count = len(os.listdir(f'{card_path}/{dirname}/photos/'))
 
-                            # Если есть, то парсим карточку
-                            
-                            if os.path.exists(excel_file) and file_count > 0:
-
-                                workbook = openpyxl.load_workbook(excel_file)
-
-                                sheet = workbook.active
-
-                                match = re.search(r'(\d+(?:\.\d+)?)ml', product_name)
-
-                                if match:
-                                    ml = match.group(1)
-
-                                category_keys = ()
-                                category_values = ()
-                                                
-                                for column in sheet.iter_rows(min_row=1, values_only=True):
-
-                                    category_key = column[0] 
-                                    category_value = column[1] 
-
-                                    category_keys += (category_key,)
-                                    category_values += (category_value,)     
-
-                                dictionary = dict(zip(category_keys, category_values))
-                                dictionary['Наименование товара'] = dirname
-                                dictionary['Размер флакончика'] = ml
-                                dictionary['Цена'] = product_price
-                                dictionary['Тестер'] = tester
-
-                                try:
-                                    category_name = dictionary['Пол']
-                                    category = Category.objects.get(name=category_name)
-                                except KeyError:
-                                    category = Category.objects.get(id=1)
-      
-                                try:
-                                    upper_notes = dictionary['Верхние ноты']
-                                except KeyError:
-                                    try:
-                                        upper_notes = dictionary['Группы']
-                                    except KeyError:
-                                        upper_notes = 'Не указано'
-                                        
-                                try:
-                                    medium_notes = dictionary['Средние ноты']
-                                except KeyError:
-                                    try:
-                                        all_notes = dictionary['Ноты'].split(',')
-                                        half_index = len(all_notes) // 2 
-                                        first_half = all_notes[:half_index]
-                                        medium_notes = ', '.join(first_half)
-                                    except KeyError:
-                                        medium_notes = 'Не указано'
-                                        
-                                try:
-                                    lower_notes = dictionary['Базовые ноты']
-                                except KeyError:
-                                    try:
-                                        all_notes = dictionary['Ноты'].split(',')
-                                        half_index = len(all_notes) // 2 
-                                        second_half = all_notes[half_index:]
-                                        lower_notes = ', '.join(second_half)
-                                    except KeyError:
-                                        lower_notes = 'Не указано'
-                                
-                                if dictionary['Тестер']:
-                                    tester_slugfield = 'tester'
-                                else:
-                                    tester_slugfield = 'not-tester'
-
-                                slug_field = dirname.lower().replace(' ', '-') + '-' + tester_slugfield + '-' + str(dictionary['Размер флакончика']) + '-' + str(dictionary['Цена'])
-
-                                try:
-                                    if dictionary['Тестер'] == True:
-                                        color = current_color
-                                        product = Product.objects.create(
-                                            category=category,
-                                            name=dictionary['Наименование товара'],
-                                            slug=slug_field,
-                                            upper_notes=upper_notes,
-                                            medium_notes=medium_notes,
-                                            lower_notes=lower_notes,
-                                            year=dictionary['Год создания'],
-                                            brand=dictionary['Бренд'],
-                                            available=True,
-                                            ml=dictionary['Размер флакончика'],
-                                            price=dictionary['Цена'],
-                                            tester=dictionary['Тестер'],
-                                            top_season=False,
-                                            present=False,
-                                            orders_amount='0',
-                                            color=color,
-                                        )
-                                   
-                                    else:
-                                        product = Product.objects.create(
-                                            category=category,
-                                            name=dictionary['Наименование товара'],
-                                            slug=slug_field,
-                                            upper_notes=upper_notes,
-                                            medium_notes=medium_notes,
-                                            lower_notes=lower_notes,
-                                            year=dictionary['Год создания'],
-                                            brand=dictionary['Бренд'],
-                                            available=True,
-                                            ml=dictionary['Размер флакончика'],
-                                            price=dictionary['Цена'],
-                                            tester=dictionary['Тестер'],
-                                            top_season=False,
-                                            present=False,
-                                            orders_amount='0',
-                                        )
-
-                                    print(f"{dictionary['Бренд']}: {dictionary['Наименование товара']}: {dictionary['Размер флакончика']}: {dictionary['Тестер']}: {dictionary['Цена']} добавлен в PostgreSQL!\n")
-                                    for photo in os.listdir(f"{card_path}/{dirname}/photos/"):
-                                        cleaned_photo = photo.replace('\r', '').replace('\n', '')
-                                        try:
-                                            Image.objects.create(
-                                                product=product,
-                                                image=f"images/{brand_name} {dirname} {cleaned_photo}",
-                                            )
-                                            
-                                            print(f"{dictionary['Бренд']} - {dictionary['Наименование товара']} - {cleaned_photo} добавлен в PostgreSQL!\n\n")
-                                            
-                                        except Exception as _ex:
-                                            print(f"{_ex}")
-
-                                    
-                                                        
-                                except Exception as _e:
-                                    print(f"{_e} с товаром {dictionary['Бренд']}: {dictionary['Наименование товара']}")
        

@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="search filter__search" data-da=".catalog__head, 950, first">
                                         <div class="search__body">
-                                            <input type="text" name="search" id="search-header" class="search__input text" placeholder="Поиск по сайт" />
+                                            <input type="text" name="search" id="search-header" class="search__input text" placeholder="Поиск по сайту" />
                                             <button class="search__icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                     <path
@@ -48,7 +48,7 @@
                                     
                                     <form action="{% url 'catalog' %}" method='GET'>
                                         <div class="_open filter-menu filter__menu">
-                                            <div class="filter-menu__title">Бренд <img src={% static "images/select-str.svg" %} alt="" /></div>
+                                            <div class="filter-menu__title">Бренд<img src={% static "images/select-str.svg" %} alt="" /></div>
                                             <div class="filter-menu__body checkbox">
                                                 {% for br in brands %}
                                                 <div class="filter-menu__item">
@@ -60,7 +60,7 @@
                                         </div>
 
                                         <div class="_open filter-menu filter__menu">
-                                            <div class="filter-menu__title">Объем <img src={% static "images/select-str.svg" %} alt="" /></div>
+                                            <div class="filter-menu__title">Объем<img src={% static "images/select-str.svg" %} alt="" /></div>
                                             <div class="filter-menu__body checkbox">
                                                 <div class="filter-menu__item">
                                                     <input type="checkbox" id="price1" name="mls" value="30" class="filter-menu__checkbox-input" /> 
@@ -86,7 +86,7 @@
                                         </div>
 
                                         <div class="_open filter-menu filter__menu">
-                                            <div class="filter-menu__title">Тип товара <img src={% static "images/select-str.svg" %} alt="" /></div>
+                                            <div class="filter-menu__title">Тип товара<img src={% static "images/select-str.svg" %} alt="" /></div>
                                             <div class="filter-menu__body checkbox">
                                                 <div class="filter-menu__item">
                                                     <input type="checkbox" id="parfum1" name="parfum" value="Одеколон" class="filter-menu__checkbox-input" /> 
@@ -97,8 +97,8 @@
                                                     <label for="parfum2" class="filter-menu__checkbox-label">Туалетная вода</label>
                                                 </div>
                                                 <div class="filter-menu__item">
-                                                    <input type="checkbox" id="parfum3" name="parfum" value="Парфюмированная вода" class="filter-menu__checkbox-input" /> 
-                                                    <label for="parfum3" class="filter-menu__checkbox-label">Парфюмированная вода</label>
+                                                    <input type="checkbox" id="parfum3" name="parfum" value="Парфюмерная вода" class="filter-menu__checkbox-input" /> 
+                                                    <label for="parfum3" class="filter-menu__checkbox-label">Парфюмерная вода</label>
                                                 </div>
                                                 <div class="filter-menu__item">
                                                     <input type="checkbox" id="parfum4" name="parfum" value="Парфюм" class="filter-menu__checkbox-input" /> 
@@ -124,7 +124,7 @@
                                         </div>
 
                                         <div class="_open filter-menu filter__menu">
-                                            <div class="filter-menu__title">Цена <img src={% static "images/select-str.svg" %} alt="" /></div>
+                                            <div class="filter-menu__title">Цена<img src={% static "images/select-str.svg" %} alt="" /></div>
                                             <div class="filter-menu__body filter-menu__body-range">
                                                 <div class="range">
                                                     <div class="range__row-input">
@@ -159,17 +159,25 @@
                                 <div class="catalog__sort sort">
                                     <div class="sort__title">Сортировка</div>
                                     <div class="select sort__body">
-                                        <input class="select__input" type="hidden" name="" />
+                                        <input class="select__input" name="sort" type="hidden" />
                                         <div class="select__head-mob">Сортировка</div>
                                         <div class="select__head">Сначала популярные</div>
+            
                                         <ul class="select__list" data-da=".catalog__head, 650, last">
-                                            <li class="select__item">Популярное</li>
-                                            <li class="select__item">С лучшей оценкой</li>
+                                            <li class="select__item" name="best">Популярное</li>
+                                            <li class="select__item" name="best">С лучшей оценкой</li>
                                             <li class="select__item">По отзывам</li>
-                                            <li class="select__item">Сначала дорогие</li>
-                                            <li class="select__item">Сначала дешевые</li>
+                                            <form method="GET" class="select__item">
+                                                <input name="Сначала дорогие" value="Сначала дорогие" type="hidden"/>
+                                                <button>Сначала дорогие</button>
+                                            </form>
+                                            <form method="GET" class="select__item">
+                                                <input name="Сначала дешевые" value="Сначала дешевые" type="hidden" />
+                                                <button>Сначала дешевые</button>
+                                            </form>
                                             <li class="select__item">Новинки</li>
                                         </ul>
+                                        
                                     </div>
                                 </div>
                                 
@@ -226,10 +234,12 @@
                                         <div class="card__body">
                                             {% for image in product.image.all %}
                                                 {% if forloop.counter == 1 %}
-                                                <picture>
-                                                    <source srcset={% static image  %} type="image/webp">
-                                                    <img src={% static image  %} alt="" class="card__img">
-                                                </picture>
+                                                <a href="{{product.get_absolute_url}}">
+                                                    <picture>
+                                                        <source srcset="{{ product.image.url }}" type="image/webp">
+                                                        <img src="{{ image }}" alt="" class="card__img">
+                                                    </picture>
+                                                </a>
                                                 {% endif %}
                                             {% endfor %}  
                                             <h3 class="card__title" style="display: inline;">{{ product.name }}</h3>
@@ -237,9 +247,10 @@
                                             <div class="card__row-star">
                                                 <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star.svg" %} alt="" /> <img src={% static "images/star-two.svg" %} alt="" /> <img src={% static "images/star-trans.svg" %} alt="" />
                                             </div>
-                                            <div class="card__recommendation">{{ product.brand }} {{ product.ml }} мл.</div>
+                                            <div class="card__recommendation">{{ product.brand }}</div>
+                                            <div class="card__recommendation">{{ product.ml }} МЛ.</div>
                                             <div class="card__recommendation">
-                                                {{ product.image.first|split_last }}
+                                                {{ product.parfum_type }}
                                                 
                                                 {% if product.tester %}
                                                   (Тестер)
@@ -247,7 +258,7 @@
                                               </div>
                                               
                                             <div class="card__price">{{ product.price }} RUB</div>
-                                            <a href={% url 'product' slug=product.slug %} class="button card__button">КУПИТЬ СЕЙЧАС</a>
+                                            <a href="{{product.get_absolute_url}}" class="button card__button">КУПИТЬ СЕЙЧАС</a>
                                         </div>
                                     </div>
                                     {% endfor %}
@@ -314,4 +325,5 @@
                     </div>
                 </div>
             </main>
+            
 {% endblock %}

@@ -52,6 +52,9 @@ class ShowProfile(FormView):
         user = self.request.user
         profile = Profile.objects.get(user=user.id)
         data['profile'] = profile
+        data['current_bonuses'] = profile.current_bonuses
+        data['aroma_balls'] = profile.aroma_balls
+        data['loyal_status'] = profile.loyal_status
         return data
 
     def get_initial(self, *args, **kwargs):

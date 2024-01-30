@@ -270,7 +270,7 @@
                                                     </defs>
                                                 </svg>
                                                 <p style="margin-left:5px;margin-top:5px;">Ваши текущие Арома-баллы:</p>
-                                                <p class="bold green" style="margin-top:5px;">1 000</p>
+                                                <p class="bold green" style="margin-top:5px;">{{ aroma_balls }}</p>
                                             </div>
                                              {% comment %} <div class="item-loyalty__row">
                                                 <p>Предстоящие:</p>
@@ -301,9 +301,38 @@
                                                     </defs>
                                                 </svg>
                                                 <p style="margin-left:5px;margin-top:5px;">Ваши текущие Бонусы:</p>
-                                                <p class="bold orange" style="margin-top:5px;">55</p>
+                                                <p class="bold orange" style="margin-top:5px;">{{ current_bonuses }}</p>
                                             </div> 
                                         </div>
+                                        
+                                        {% if loyal_status == 'Новичок' %}
+                                        <div class="item-loyalty__row-estimation">
+                                            <div class="active item-loyalty__estimation">
+                                                <img src={% static "images/estimation2.svg" %} alt="" />
+                                                <p>Новичок</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Любитель</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Знаток</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Эксперт</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Мастер ароматов</p>
+                                            </div>
+                                        </div>
+                                        {% elif loyal_status == 'Любитель' %}
                                         <div class="item-loyalty__row-estimation">
                                             <div class="item-loyalty__estimation">
                                                 <img src={% static "images/estimation1.svg" %} alt="" />
@@ -330,10 +359,94 @@
                                                 <p>Мастер ароматов</p>
                                             </div>
                                         </div>
+                                        {% elif loyal_status == 'Знаток' %}
+                                        <div class="item-loyalty__row-estimation">
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Новичок</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Любитель</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="active item-loyalty__estimation">
+                                                <img src={% static "images/estimation2.svg" %} alt="" />
+                                                <p>Знаток</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Эксперт</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Мастер ароматов</p>
+                                            </div>
+                                        </div>
+                                        {% elif loyal_status == 'Эксперт' %}
+                                        <div class="item-loyalty__row-estimation">
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Новичок</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Любитель</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Знаток</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="active item-loyalty__estimation">
+                                                <img src={% static "images/estimation2.svg" %} alt="" />
+                                                <p>Эксперт</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation3.svg" %} alt="" />
+                                                <p>Мастер ароматов</p>
+                                            </div>
+                                        </div>
+                                        {% elif loyal_status == 'Мастер ароматов' %}
+                                        <div class="item-loyalty__row-estimation">
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Новичок</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Любитель</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Знаток</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="item-loyalty__estimation">
+                                                <img src={% static "images/estimation1.svg" %} alt="" />
+                                                <p>Эксперт</p>
+                                            </div>
+                                            <div class="item-loyalty__line"></div>
+                                            <div class="active item-loyalty__estimation">
+                                                <img src={% static "images/estimation2.svg" %} alt="" />
+                                                <p>Мастер ароматов</p>
+                                            </div>
+                                        </div>
+                                        
+                                        {% endif %}
+
                                         <div class="item-loyalty__item">
                                             <div class="item-loyalty__row">
                                                 <p>Ваш текущий уровень:</p>
-                                                <p class="bold">Любитель</p>
+                                                <p class="bold">{{ loyal_status }}</p>
                                             </div>
                                             <div class="item-loyalty__row">
                                                 <p>Вам нужно набрать <span class="bold">5 Арома-баллов</span> для достижения следующего уровня.</p>

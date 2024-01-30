@@ -9,6 +9,7 @@ class NewUserForm(UserCreationForm):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'registrationFormDes', 'required': 'true', 'placeholder': 'Повторите ваш пароль'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Введите ваше имя'}))
     phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Номер телефона'}))
+    email_for_reset = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'E-mail адрес'}))
 
     class Meta:
         model = NewUser
@@ -16,7 +17,8 @@ class NewUserForm(UserCreationForm):
             'phone_number', 
             'first_name', 
             'password1', 
-            'password2'
+            'password2',
+            'email_for_reset'
         ]
 
 

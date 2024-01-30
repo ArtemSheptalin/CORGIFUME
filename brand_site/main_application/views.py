@@ -1,17 +1,41 @@
 from typing import Any
 
+from django.db.models.query import QuerySet
+
 from cart.cart import Cart
 from django.views.generic import *
 from product.models import *
 from django.db.models import FloatField
 from django.db.models.functions import Cast
-import re
-
-
+import json
+from django.core import serializers
+from django.http import *
+from django.db.models import Q
 
 
 class MainPageView(TemplateView):
     template_name = 'index.html'
+
+    def post(self, request, *args, **kwargs):
+        product_id = request.POST.get('product_id')
+        product = Product.objects.get(id=int(product_id))
+        cart = Cart(request)
+        
+        cart.add(product=product)
+
+        item_quantity = cart.get_total_len()
+
+        product_json = serializers.serialize('json', [product])
+        product_data = json.loads(product_json)[0]['fields']
+
+        card_data = {
+            'items': list(cart.get_content()),
+            'subtotal': cart.get_total_price(),
+        }
+
+        return JsonResponse({'success': True, 'product_instance': product_data, 
+                             'quantity': item_quantity, 'new_cart': card_data, 
+                             'id': product_id})
 
     def get_context_data(self, *args, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -20,6 +44,7 @@ class MainPageView(TemplateView):
         data['product'] = product
         data['cart'] = cart
         return data
+    
 
 
 class CatalogPageView(TemplateView):
@@ -75,7 +100,6 @@ class CatalogPageView(ListView):
 
         string_brands = Product.objects.order_by('brand').values_list('brand', flat=True).distinct()
 
-
         data['brands'] = sorted(set(brands), reverse=False)
         data['string_brands'] = str(string_brands)
         data['selected_brands'] = self.request.GET.getlist('brand')
@@ -84,42 +108,62 @@ class CatalogPageView(ListView):
 
         data['selected_min_price'] = self.request.GET.get('superscroll1')
         data['selected_max_price'] = self.request.GET.get('superscroll2')
-        data['total_query_count'] = self.get_queryset().count()
+        queryset = self.get_queryset()
+        
+        if queryset:
+            data['total_query_count'] = queryset.count()
+        else:
+            data['total_query_count'] = 0
+
 
         return data
     
     def get_queryset(self):
         queryset = super().get_queryset()
         brands = self.request.GET.getlist('brand')
-        mls = self.request.GET.getlist('mls')
+        mls = self.request.GET.get('mls')
         parfums = self.request.GET.getlist('parfum')
         min_price = self.request.GET.get('superscroll1')
         max_price = self.request.GET.get('superscroll2')
+        search_box = self.request.GET.get('search')
+        expensive = self.request.GET.get('Сначала дорогие')
+        cheapest = self.request.GET.get('Сначала дешевые')
+
+
+        if expensive == 'Сначала дорогие':
+            queryset = Product.objects.order_by('-price')
+        
+        if cheapest == 'Сначала дешевые':
+            queryset = Product.objects.order_by('price')
+
+
+
+        if search_box:
+            queryset = Product.objects.filter(Q(name__icontains=search_box) 
+                                              | Q(brand__icontains=search_box) 
+                                              | Q(parfum_type__icontains=search_box)
+                                              | Q(notes__icontains=search_box)
+                                              | Q(inner_article__icontains=search_box))
 
         if brands:
             queryset = queryset.filter(brand__in=brands)
 
+
         if mls:
-            if mls[0] == '30':
-                queryset = queryset.extra(where=["CAST(ml AS float) < 30"])
-            elif mls[0] == '50':
-                queryset = queryset.annotate(ml_float=Cast('ml', output_field=FloatField())).filter(ml_float__gt=30, ml_float__lt=51)
-            elif mls[0] == '75':
-                queryset = queryset.annotate(ml_float=Cast('ml', output_field=FloatField())).filter(ml_float__gt=51, ml_float__lt=75)
-            elif mls[0] == '100':
-                queryset = queryset.annotate(ml_float=Cast('ml', output_field=FloatField())).filter(ml_float__gt=75, ml_float__lt=100)
-            elif mls[0] == '101':
-                queryset = queryset.extra(where=["CAST(ml AS float) > 100"])
+            if mls == '30':
+                queryset = queryset.filter(ml__lte=30)
+            elif mls == '50':
+                queryset = queryset.filter(ml__gt=30, ml__lte=50)
+            elif mls == '75':
+                queryset = queryset.filter(ml__gt=50, ml__lte=75)
+            elif mls == '100':
+                queryset = queryset.filter(ml__gt=75, ml__lte=100)
+            elif mls == '101':
+                queryset = queryset.filter(ml__gt=100)
         
         if parfums:
-            matching_ids = []
-            all_products = Product.objects.all().prefetch_related('image')
-            for product in all_products:
-                image_name = product.image.first()
-                if parfums[0] in str(image_name):
-                    matching_ids.append(product.id)
+            queryset = Product.objects.filter(parfum_type__in=parfums)
 
-            queryset = queryset.filter(id__in=matching_ids)
         
         if min_price:
             min_price = min_price.replace(" ", "")
@@ -135,44 +179,71 @@ class CatalogPageView(ListView):
         return queryset
 
 
-
-
 class ProductCardView(DetailView):
     model = Product
     template_name = 'product.html'
     context_object_name = 'product'
 
     def get_object(self,queryset=None):
-        slug = self.kwargs.get('slug')
-        return self.model.objects.get(slug=slug)
+        id = self.kwargs.get('id')
+        return self.model.objects.get(id=id)
     
     def get_context_data(self, *args, **kwargs):
         data = super().get_context_data(**kwargs)
-        name = self.kwargs.get('slug')
-        cleaned_name = name.split('tester')
-        if 'not-' in cleaned_name[0]:
-            cleaned_name = cleaned_name[0].replace('-not-', '')
-            cleaned_name = cleaned_name.replace('-', ' ')
-            cleaned_name = cleaned_name.title()
-            if 'Vip' in cleaned_name:
-                cleaned_name = cleaned_name.replace('Vip', 'VIP')
-            elif 'Xs' in cleaned_name:
-                cleaned_name = cleaned_name.replace('Xs', 'XS')
-        else:
-            cleaned_name = cleaned_name[0].rstrip('-')
-            cleaned_name = cleaned_name.replace('-', ' ')
-            cleaned_name = cleaned_name.title()
-            if 'Vip' in cleaned_name:
-                cleaned_name = cleaned_name.replace('Vip', 'VIP')
-            elif 'Xs' in cleaned_name:
-                cleaned_name = cleaned_name.replace('Xs', 'XS')
-        products = Product.objects.filter(name=cleaned_name).order_by('ml')
+        cart = Cart(self.request)
+        
+        id = self.kwargs.get('id')
+        
+        current_product = Product.objects.get(id=id)
+        products = Product.objects.filter(name=current_product.name).order_by('ml')
+        # currents_names = Product.objects.filter(name=current_product.name)
+
         data['products'] = list(products.values_list('ml', flat=True).distinct())
+        data['sizes'] = products.values_list('price', flat=True)
+        data['length_size'] = len(list(products.values_list('ml', flat=True).distinct()))
+
+        amount = cart.current_quantity(id)      
+        
+        data['amount'] = amount 
+
+        # print(f"\n{currents_names}\n")
+        # print(f"\n\n{currents_names.values('full_name').distinct()}\n\n")         
         return data
+        
 
 
 class AboutUsView(TemplateView):
     template_name = 'about.html'
+
+
+class CatalogQuerysetBrand(ListView):
+    template_name = 'catalog.html'
+    model = Product
+    paginate_by = 30 
+
+    def get_queryset(self):
+        queryset =  super().get_queryset()
+        brand = self.kwargs['link_brand']  # Получаем название бренда из id
+        queryset = queryset.filter(brand=brand) 
+        return queryset
+    
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        data = super().get_context_data(**kwargs)
+        brands = Product.objects.order_by('brand').values_list('brand', flat=True).distinct()
+        string_brands = Product.objects.order_by('brand').values_list('brand', flat=True).distinct()
+        data['brands'] = sorted(set(brands), reverse=False)
+        data['string_brands'] = str(string_brands)
+        data['total_query_count'] = self.get_queryset().count()
+        return data
+
+
+    
+
+    
+
+
+    
+
 
 
 

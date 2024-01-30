@@ -27,32 +27,71 @@
                     <div class="presentation__container">
                         <div class="presentation__row">
                             <div class="presentation__display">
-                                <div class="presentation__slider">
+                                {% comment %} <div class="presentation__slider">
                                     <div class="swiper-wrapper presentation__wrapper">
                                         {% for image in product.image.all %}
                                             {% if forloop.counter == 1 %}
-                                            <picture>
-                                                <source srcset={% static image  %} type="image/webp">
-                                                <img src={% static image  %} alt="" class="card__img">
-                                            </picture>
+                                            <div class="presentation__slide swiper-slide" >
+                                                
+                                                <picture>
+                                                    <source srcset="{{ product.image.url }}" type="image/webp">
+                                                    <img src="{{ image }}" alt="" class="card__img" height="200">
+                                                </picture>
+                                                
+                                            </div>
+                                            {% elif forloop.counter == 2 %}
+                                            <div class="presentation__slide swiper-slide" >
+                                                
+                                                <picture>
+                                                    <source srcset="{{ product.image.url }}" type="image/webp">
+                                                    <img src="{{ image }}" alt="" class="card__img">
+                                                </picture>
+                                                
+                                            </div>
+                                            {% elif forloop.counter == 3 %}
+                                            <div class="presentation__slide swiper-slide" >
+                                                
+                                                <picture>
+                                                    <source srcset="{{ product.image.url }}" type="image/webp">
+                                                    <img src="{{ image }}" alt="" class="card__img">
+                                                </picture>
+                                                
+                                            </div>
                                             {% endif %}
-                                          
-                                        <div class="swiper-slide presentation__slide">
-                                            {% if forloop.counter == 2 %}
-                                            <picture>
-                                                <source srcset={% static image  %} type="image/webp">
-                                                <img src={% static image  %} alt="" class="card__img">
-                                            </picture>
+                                        {% endfor %}
+                                    </div>
+                                </div> {% endcomment %}
+                                <div class="presentation__slider-bunde">
+                                    <div class="presentation__wrapper swiper-wrapper">
+                                        {% for image in product.image.all %}
+                                            {% if forloop.counter == 1 %}
+                                            <div class="presentation__slide swiper-slide" >
+                                                
+                                                <picture>
+                                                    <source srcset="{{ product.image.url }}" type="image/webp">
+                                                    <img src="{{ image }}" alt="" class="card__img">
+                                                </picture>
+                                                
+                                            </div>
+                                            {% elif forloop.counter == 2 %}
+                                            <div class="presentation__slide swiper-slide" >
+                                                
+                                                <picture>
+                                                    <source srcset="{{ product.image.url }}" type="image/webp">
+                                                    <img src="{{ image }}" alt="" class="card__img">
+                                                </picture>
+                                                
+                                            </div>
+                                            {% elif forloop.counter == 3 %}
+                                            <div class="presentation__slide swiper-slide" >
+                                                
+                                                <picture>
+                                                    <source srcset="{{ product.image.url }}" type="image/webp">
+                                                    <img src="{{ image }}" alt="" class="card__img">
+                                                </picture>
+                                                
+                                            </div>
                                             {% endif %}
-                                        </div>
-                                        {% comment %} <div class="swiper-slide presentation__slide">
-                                            {% if forloop.counter == 3 %}
-                                            <picture>
-                                                <source srcset={% static image  %} type="image/webp">
-                                                <img src={% static image  %} alt="" class="card__img">
-                                            </picture>
-                                            {% endif %}
-                                        </div>  {% endcomment %}
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -63,10 +102,38 @@
                                     <p>{{ product.description }}</p>
                                 </div>
                             </div>
-                            <div class="presentation__body">
+                            <div class="presentation__body product-card">
                                 <div class="presentation__head">
                                     <h1 class="presentation__title">{{ product.name }}</h1>
-                                    <div class="presentation__price">{{ product.price }} RUB</div>
+                                    {% comment %} <div class="presentation__price">{{ product.price }} RUB</div> {% endcomment %}
+                                    {% comment %} {{ sizes }} {% endcomment %}
+                                    {% comment %} {{length_size}} {% endcomment %}
+                                    {% if length_size > 1 %}
+                                        {% for size in sizes %}
+                                        
+                                            {% if forloop.counter == 1 %}
+                                                <span class="price-number price-number-one _active">{{ size }}</span>
+                                            {% endif %}
+                                            {% if forloop.counter == 2 %}
+                                            <span class="price-number price-number-two">{{ size }}</span>
+                                            {% endif %}
+                                            {% if forloop.counter == 3 %}
+                                            <span class="price-number price-number-three">{{ size }}</span>
+                                            {% endif %}
+                                        {% comment %} <div class="presentation__price">
+                                            <span class="price-number price-number-one _active">3 400</span>
+                                            <span class="price-number price-number-two">5 000</span>
+                                            <span class="price-number price-number-three">7 000</span>
+                                            RUB
+                                        </div> {% endcomment %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for size in sizes %}
+                                            {% if forloop.counter == 1 %}
+                                                <span class="price-number price-number-one _active">{{ size }}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
                                     
                                 </div>
                                 <div class="presentation__rating">
@@ -105,18 +172,39 @@
                                         <p>Парфюмерная вода</p>
                                     </li> {% endcomment %}
                                     <li class="description__item">
-                                        <p class="description__title">Верхние ноты</p>
-                                        <p>{{ product.upper_notes }}</p>
+                                        <p class="description__title">Ноты</p>
+                                        <p>{{ product.notes }}</p>
                                     </li>
                                     <li class="description__item">
-                                        <p class="description__title">Средние ноты</p>
-                                        <p>{{ product.medium_notes }}</p>
+                                        <p class="description__title">Страна</p>
+                                        <p>{{ product.country }}</p>
                                     </li>
                                     <li class="description__item">
-                                        <p class="description__title">Базовые ноты</p>
-                                        <p>{{ product.lower_notes }}</p>
+                                        <p class="description__title">Бренд</p>
+                                        <p>{{ product.brand }}</p>
                                     </li>
                                 </ul>
+                                <div class="quantity__row">
+                                                
+                                    <form action="{% url 'remove_cart' %}" method="post" class="removeCartClass">
+                                        {% csrf_token %}
+                                        {{ item.update_quantity_form.quantity }}
+                                        {{ item.update_quantity_form.update }}
+                                        <input type="hidden" name="product_id" value="{{ product.id }}" id="remove_{{product.id}}">
+                                        <input type="submit" value="-" class="quantity__number-minus"> 
+                                    </form>
+                                                                                
+                                    <span class="quantity__input" id="quantityID_{{product.id}}">{{ amount }}</span>
+                                                                                
+                                    <form action="{% url 'add_certain' %}" method="post" class="addCartClass">
+                                        {% csrf_token %}
+                                        {{ item.update_quantity_form.quantity }}
+                                        {{ item.update_quantity_form.update }}
+                                        <input type="hidden" name="product_id" value="{{ product.id }}" id="add_{{product.id}}">
+                                        <input type="submit" value="+" class="quantity__number-plus"> 
+                                     </form>
+                                </div>
+                                
                                 <div class="presentation__volume volume">
                                     <div class="volume__title">Объем</div>
                                     <div class="volume__row">
@@ -124,19 +212,19 @@
                                             {% if forloop.counter == 1 %}
                                                 <div class="volume__item">
                                                     <input type="radio" checked="checked" id="volume1" name="volume" value="50мл" class="volume__input" /> 
-                                                    <label for="volume1" class="volume__label">{{ prod }} МЛ</label>
+                                                    <label for="volume1" class="volume__label">{{ prod }}</label>
                                                 </div>
                                             {% endif %}
                                             {% if forloop.counter == 2 %}
                                                 <div class="volume__item">
                                                     <input type="radio" id="volume2" name="volume" value="120мл" class="volume__input" /> 
-                                                    <label for="volume2" class="volume__label">{{ prod }} МЛ</label>
+                                                    <label for="volume2" class="volume__label">{{ prod }}</label>
                                                 </div>
                                             {% endif %}
                                             {% if forloop.counter == 3 %}
                                                 <div class="volume__item">
                                                     <input type="radio" id="volume3" name="volume" value="120мл" class="volume__input" /> 
-                                                    <label for="volume3" class="volume__label">{{ prod }} МЛ</label>
+                                                    <label for="volume3" class="volume__label">{{ prod }}</label>
                                                 </div>
                                             {% endif %}
                                         {% endfor %}
@@ -163,13 +251,13 @@
                                     </div>
                                 </div> {% endcomment %}
                                 <div class="presentation__button-row">
-                                    <form action="{% url 'add_cart' %}" method="POST" class="CardForm">
+                                    {% comment %} <form action="{% url 'add_cart' %}" method="POST" class="CardForm">
                                         {% csrf_token %}
                                         <input type="hidden" name="card_product_id" value="{{ product.id }}" id="{{ product.id }}">
                                         <input type="submit" value="ДОБАВИТЬ В КОРЗИНУ" class="button card__button" style="width:100%;height:100%;">
-                                    </form>
+                                    </form> {% endcomment %}
 
-                                    <a href="#" class="button white presentation__button-bye">КУПИТЬ СЕЙЧАС</a>
+                                    <a href={% url 'cart:cart_detail' %} class="button white presentation__button-bye">КУПИТЬ СЕЙЧАС</a>
                                 </div>
                                 <p class="presentation__delivery">Бесплатная доставка от 5 000 RUB</p>
                             </div>

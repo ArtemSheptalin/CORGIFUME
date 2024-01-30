@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 from product.models import Product
 import random
+from django.utils import timezone
+
 
 class CustomAccountManager(BaseUserManager):
 
@@ -27,7 +29,7 @@ class CustomAccountManager(BaseUserManager):
 class NewUser(AbstractBaseUser, PermissionsMixin):
     
     phone_number = models.CharField(_('Мобильный телефон'), max_length=19, unique=True)
-    email_for_reset = models.EmailField(_('Адрес электронной почты'), null=True, unique=True, default="")
+    email_for_reset = models.EmailField(_('Адрес электронной почты'), null=True, unique=True)
     
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -41,17 +43,18 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.phone_number}"
 
+
 class Profile(models.Model):
-    user = models.OneToOneField(NewUser, on_delete=models.CASCADE, related_name='user_profile', null=True, blank=True)
+    user = models.OneToOneField(NewUser, on_delete=models.CASCADE, related_name='user_profile')
     # Личные данные
-    first_name = models.CharField(max_length=50, blank=True)
-    last_name = models.CharField(max_length=50, blank=True)
-    city = models.CharField(max_length=200, blank=True)
-    index = models.CharField(max_length=200, blank=True)
-    house = models.CharField(max_length=200, blank=True)
-    street = models.CharField(max_length=200, blank=True)
-    room = models.CharField(max_length=200, blank=True)
-    corp = models.CharField(max_length=200, blank=True)
+    first_name = models.CharField(max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
+    index = models.CharField(max_length=200, null=True, blank=True)
+    house = models.CharField(max_length=200, null=True, blank=True)
+    street = models.CharField(max_length=200, null=True, blank=True)
+    room = models.CharField(max_length=200, null=True, blank=True)
+    corp = models.CharField(max_length=200, null=True, blank=True)
     date_of_birth = models.CharField(null=True, blank=True)
     # Программа лояльности
     current_bonuses = models.IntegerField(default=0)
@@ -83,7 +86,7 @@ class Favorite(models.Model):
 class Order(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='orders')
     order_number = models.IntegerField(default=random.randint(100000, 999999))
-    order_date = models.CharField()
+    order_date = models.DateTimeField(default=timezone.now)
     product = models.ManyToManyField(Product)
     status = models.CharField(max_length=100, choices=(
         ('processing', 'В обработке'),
@@ -91,8 +94,8 @@ class Order(models.Model):
         ('accepted', 'Принят'),
         ('completed', 'Доставлено')
     ), default='processing')
-    shipping_address = models.CharField(null=True)
+    shipping_address = models.CharField()
     order_price = models.IntegerField(default=0)
-    name = models.CharField(null=True)
-    phone = models.CharField(null=True)
+    name = models.CharField()
+    phone = models.CharField()
 
