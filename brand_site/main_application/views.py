@@ -11,7 +11,7 @@ import json
 from django.core import serializers
 from django.http import *
 from django.db.models import Q
-
+from utils.utils import *
 
 class MainPageView(TemplateView):
     template_name = 'index.html'
@@ -80,6 +80,7 @@ class BrandsPageView(TemplateView):
 
 
         data['brands'] = dictionary
+        data['letters'] = ['0-9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         return data
 
 
@@ -96,6 +97,7 @@ class CatalogPageView(ListView):
     def get_context_data(self, *args, **kwargs):
 
         data = super().get_context_data(**kwargs)
+
         brands = Product.objects.order_by('brand').values_list('brand', flat=True).distinct()
 
         string_brands = Product.objects.order_by('brand').values_list('brand', flat=True).distinct()
@@ -108,6 +110,7 @@ class CatalogPageView(ListView):
 
         data['selected_min_price'] = self.request.GET.get('superscroll1')
         data['selected_max_price'] = self.request.GET.get('superscroll2')
+        
         queryset = self.get_queryset()
         
         if queryset:
@@ -196,7 +199,6 @@ class ProductCardView(DetailView):
         
         current_product = Product.objects.get(id=id)
         products = Product.objects.filter(name=current_product.name).order_by('ml')
-        # currents_names = Product.objects.filter(name=current_product.name)
 
         data['products'] = list(products.values_list('ml', flat=True).distinct())
         data['sizes'] = products.values_list('price', flat=True)
@@ -205,9 +207,7 @@ class ProductCardView(DetailView):
         amount = cart.current_quantity(id)      
         
         data['amount'] = amount 
-
-        # print(f"\n{currents_names}\n")
-        # print(f"\n\n{currents_names.values('full_name').distinct()}\n\n")         
+        
         return data
         
 

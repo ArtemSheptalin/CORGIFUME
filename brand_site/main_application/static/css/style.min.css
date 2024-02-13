@@ -3379,14 +3379,12 @@ textarea::placeholder {
   overflow: hidden;
   position: relative;
   width: inherit;
-  border-radius: 8px;
 }
 
 .slides {
   height: inherit;
   position: absolute;
   width: inherit;
-  border-radius: 8px;
 }
 
 .slide1 {
@@ -9364,3 +9362,10 @@ input[type=number]::-webkit-outer-spin-button {
   margin-bottom: 0.75rem;
 }
 
+.promocode_error {
+  border-color: #ea827f;
+}
+
+.promocode_ok {
+  border-color: #12b76a;
+}

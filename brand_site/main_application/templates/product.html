@@ -196,7 +196,7 @@
                                                                                 
                                     <span class="quantity__input" id="quantityID_{{product.id}}">{{ amount }}</span>
                                                                                 
-                                    <form action="{% url 'add_certain' %}" method="post" class="addCartClass">
+                                    <form action="{% url 'add_product' %}" method="post" class="addProductClass">
                                         {% csrf_token %}
                                         {{ item.update_quantity_form.quantity }}
                                         {{ item.update_quantity_form.update }}

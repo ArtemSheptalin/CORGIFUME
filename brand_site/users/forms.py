@@ -10,6 +10,7 @@ class NewUserForm(UserCreationForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Введите ваше имя'}))
     phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Номер телефона'}))
     email_for_reset = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'E-mail адрес'}))
+    date_of_birth = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Дата рождения', 'id': 'birthId'}))
 
     class Meta:
         model = NewUser
@@ -23,22 +24,21 @@ class NewUserForm(UserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
-    phone_number = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Номер телефона'}))
-    email_field = forms.EmailField()
+    first_name = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    last_name = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    date_of_birth = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    city = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Номер телефона', 'readonly': 'readonly'}))
+    email_field = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    room = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    index = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    house = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    corp = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    street = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
     class Meta:
         model = Profile
-        fields = [
-            'first_name',
-            'last_name',
-            'date_of_birth',
-            'city',
-            'room',
-            'index',
-            'house',
-            'corp',
-            'street',
-        ]
+        fields = ()
 
 
 class ProfileChangeForm(forms.ModelForm):
@@ -49,7 +49,6 @@ class ProfileChangeForm(forms.ModelForm):
         fields = [
             'first_name',
             'last_name',
-            'date_of_birth',
             'city',
             'room',
             'index',

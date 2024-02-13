@@ -87,8 +87,8 @@
                                             </div>
                                             <input type="radio" id="payment4" name="payment" class="checkbox-del__input" />
                                         </div>
-                                        <div class="delivery__row-bonus">
-                                            <p>У вас 17 000 бонусов</p>
+                                        {% comment %} <div class="delivery__row-bonus">
+                                            <p>У вас {{ current_bonuses }} бонусов</p>
                                             <form method="POST" class="entrance__form form-ent">
                                                 {% csrf_token %}
                                                 <div class="form-ent__item">
@@ -97,7 +97,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="button white delivery__button-bonus">Списать бонусы</div>
+                                        <div class="button white delivery__button-bonus">Списать бонусы</div> {% endcomment %}
                                         <button class="button delivery__button">ПОДТВЕРДИТЬ ЗАКАЗ</button>
                                     </div>
                                     <p class="delivery__text">Нажимая на кнопку вы соглашаетесь на обработку ваших персональных данных</p>
@@ -110,16 +110,18 @@
                                             <p>Стоимость</p>
                                         </div>
                                         <div class="score-making__item">
-                                            <p>25 товаров</p>
-                                            <p>27 200 RUB</p>
+                                            <p>{{ cart.get_total_len }} товаров</p>
+                                            <p>{{ cart.get_total_price }},00 RUB</p>
                                         </div>
-                                        <div class="score-making__item">
-                                            <p>Скидка</p>
-                                            <p>7 500 RUB</p>
-                                        </div>
+                                        {% if birthday_discount != total_price %}
+                                            <div class="score-making__item">
+                                                <p>Скидка</p>
+                                                <p>{{ birthday_discount }},00 RUB</p>
+                                            </div>
+                                        {% endif %}
                                         <div class="score-making__item">
                                             <p>Доставка</p>
-                                            <p>3 500 RUB</p>
+                                            <p>199,00 RUB</p>
                                         </div>
                                         <div class="score-making__title-bonus">
                                             <p>Бонусы</p>
@@ -148,17 +150,24 @@
                                             </svg>
                                         </div>
                                         <div class="score-making__item score-making__item-downs">
-                                            <p>Списание</p>
-                                            <p class="number">2 700</p>
+                                            <p>Доступно к списанию</p>
+                                            <p class="number">{{ current_bonuses }}</p>
                                         </div>
                                         <div class="score-making__item score-making__item-accrual">
-                                            <p>Начисление</p>
-                                            <p class="number">1 200</p>
+                                            <p>Будет начислено</p>
+                                            <p class="number">{{ total_bonuses }}</p>
                                         </div>
+                                        {% if birthday_discount != total_price %}
                                         <div class="score-making__item score-making__item-result">
                                             <p>Итого к оплате</p>
-                                            <p>55 680</p>
+                                            <p>{{ birthday_price }},00 RUB</p>
                                         </div>
+                                        {% else %}
+                                        <div class="score-making__item score-making__item-result">
+                                            <p>Итого к оплате</p>
+                                            <p>{{ total_price }} RUB</p>
+                                        </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

@@ -8,13 +8,13 @@ from .forms import NewUserForm, ProfileForm, ProfileChangeForm
 from .models import NewUser, Profile, Order, Favorite
 from product.models import Product
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy
 
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import PasswordResetForm
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
+from utils.utils import UtilitiesFunctions
 
 
 
@@ -35,9 +35,10 @@ class RegForm(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         new_user = form.instance
+        date_of_birth = str(form.cleaned_data['date_of_birth'])
 
-        Profile.objects.create(user=new_user, first_name=form.cleaned_data['first_name'], user_id=new_user.id)
-        # order = Order.objects.create(profile=profile, profile_id=profile.id)
+        Profile.objects.create(user=new_user, first_name=form.cleaned_data['first_name'], date_of_birth=date_of_birth, user_id=new_user.id)
+        
         return response
 
 
@@ -50,11 +51,15 @@ class ShowProfile(FormView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         data = super().get_context_data(**kwargs)
         user = self.request.user
-        profile = Profile.objects.get(user=user.id)
-        data['profile'] = profile
-        data['current_bonuses'] = profile.current_bonuses
-        data['aroma_balls'] = profile.aroma_balls
-        data['loyal_status'] = profile.loyal_status
+
+        utilities_object = UtilitiesFunctions(self.request.user)
+        # utilities_object.birthday_discount(10000)
+        
+        data['profile'] = utilities_object.get_user_profile()
+        data['current_bonuses'] = utilities_object.get_current_bonuses()
+        data['future_bonuses'] = utilities_object.future_balls()
+        data['aroma_balls'] = utilities_object.get_aroma_balls()
+        data['loyal_status'] = utilities_object.get_loyal_status()
         return data
 
     def get_initial(self, *args, **kwargs):
@@ -90,7 +95,7 @@ class ShowProfile(FormView):
 class EditProfile(UpdateView):
     template_name = 'edit_profile.html'
     form_class = ProfileChangeForm
-    success_url = '/'
+    success_url = reverse_lazy('users:profile')
     model = Profile
 
     # мы возвращаем профиль пользователя, связанный с текущим залогиненным пользователем.

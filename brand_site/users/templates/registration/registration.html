@@ -64,6 +64,18 @@
                                             </div>
                                             <p class="form-ent__error-text">Введите e-mail адрес</p>
                                         </div>
+
+                                        <div class="form-ent__item">
+                                            <label for="{{ form.date_of_birth.id_for_label }}" class="form-ent__label">Дата рождения</label> 
+                                            {{ form.date_of_birth|attr:"placeholder:Например, 01.01.2000"|add_class:"_req" }}
+                                            <div class="form-ent__icon-ok">
+                                                <img src={% static "images/ok-icon-input.svg" %} alt="" />
+                                            </div>
+                                            <div class="form-ent__icon-error">
+                                                <img src={% static "images/error-icon-input.svg" %} alt="" />
+                                            </div>
+                                            <p class="form-ent__error-text">Введите дату рождения</p>
+                                        </div>
                                         
                                         <div class="form-ent__item">
                                             <label for="{{ form.password1.id_for_label }}" class="form-ent__label">Пароль</label>

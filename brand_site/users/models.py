@@ -1,10 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext as _
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import *
+from django.contrib.postgres.fields import ArrayField
 
 from product.models import Product
 import random
 from django.utils import timezone
+from datetime import date
 
 
 class CustomAccountManager(BaseUserManager):
@@ -46,6 +48,7 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     user = models.OneToOneField(NewUser, on_delete=models.CASCADE, related_name='user_profile')
+    date_of_register = models.DateField(default=date.today)
     # Личные данные
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
@@ -57,10 +60,11 @@ class Profile(models.Model):
     corp = models.CharField(max_length=200, null=True, blank=True)
     date_of_birth = models.CharField(null=True, blank=True)
     # Программа лояльности
-    current_bonuses = models.IntegerField(default=0)
+    current_bonuses = models.FloatField(default=0.0)
     future_bonuses = models.IntegerField(default=0)
-    aroma_balls = models.IntegerField(default=0)
+    aroma_balls = models.IntegerField(default=1) 
     loyal_status = models.CharField(default='Новичок')
+    has_birthday_present = models.BooleanField(default=False)
     # платёжные данные
     yandex_pay = models.BigIntegerField(default=0) 
     tinkoff_pay = models.BigIntegerField(default=0)
@@ -85,17 +89,34 @@ class Favorite(models.Model):
 
 class Order(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='orders')
-    order_number = models.IntegerField(default=random.randint(100000, 999999))
+    order_number = models.IntegerField(default=random.randint(100000, 999999), unique=True)
     order_date = models.DateTimeField(default=timezone.now)
-    product = models.ManyToManyField(Product)
+    product = models.JSONField(default=list)
     status = models.CharField(max_length=100, choices=(
         ('processing', 'В обработке'),
         ('created', 'Создан'),
         ('accepted', 'Принят'),
         ('completed', 'Доставлено')
     ), default='processing')
-    shipping_address = models.CharField()
-    order_price = models.IntegerField(default=0)
-    name = models.CharField()
-    phone = models.CharField()
+
+    city = models.CharField(max_length=200, null=True, blank=True)
+    index = models.CharField(max_length=200, null=True, blank=True)
+    house = models.CharField(max_length=200, null=True, blank=True)
+    street = models.CharField(max_length=200, null=True, blank=True)
+    room = models.CharField(max_length=200, null=True, blank=True)
+    corp = models.CharField(max_length=200, null=True, blank=True)
+    order_price = models.FloatField(default=0.0)
+    loyal_status = models.CharField(default='Новичок')
+
+
+class PromoCode(models.Model):
+    
+    title = models.CharField(max_length=8)
+    expiration_date = models.DateField()
+    active = models.BooleanField(default=True)
+    # category + profile
+
+
+    def __str__(self):
+        return self.title
 

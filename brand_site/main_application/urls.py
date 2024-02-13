@@ -14,6 +14,7 @@ urlpatterns = [
     path('catalog/<str:link_brand>/', CatalogQuerysetBrand.as_view(), name='brand_catalog'),    
     path('add-to-cart/', add_to_cart, name='add_cart'),
     path('add-certain-amount/', add_certain_amount, name='add_certain'),
+    path('add-product/', add_product, name='add_product'),
     path('remove/', cart_remove, name='remove_cart'),
     path('remove_second/', cart_remove_second, name='remove_cart_second'),
     path('delete_certain_product/<int:id>/', delete_all_certain_product, name="delete_product"),

@@ -81,7 +81,7 @@
                                         
                                             </div>
                                         {% comment %} </div> {% endcomment %}
-                                        <div class="prod-tab__score prod-tab__score-bonus">327</div>
+                                        <div class="prod-tab__score prod-tab__score-bonus" id="product_bonuses_ID">{{ product_bonuses }}</div>
                                         <div class="prod-tab__score prod-tab__price prod-tab-price" id="item_total_price_{{ item.product.id }}">{{ item.total_price }} RUB</div>
                                         
                                         <div class="prod-tab__remove">
@@ -100,6 +100,7 @@
                                 <p class="basket__result-price" id="total_price">{{ cart.get_total_price }} RUB</p>
                             </div>
                             <div class="basket__result">
+                                {% if user.is_authenticated %}
                                 <p>Начисление бонусов:</p>
                                 <div class="basket__result-bonus">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -125,8 +126,11 @@
                                             <clipPath id="clip0_412_4433"><rect width="32" height="32" fill="white" /></clipPath>
                                         </defs>
                                     </svg>
-                                    <p>1 020</p>
+                                    <p id="bonuses_ID">{{ total_bonuses_counter }}</p>
                                 </div>
+                                {% else %}
+                                <p>Для подсчета бонусов<br> необходимо авторизоваться</p>
+                                {% endif %}
                             </div>
                             <div class="basket__button-row"><a href="{% url 'order:order-create' %}" class="button basket__button">ПЕРЕЙТИ К ОФОРМЛЕНИЮ</a></div>
                         </div>

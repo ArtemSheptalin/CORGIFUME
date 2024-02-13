@@ -2,14 +2,10 @@ from django import forms
 from users.models import Order, Profile
 
 class NewUserForm(forms.ModelForm):
-    current_bonuses = forms.CharField(max_length=10000, required=False)
 
     class Meta:
         model = Order
         fields = [
-            'name',
-            'phone',
-            'shipping_address',
             'order_number',
             'order_date',
             'product',
@@ -18,8 +14,9 @@ class NewUserForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
-    shipment_date = forms.CharField(max_length=10, required=False)
-    promo = forms.CharField(max_length=10, required=False)
+    shipment_date = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    promo = forms.CharField(max_length=10, required=False, widget=forms.TextInput(attrs={'class': 'delivery__input'}))
+    current_bonuses = forms.CharField(max_length=10000, required=False, widget=forms.TextInput(attrs={'class': 'delivery__input', 'id': 'bonuses_formID'}))
 
     class Meta:
         model = Profile
@@ -31,6 +28,8 @@ class OrderForm(forms.ModelForm):
             'house',
             'room',
         ]
+    
+    
 
 class BonusesUse(forms.ModelForm):
     class Meta:
