@@ -41,7 +41,16 @@
                                     <a href="#">Партнерство </a>
                                     <a href="#">Скидка студентам</a></div>
                             </div>
-                            <div class="menu__button-row"><a href="#" class="button menu__button">Регистрация </a><a href="#" class="button white menu__button">Авторизоваться</a></div>
+                            
+                            <div class="menu__button-row">
+                                {% if not user.is_authenticated %}
+                                    <a href="{% url 'users:registration_page' %}" class="button menu__button">Регистрация </a>
+                                    <a href="{% url 'users:login' %}" class="button white menu__button">Авторизоваться</a>
+                                {% else %}
+                                    <a href="{% url 'users:logout' %}" class="button menu__button">Выйти </a>
+                                {% endif %}
+                            </div>
+                     
                         </nav>
                         <div class="search top-header__search your-class" data-da=".top-header__icon-row, 620, first">
                             <div class="search__button-open">
@@ -317,6 +326,7 @@
                     localStorage.setItem('isHidden', 'true');
                 }, 300);
             });
-        </script>          
+        </script>   
+        <script src="https://securepay.tinkoff.ru/html/payForm/js/tinkoff_v2.js"></script>       
 </body>
 </html>

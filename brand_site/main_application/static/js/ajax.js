@@ -210,26 +210,55 @@ $(function() {
 // Проверка бонусов в форме при формировании заказа
 
 $(function() {
-    $('#orderForm').on('submit', function(e){ 
-        
+    $('.making__form').on('submit', function(e){ 
         e.preventDefault();
-        let input_data = $('#bonuses_formID').val();
-        // Добавьте эту строку для проверки значения input_data
-        console.log(input_data);
+        let bonuses = $('#bonuses_formID').val();
+        let promo = $('#promo_formID').val();
+        let delivery = $('#delivery-moscow').val();
+        let shipment_type = $('#way1').val();
+        let city = $('#city_ID').val();
+        let index = $('#index_ID').val();
+        let street = $('#street_ID').val();
+        let house = $('#house_ID').val();
+        let corp = $('#corp_ID').val();
+        let room = $('#room_ID').val();
+        let shipment_date = $('#shipment_date_ID').val()
+        let order_price = $('#res_price_ID').text();
+        console.log(order_price);
 
         $.ajax({
-            url: "/check-bonuses/",
+            url: "/order/check-bonuses/",
             type: 'POST',
             data: {
-                input_data: input_data,
+                input_bonuses: bonuses,
+                input_promo: promo,
+                delivery: delivery,
+                shipment_type: shipment_type,
+                city: city,
+                index: index,
+                street: street,
+                house: house,
+                corp: corp,
+                room: room,
+                shipment_date: shipment_date,
+                order_price: order_price,
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             },
             success: function (response) {
-            if (response.success) {
+            if (response.success && response.both_correct) {
+                $('#promo_formID').addClass('promocode_ok');
+                $('#bonuses_formID').addClass('promocode_ok');
+                window.location.href = 'https://5666-46-138-94-207.ngrok-free.app/order/tinkoff-kassa/';
+            } else if (response.success && response.promocode && response.bonuses === false) {
+                $('#promo_formID').addClass('promocode_ok');
+                $('#bonuses_formID').addClass('promocode_error');
+            } else if (response.success && response.promocode === false && response.bonuses) {
+                $('#promo_formID').addClass('promocode_error');
                 $('#bonuses_formID').addClass('promocode_ok');
             } else {
-                console.log(input_data);
+                $('#promo_formID').addClass('promocode_error');
                 $('#bonuses_formID').addClass('promocode_error');
+                
             }
         },
     });     

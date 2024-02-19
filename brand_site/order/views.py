@@ -1,17 +1,14 @@
 from typing import Any
-from django.core.exceptions import ValidationError
 from django.http import *
-from django.shortcuts import render
 from django.views.generic import *
 from utils.utils import UtilitiesFunctions
 from users.models import *
 from cart.cart import Cart
-from .forms import NewUserForm, OrderForm
+from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from datetime import datetime, timedelta
-from django.shortcuts import redirect
 
 
 @method_decorator(login_required(login_url=reverse_lazy('users:login')), name='dispatch')
@@ -28,14 +25,10 @@ class OrderPay(CreateView):
         profile = Profile.objects.get(user=self.request.user.id)
         total_price = int(cart.get_total_price()) + 199
         birthday_price = utilities_object.birthday_discount(int(cart.get_total_price()))
-        data['cart'] = cart
-        data['total_bonuses'] = utilities_object.showing_income_balls(int(cart.get_total_price()))
-        data['current_bonuses'] = int(profile.current_bonuses)
-        data['total_price'] = total_price 
-        # либо всю стоимость, либо стоимость скидки
-        data['birthday_discount'] = total_price - birthday_price
-        # либо 0, либо стоимость заказа с учетом скидки
-        data['birthday_price'] = birthday_price + 199
+       
+        data.update({'cart': cart, 'total_bonuses': utilities_object.showing_income_balls(int(cart.get_total_price())), 
+                     'current_bonuses': int(profile.current_bonuses), 'total_price': total_price,
+                     'birthday_discount': total_price - birthday_price, 'birthday_price': birthday_price + 199 })
         return data
 
 
@@ -45,74 +38,6 @@ class OrderCreate(CreateView):
     form_class = OrderForm
     template_name = 'making.html'
 
-    # def form_valid(self, form):
-    #     PRODUCTS_LIST = []
-    #     profile = Profile.objects.get(user=self.request.user.id)
-    #     order_data = form.cleaned_data # {'city': 'Москва', 'index': '105523', 'street': '15-я парковая', 'corp': '1', 'house': '54', 'room': '52', 'shipment_date': '15.02.2024', 'promo': '', 'current_bonuses': '17599'}
-        
-    #     city = order_data['city']
-    #     index = order_data['index']
-    #     street = order_data['street']
-    #     corp = order_data['corp']
-    #     house = order_data['house']
-    #     room = order_data['room']
-    #     shipment_date = order_data['shipment_date']
-    #     promo = order_data['promo']
-    #     current_bonuses = order_data['current_bonuses']
-
-    #     cart = Cart(self.request)
-    #     products = cart.get_content()
-    #     for product in products:
-    #         parfume = Product.objects.get(id=product[0])
-    #         PRODUCTS_DICT = {
-    #             f"http://127.0.0.1:8000{parfume.get_absolute_url()}": f"{product[1]['quantity']} шт.",
-    #         }
-    #         PRODUCTS_LIST.append(PRODUCTS_DICT)
-        
-        # print(f"\n\nЗапрошенные бонусы:\n{order_data['current_bonuses']}\nФормат: {type(order_data['current_bonuses'])}\nНовый формат: {0 if ' ' else int(order_data['current_bonuses'])}\n\nТекущие бонусы:\n{profile.current_bonuses}\nФормат: {profile.current_bonuses}\nНовый формат: {int(profile.current_bonuses)}\n\n")
-        # try:
-        #     inputed_bonuses = 0 if ' ' else int(order_data['current_bonuses'])
-        #     if inputed_bonuses > int(profile.current_bonuses):
-        #         raise ValidationError("Недостаточно бонусов для получения скидки!")
-
-        # except ValueError:
-        #     raise ValidationError("Недостаточно бонусов для получения скидки!")
-        
-        # if not (order_data['promo'] in PromoCode.objects.all()):
-        #     raise ValueError
-        
-        # else:
-        #     order = Order (
-        #         profile=profile,
-        #         product=PRODUCTS_LIST,
-        #         city=
-                
-        #     )
-
-        # order_instance = Order(
-        #     field1=order_data['field1'],
-        #     field2=order_data['field2'],
-        # )
-
-        # order_instance.save()
-
-        # return redirect(reverse('order:check-bonuses'))
-
-
-
-
-    
-    # def get(self, request):
-    #     form = OrderForm(request.POST)
-    #     current_bonuses = request.POST.get('current_bonuses')
-    #     print(f"\nЗапрошенные бонусы: {current_bonuses}\n")
-    #     return HttpResponse()
-        # if form.is_valid():
-        #     order = form.save(commit=False)
-        #     profile = Profile.objects.get(user=self.request.user.id)
-        #     Order.objects.create(profile=profile)
-        #     return redirect(reverse('order:order-pay'))
-
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         data = super().get_context_data(**kwargs)
         cart = Cart(self.request)
@@ -120,45 +45,196 @@ class OrderCreate(CreateView):
         profile = Profile.objects.get(user=self.request.user.id)
         total_price = int(cart.get_total_price()) + 199
         birthday_price = utilities_object.birthday_discount(int(cart.get_total_price()))
-        data['cart'] = cart
-        data['total_bonuses'] = utilities_object.showing_income_balls(int(cart.get_total_price()))
-        data['current_bonuses'] = int(profile.current_bonuses)
-        data['total_price'] = total_price 
-        data['birthday_discount'] = total_price - birthday_price
-        data['birthday_price'] = birthday_price + 199
+
+        data.update({'cart': cart, 'total_bonuses': utilities_object.showing_income_balls(int(cart.get_total_price())), 
+                     'current_bonuses': int(profile.current_bonuses), 'total_price': total_price,
+                     'birthday_discount': total_price - birthday_price, 'birthday_price': birthday_price + 199 })
         return data
 
+
     def get_initial(self, *args, **kwargs):
-        initial = super().get_initial(**kwargs)
         user = self.request.user
         profile = Profile.objects.get(user=user.id)   
         shipment_date = datetime.now().date() + timedelta(days=2)  
-        initial['city'] = profile.city   
-        initial['index'] = profile.index
-        initial['street'] = profile.street
-        initial['house'] = profile.house
-        initial['corp'] = profile.corp
-        initial['room'] = profile.room
-        initial['shipment_date'] = shipment_date.strftime('%d.%m.%Y')
-
-        return initial
+        
+        return {'city': profile.city, 'index': profile.index, 
+                'street': profile.street, 'house': profile.house,
+                'corp': profile.corp, 'room': profile.room,
+                'shipment_date': shipment_date }
 
 
 def check_bonuses(request):
+
     if request.method == 'POST':
         profile = Profile.objects.get(user=request.user.id)
+        cart = Cart(request)
+        promocodes = PromoCode.objects.all()
         current_bonuses = int(profile.current_bonuses)
+        bonuses = request.POST.get('input_bonuses')  
+        promocode = request.POST.get('input_promo') 
+        order_price = request.POST.get('order_price')
 
-        print(f"\n{request.POST.get('input_data')}\n")
+        items = cart.get_content()
+        products_dict = []
+        for item in items:
+            product = Product.objects.get(id=item[0])
+            values = item[1]
+            
+            products_dict.append({
+                product.full_name: values
+            })
 
+        data_dictionary = {
+            'name': profile.first_name,
+            'last_name': profile.last_name,
+            'phone_number': profile.user.phone_number,
+            'region': 'Москва' if request.POST.get('delivery') == 'moscow' else 'Регион, уточнять по адресу',
+            'shipment_type': 'Обычная' if request.POST.get('shipment_type') == 'usual' else 'Экспресс',
+            'city': request.POST.get('city') if not None else '',
+            'index': request.POST.get('index') if not None else '',
+            'street': request.POST.get('street') if not None else '',
+            'house': request.POST.get('house') if not None else '',
+            'corp': request.POST.get('corp') if not None else '',
+            'room': request.POST.get('room') if not None else '',
+            'shipment_date': request.POST.get('shipment_date') if not None else '',
+            'promocode': request.POST.get('input_promo') if not None else '',
+            'bonuses': request.POST.get('input_bonuses') if not None else '',
+            'order_price': order_price.replace(',00 RUB', ''),
+            'loyal_status': profile.loyal_status,
+            'products': products_dict,
+        }
+        
         try:
-            input_bonuses = int(request.POST.get('input_data'))
-        except TypeError:
-            input_bonuses = 0
+            input_bonuses = int(bonuses)
+        except (TypeError, ValueError):
+            input_bonuses = None
+        
+        try:
+            promocode = str(promocode)
+        except (TypeError, ValueError):
+            promocode = ''
 
-        if input_bonuses > current_bonuses:
-            return JsonResponse({'success': False, 'message': 'Число запрошенных бонусов больше текущих!'})
+        '''
+            views.py
+
+            1) Если оба поля не пустые:
+                А) Если промокод есть в БД и бонусы <= доступным (+ +)
+                    return JsonResponse({'success': True, 'both_correct': True})
+                Б) Если промокод есть в базе данных, а бонусы > доступных (+ -)
+                    return JsonResponse({'success': True, 'promocode': True, 'bonuses': False })
+                В) Если промокода нет в БД, а бонусы <= доступным (- +)
+                    return JsonResponse({'success': True, 'promocode': False, 'bonuses': True })
+                Г) Если промокода нет в БД и бонусы > доступным (- -)
+                    return JsonResponse({'success': True, 'both_correct': False })
+            2) Если заполнено только поле промокод:
+                А) Если промокод есть в БД (+)
+                    return JsonResponse({'success': True, 'both_correct': True })
+                Б) Если промокода нет в БД (-)
+                    return JsonResponse({'success': True, 'promocode': False, 'bonuses': True })
+            3) Если заполнено только поле бонусов:
+                А) Если бонусы <= доступным (+)
+                    return JsonResponse({'success': True, 'both_correct': True})
+                Б) Если бонусы > доступных (-)
+                    return JsonResponse({'success': True, 'promocode': True, 'bonuses': False })
+            4) Если оба поля пустые:
+                return JsonResponse({'success': True, 'both_correct': True })
+            
+            ajax.js
+
+            if (response.success && response.both_correct) 
+                $('#promo_formID').addClass('promocode_ok');
+                $('#bonuses_formID').addClass('promocode_ok');
+                window.location.href = 'http://127.0.0.1:8000/order/order-pay/';
+            } else if (response.success && response.promocode && response.bonuses === False) {
+                $('#promo_formID').addClass('promocode_ok');
+                $('#bonuses_formID').addClass('promocode_error');
+            } else if (response.success && response.promocode === False && response.bonuses) {
+                $('#promo_formID').addClass('promocode_error');
+                $('#bonuses_formID').addClass('promocode_ok');
+            } else {
+                $('#promo_formID').addClass('promocode_ok');
+                $('#bonuses_formID').addClass('promocode_ok');
+                window.location.href = 'http://127.0.0.1:8000/order/order-pay/';
+            }
+            
+        '''
+        
+        if promocode != '' and input_bonuses != None:
+            if promocode in promocodes and input_bonuses <= current_bonuses:
+                create_order(data_dictionary, profile)
+                return JsonResponse({'success': True, 'both_correct': True})
+            elif promocode in promocodes and input_bonuses > current_bonuses:
+                return JsonResponse({'success': True, 'promocode': True, 'bonuses': False })
+            elif promocode not in promocodes and input_bonuses <= current_bonuses:
+                return JsonResponse({'success': True, 'promocode': False, 'bonuses': True })
+            else:
+                return JsonResponse({'success': True, 'both_correct': False })
+        elif promocode != '' and input_bonuses == None:
+            if promocode in promocodes:
+                create_order(data_dictionary, profile)
+                return JsonResponse({'success': True, 'both_correct': True })
+            else:
+                return JsonResponse({'success': True, 'promocode': False, 'bonuses': True })
+        elif promocode == '' and input_bonuses != None:
+            if input_bonuses <= current_bonuses:
+                create_order(data_dictionary, profile)
+                return JsonResponse({'success': True, 'both_correct': True})
+            else:
+                return JsonResponse({'success': True, 'promocode': True, 'bonuses': False })
         else:
-            return JsonResponse({'success': True})
+            create_order(data_dictionary, profile)
+            return JsonResponse({'success': True, 'both_correct': True })
+        
+
+def create_order(data_dictionary, profile):
+
+    try:
+        order = Order.objects.create(
+            profile=profile,
+            first_name=data_dictionary['name'],
+            last_name=data_dictionary['last_name'],
+            phone_number=data_dictionary['phone_number'],
+            shipment_type=data_dictionary['shipment_type'],
+            region=data_dictionary['region'],
+            city=data_dictionary['city'],
+            index=data_dictionary['index'],
+            street=data_dictionary['street'],
+            house=data_dictionary['house'],
+            corp=data_dictionary['corp'],
+            room=data_dictionary['room'],
+            shipment_date=data_dictionary['shipment_date'],
+            order_price=data_dictionary['order_price'],
+            loyal_status=data_dictionary['loyal_status'],
+            product=data_dictionary['products'],
+        )
+    except Exception as _:
+        print(f"\nОшибка: {_}\n")
+    
+    if order in Order.objects.all():
+        print(f"\nЗаказ уже есть в базе данных!\n")
+
+
+class TinkoffPay(TemplateView):
+    template_name = 'tinkoff-kassa.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        profile = Profile.objects.get(user=self.request.user.id)
+        order = profile.orders.order_by('-id').first() 
+        client_name = f"{profile.last_name} {profile.first_name}"
+        form = PaymentForm(initial={
+            'amount': int(order.order_price),  # Set initial value for amount
+            'name': client_name,  # Set initial value for name
+            'email': self.request.user.email_for_reset,  # Set initial value for email
+            'phone': order.phone_number  # Set initial value for phone
+        })
+        data['form'] = form
+        return data
+
+
+    
+
+
+    
     
 

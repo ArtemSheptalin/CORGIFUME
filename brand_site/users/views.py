@@ -50,16 +50,16 @@ class ShowProfile(FormView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         data = super().get_context_data(**kwargs)
-        user = self.request.user
+        profile = Profile.objects.get(user=self.request.user.id)
 
         utilities_object = UtilitiesFunctions(self.request.user)
-        # utilities_object.birthday_discount(10000)
         
         data['profile'] = utilities_object.get_user_profile()
         data['current_bonuses'] = utilities_object.get_current_bonuses()
         data['future_bonuses'] = utilities_object.future_balls()
         data['aroma_balls'] = utilities_object.get_aroma_balls()
         data['loyal_status'] = utilities_object.get_loyal_status()
+        data['orders'] = profile.orders.all()
         return data
 
     def get_initial(self, *args, **kwargs):

@@ -23,14 +23,17 @@
                             <div class="crumbs__item select"><a href="#">Оформление заказа</a></div>
                         </div>
                         <h2 class="making__title">Оформление заказа</h2>
-                        <form action="{% url 'order:check-bonuses' %}" class="making__form" method="POST" id="making__form">
+                        <form action="{% url 'order:check_bonuses' %}" class="making__form" method="POST" id="making__form">
                            {% csrf_token %} 
+                           
                            <div class="making__row">
+                            
                                 <div class="delivery making__delivery">
                                     <h3 class="delivery__title">Доставка</h3>
                                     <p class="delivery__sub-text">Выберите подходящий вам вариант доставки:</p>
                                     <p class="delivery__sub-text sdeck">Доставка осуществляется компанией СДЭК</p>
                                     <div class="delivery__body">
+                                        
                                         <div class="delivery__item-radio">
                                             <div class="delivery__item-title">Выберите регион</div>
                                             <div class="delivery__row">
@@ -48,7 +51,8 @@
                                             <div class="delivery__item-title">Способ доставки</div>
                                             <div class="delivery__row">
                                                 <div class="delivery__radio">
-                                                    <input type="radio" id="way1" checked="checked" name="way" value="usual" class="delivery__radio-input" /> <label for="way1" class="delivery__radio-label">Обычная</label>
+                                                    <input type="radio" id="way1" checked="checked" name="way" value="usual" class="delivery__radio-input" /> 
+                                                    <label for="way1" class="delivery__radio-label">Обычная</label>
                                                 </div>
                                                 <div class="delivery__radio">
                                                     <input type="radio" id="way2" disabled="disabled" name="way" value="express" class="delivery__radio-input delivery__radio-russia" />
@@ -57,6 +61,7 @@
                                             </div>
                                             <div class="active delivery__text-error">На данный момент экспресс доставка по Москве недоступна</div>
                                         </div>
+                                        
                                         <div class="delivery__row-item">
                                         
                                                 <div class="delivery__row-input"> 
@@ -103,7 +108,9 @@
                                                     <label for="name" class="delivery__label">Списать бонусов:</label> 
                                                     {{ form.current_bonuses }}
                                                 </div>
-                                                <input type="submit"  class="button delivery__button" value="ПЕРЕЙТИ К ОПЛАТЕ">
+                                                
+                                                {% comment %} <p class="text__ok" id="text_error">Количество запрашиваемых бонусов меньше доступных!</p>  {% endcomment %}
+                                                <button type="submit" class="button delivery__button" id="delivery__buttonID">ПЕРЕЙТИ К ОПЛАТЕ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -162,17 +169,14 @@
                                             <p>Будет начислено</p>
                                             <p class="number">{{ total_bonuses }}</p>
                                         </div>
-                                        {% if birthday_discount != total_price %}
                                         <div class="score-making__item score-making__item-result">
                                             <p>Итого к оплате</p>
-                                            <p>{{ birthday_price }},00 RUB</p>
-                                        </div>
-                                        {% else %}
-                                        <div class="score-making__item score-making__item-result">
-                                            <p>Итого к оплате</p>
-                                            <p>{{ total_price }} RUB</p>
-                                        </div>
-                                        {% endif %}
+                                            {% if birthday_discount != total_price %}
+                                                <p id="res_price_ID">{{ birthday_price }},00 RUB</p>
+                                            {% else %}
+                                                <p id="res_price_ID">{{ total_price }},00 RUB</p>
+                                            {% endif %}
+                                        </div>   
                                     </div>
                                 </div>
                             </div>

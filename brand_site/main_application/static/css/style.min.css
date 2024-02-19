@@ -5491,8 +5491,16 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .item-support__form {
-  margin-left: 300px;
-  width: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 20px auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 300px;
+  width: 300px;
 }
 
 .item-support__form p {
@@ -5516,7 +5524,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .item-support__button-submit.button {
-  margin-top: 0.3125rem;
+  margin-top: 10px;
   width: 100%;
   margin-right: 0;
   max-width: 100%;
@@ -8708,6 +8716,7 @@ ul li a:hover {
   text-transform: uppercase;
   margin-right: -1px;
   cursor: pointer;
+  max-width: 250px;
 }
 
 .brands__row {
@@ -9369,3 +9378,67 @@ input[type=number]::-webkit-outer-spin-button {
 .promocode_ok {
   border-color: #12b76a;
 }
+
+.text__ok {
+  left: 20rem;
+  font-size: 0.875rem;
+  color: #ea827f;
+  position: relative;
+  display: none;
+}
+
+.text__error {
+  left: 20rem;
+  font-size: 0.875rem;
+  color: #ea827f;
+  position: relative;
+  display: block;
+}
+
+.payform-tinkoff {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 20px auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 300px;
+  width: 300px;
+}
+  
+.payform-tinkoff-row {
+  margin: 2px;
+  border-radius: 4px;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  border: 1px solid #DFE3F3;
+  padding: 15px;
+  outline: none;
+  background-color: #DFE3F3;
+  font-size: 15px;
+}
+
+.payform-tinkoff-row:focus {
+        background-color: #FFFFFF;
+        border: 1px solid #616871;
+        border-radius: 4px;
+}
+
+.payform-tinkoff-btn {
+        background-color: #FBC520;
+        border: 1px solid #FBC520;
+        color: #3C2C0B;
+}
+    
+.payform-tinkoff-btn:hover {
+        background-color: #FAB619;
+        border: 1px solid #FAB619;
+}
+
+

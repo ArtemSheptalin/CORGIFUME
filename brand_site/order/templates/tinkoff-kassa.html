@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}Тинькофф касса{% endblock %}
+{% load static %}
+{% block content %}
+<form class="payform-tinkoff" name="payform-tinkoff" method="post" onsubmit="pay(this); return false;">
+    {% for field in form %}
+        {{ field }}
+    {% endfor %}
+    <input class="payform-tinkoff-row payform-tinkoff-btn" type="submit" value="Оплатить">
+</form>
+
+{% endblock %}

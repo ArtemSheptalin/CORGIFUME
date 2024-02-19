@@ -155,10 +155,13 @@ class CartDetail(LoginRequiredMixin, TemplateView):
         data = super().get_context_data(**kwargs)
         utilities_object = UtilitiesFunctions(self.request.user)
         cart = Cart(self.request)
-        # current_price = self.request.POST.get('current_price')
+
+        current_price = self.request.POST.get('current_price')
+        if current_price is None:
+            current_price = 0
+
         
         data['cart'] = cart
-        # data['product_bonuses'] = utilities_object.showing_income_balls(int(current_price))
         data['total_bonuses_counter'] = utilities_object.showing_income_balls(int(cart.get_total_price()))
 
         contents = cart.get_content()
@@ -170,7 +173,6 @@ class CartDetail(LoginRequiredMixin, TemplateView):
         for prod in image_contents:
             current_price = prod.price
             first_image = prod.image.first()
-            print(f"\n{int(current_price)}\n")
             
             if first_image:
                 images.append(first_image)

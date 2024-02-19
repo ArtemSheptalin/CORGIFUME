@@ -184,56 +184,24 @@
                                             <div class="item-orders__item details">Подробности</div>
                                         </div>
                                         <div class="item-orders__line">
-                                            <div class="item-orders__item">#3066</div>
-                                            <div class="item-orders__item">22.07.2012</div>
-                                            <div class="item-orders__item delivery">22.07.2012</div>
-                                            <div class="item-orders__item remained">16 ч.</div>
-                                            <div class="item-orders__item cost">5 000 RUB</div>
+                                            {% for order in orders %}
+                                            <div class="item-orders__item">#{{ order.order_number }}</div>
+                                            <div class="item-orders__item">{{ order.order_date }}</div>
+                                            <div class="item-orders__item delivery">{{ order.shipment_date }}</div>
+                                            <div class="item-orders__item cost">{{ order.order_price }} RUB</div>
                                             <div class="item-orders__item">
-                                                <div class="active item-orders__status-ok">Принят</div>
-                                                <div class="item-orders__status-not">Отказано</div>
-                                                <div class="item-orders__status-created">Создан</div>
+                                                {% if order.status == 'processing' or order.status == 'created' %}
+                                                    <div class="active item-orders__status-created">Создан</div>
+                                                {% elif order.status == 'accepted' %}
+                                                    <div class="active item-orders__status-ok">Принят</div>
+                                                {% elif order.status == 'completed' %}
+                                                    <div class="active item-orders__status-ok">Доставлено</div>
+                                                {% else %}
+                                                    <div class="active item-orders__status-not">Отказано</div>
+                                                {% endif %}
                                             </div>
                                             <div class="item-orders__item details">Подробности</div>
-                                        </div>
-                                        <div class="item-orders__line">
-                                            <div class="item-orders__item">#3066</div>
-                                            <div class="item-orders__item">22.07.2012</div>
-                                            <div class="item-orders__item delivery">22.07.2012</div>
-                                            <div class="item-orders__item remained">22 ч.</div>
-                                            <div class="item-orders__item cost">5 000 RUB</div>
-                                            <div class="item-orders__item">
-                                                <div class="active item-orders__status-ok">Принят</div>
-                                                <div class="item-orders__status-not">Отказано</div>
-                                                <div class="item-orders__status-created">Создан</div>
-                                            </div>
-                                            <div class="item-orders__item details">Подробности</div>
-                                        </div>
-                                        <div class="item-orders__line">
-                                            <div class="item-orders__item">#3066</div>
-                                            <div class="item-orders__item">22.07.2012</div>
-                                            <div class="item-orders__item delivery">22.07.2012</div>
-                                            <div class="item-orders__item remained">5 д. 16 ч.</div>
-                                            <div class="item-orders__item cost">5 000 RUB</div>
-                                            <div class="item-orders__item">
-                                                <div class="item-orders__status-ok">Принят</div>
-                                                <div class="item-orders__status-not">Отказано</div>
-                                                <div class="active item-orders__status-created">Создан</div>
-                                            </div>
-                                            <div class="item-orders__item details">Подробности</div>
-                                        </div>
-                                        <div class="item-orders__line">
-                                            <div class="item-orders__item">#3066</div>
-                                            <div class="item-orders__item">22.07.2012</div>
-                                            <div class="item-orders__item delivery">22.07.2012</div>
-                                            <div class="item-orders__item remained">5 д. 16 ч.</div>
-                                            <div class="item-orders__item cost">5 000 RUB</div>
-                                            <div class="item-orders__item">
-                                                <div class="item-orders__status-ok">Принят</div>
-                                                <div class="active item-orders__status-not">Отказано</div>
-                                                <div class="item-orders__status-created">Создан</div>
-                                            </div>
-                                            <div class="item-orders__item details">Подробности</div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                     <div class="item-orders__button-row"><a href="#" class="button item-orders__button">Экспортировать таблицу</a></div>

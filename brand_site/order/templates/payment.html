@@ -87,17 +87,6 @@
                                             </div>
                                             <input type="radio" id="payment4" name="payment" class="checkbox-del__input" />
                                         </div>
-                                        {% comment %} <div class="delivery__row-bonus">
-                                            <p>У вас {{ current_bonuses }} бонусов</p>
-                                            <form method="POST" class="entrance__form form-ent">
-                                                {% csrf_token %}
-                                                <div class="form-ent__item">
-                                                    <label for="name" class="delivery__label">Списать бонусов:</label> 
-                                                    {{ form.current_bonuses|add_class:"delivery__input" }}
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="button white delivery__button-bonus">Списать бонусы</div> {% endcomment %}
                                         <button class="button delivery__button">ПОДТВЕРДИТЬ ЗАКАЗ</button>
                                     </div>
                                     <p class="delivery__text">Нажимая на кнопку вы соглашаетесь на обработку ваших персональных данных</p>
