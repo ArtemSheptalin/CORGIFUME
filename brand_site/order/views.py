@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from datetime import datetime, timedelta
+from loyal_program.models import *
+from product.models import *
 
 
 @method_decorator(login_required(login_url=reverse_lazy('users:login')), name='dispatch')
@@ -158,35 +160,58 @@ def check_bonuses(request):
             }
             
         '''
+        exists = promocode_exists(promocode)
         
         if promocode != '' and input_bonuses != None:
-            if promocode in promocodes and input_bonuses <= current_bonuses:
-                create_order(data_dictionary, profile)
+            
+            if exists and input_bonuses <= current_bonuses:
+                order_price = int(data_dictionary['order_price']) - input_bonuses
+                create_order(data_dictionary, profile, order_price, promocode)
                 return JsonResponse({'success': True, 'both_correct': True})
-            elif promocode in promocodes and input_bonuses > current_bonuses:
+            elif exists and input_bonuses > current_bonuses:
                 return JsonResponse({'success': True, 'promocode': True, 'bonuses': False })
-            elif promocode not in promocodes and input_bonuses <= current_bonuses:
+            elif exists == False and input_bonuses <= current_bonuses:
                 return JsonResponse({'success': True, 'promocode': False, 'bonuses': True })
             else:
                 return JsonResponse({'success': True, 'both_correct': False })
         elif promocode != '' and input_bonuses == None:
-            if promocode in promocodes:
-                create_order(data_dictionary, profile)
+            if exists:
+                input_bonuses = 0
+                order_price = int(data_dictionary['order_price']) - input_bonuses
+                create_order(data_dictionary, profile, order_price, promocode)
                 return JsonResponse({'success': True, 'both_correct': True })
             else:
                 return JsonResponse({'success': True, 'promocode': False, 'bonuses': True })
         elif promocode == '' and input_bonuses != None:
             if input_bonuses <= current_bonuses:
-                create_order(data_dictionary, profile)
+                order_price = int(data_dictionary['order_price']) - input_bonuses
+                create_order(data_dictionary, profile, order_price, promocode)
                 return JsonResponse({'success': True, 'both_correct': True})
             else:
                 return JsonResponse({'success': True, 'promocode': True, 'bonuses': False })
         else:
-            create_order(data_dictionary, profile)
+            input_bonuses = 0
+            order_price = int(data_dictionary['order_price']) - input_bonuses
+            create_order(data_dictionary, profile, order_price, promocode)
             return JsonResponse({'success': True, 'both_correct': True })
-        
 
-def create_order(data_dictionary, profile):
+
+def promocode_exists(promocode):
+    promocode_exists = PromoCode.objects.filter(title=promocode).exists()
+    return promocode_exists
+       
+
+def create_order(data_dictionary, profile, order_price, promocode):
+
+    # print(f"\nИтоговая цена: {order_price}\nВведённый промокод: {promocode}\n")
+
+    exists = promocode_exists(promocode)
+    
+    if exists:
+        promocode_discount = PromoCode.objects.get(title=promocode)
+        order_price = order_price - promocode_discount.discount  
+
+    print(f"\nИтоговая цена: {order_price}\n")     
 
     try:
         order = Order.objects.create(
@@ -203,15 +228,13 @@ def create_order(data_dictionary, profile):
             corp=data_dictionary['corp'],
             room=data_dictionary['room'],
             shipment_date=data_dictionary['shipment_date'],
-            order_price=data_dictionary['order_price'],
+            order_price=order_price,
             loyal_status=data_dictionary['loyal_status'],
             product=data_dictionary['products'],
         )
     except Exception as _:
         print(f"\nОшибка: {_}\n")
     
-    if order in Order.objects.all():
-        print(f"\nЗаказ уже есть в базе данных!\n")
 
 
 class TinkoffPay(TemplateView):
@@ -223,10 +246,10 @@ class TinkoffPay(TemplateView):
         order = profile.orders.order_by('-id').first() 
         client_name = f"{profile.last_name} {profile.first_name}"
         form = PaymentForm(initial={
-            'amount': int(order.order_price),  # Set initial value for amount
-            'name': client_name,  # Set initial value for name
-            'email': self.request.user.email_for_reset,  # Set initial value for email
-            'phone': order.phone_number  # Set initial value for phone
+            'amount': int(order.order_price), 
+            'name': client_name,  
+            'email': self.request.user.email_for_reset, 
+            'phone': order.phone_number  
         })
         data['form'] = form
         return data

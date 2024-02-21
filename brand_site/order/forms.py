@@ -1,5 +1,6 @@
 from django import forms
-from users.models import Order, Profile
+from users.models import *
+from order.models import *
 
 class NewUserForm(forms.ModelForm):
 
@@ -38,7 +39,7 @@ class BonusesUse(forms.ModelForm):
 
 
 class PaymentForm(forms.Form):
-    terminalkey = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': 'terminalkey', 'value': 'TinkoffBankTest'}))
+    terminalkey = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': '1708362189241DEMO', 'value': '1708362189241DEMO'}))
     frame = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': 'frame', 'value': 'false'}))
     language = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': 'language', 'value': 'ru'}))
     amount = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'Сумма заказа', 'readonly': 'true'}), required=True)

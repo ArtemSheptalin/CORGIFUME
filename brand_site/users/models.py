@@ -1,11 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import *
-from django.contrib.postgres.fields import ArrayField
-
-from product.models import Product
-import random
-from django.utils import timezone
 from datetime import date
 
 
@@ -47,8 +42,8 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
+    # связанные данные
     user = models.OneToOneField(NewUser, on_delete=models.CASCADE, related_name='user_profile')
-    date_of_register = models.DateField(default=date.today)
     # Личные данные
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
@@ -59,6 +54,7 @@ class Profile(models.Model):
     room = models.CharField(max_length=200, null=True, blank=True)
     corp = models.CharField(max_length=200, null=True, blank=True)
     date_of_birth = models.CharField(null=True, blank=True)
+    date_of_register = models.DateField(default=date.today)
     # Программа лояльности
     current_bonuses = models.FloatField(default=0.0)
     future_bonuses = models.IntegerField(default=0)
@@ -78,51 +74,7 @@ class Profile(models.Model):
     def __str__(self):
         return f"{self.user.id}"
 
+    def get_associated_promocodes(self):
+        return self.promocodes.all()
 
-class Favorite(models.Model):
-    user = models.ForeignKey(NewUser, on_delete=models.CASCADE, related_name='favorites')
-    item = models.ForeignKey(Product, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.user} - {self.item}'
-
-
-class Order(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='orders')
-    order_number = models.IntegerField(default=random.randint(100000, 999999), unique=True)
-    order_date = models.DateTimeField(default=timezone.now)
-    product = models.JSONField(default=list)
-    status = models.CharField(max_length=100, choices=(
-        ('processing', 'В обработке'),
-        ('created', 'Создан'),
-        ('accepted', 'Принят'),
-        ('completed', 'Доставлено')
-    ), default='processing')
-
-    first_name = models.CharField(max_length=20, null=True, blank=True)
-    last_name = models.CharField(max_length=20, null=True, blank=True)
-    phone_number = models.CharField(max_length=20, null=True, blank=True)
-    region = models.CharField(max_length=20, null=True, blank=True)
-    shipment_type = models.CharField(max_length=10, null=True, blank=True)
-    city = models.CharField(max_length=200, null=True, blank=True)
-    index = models.CharField(max_length=200, null=True, blank=True)
-    house = models.CharField(max_length=200, null=True, blank=True)
-    street = models.CharField(max_length=200, null=True, blank=True)
-    room = models.CharField(max_length=200, null=True, blank=True)
-    corp = models.CharField(max_length=200, null=True, blank=True)
-    shipment_date = models.CharField(max_length=20, null=True, blank=True)
-    order_price = models.FloatField(default=0.0)
-    loyal_status = models.CharField(default='Новичок')
-
-
-class PromoCode(models.Model):
-    
-    title = models.CharField(max_length=8)
-    expiration_date = models.DateField()
-    active = models.BooleanField(default=True)
-    # category + profile
-
-
-    def __str__(self):
-        return self.title
 

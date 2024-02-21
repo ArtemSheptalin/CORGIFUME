@@ -418,12 +418,6 @@ textarea.input {
   padding: 0px 0px 0px 10px;
 }
 
-.quantity {
-  width: 88px;
-  height: 40px;
-  display: flex;
-  border: 1px solid rgba(166, 166, 166, 0.45);
-}
 .quantity__button {
   flex: 0 0 30px;
   position: relative;
@@ -6124,6 +6118,20 @@ input[type=number]::-webkit-outer-spin-button {
     gap: 1.875rem;
   }
 }
+
+@media (max-width: 985px) {
+  .prod-tab .prod-tab__price {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .prod-tab__score {
+    display: none;
+  }
+}
+  
+
 @media (max-width: 1070px) {
   .prod-tab__score.quantity {
     display: none;
@@ -6154,11 +6162,6 @@ input[type=number]::-webkit-outer-spin-button {
 
   .top-header__search {
     max-width: 15.625rem;
-  }
-}
-@media (max-width: 985px) {
-  .prod-tab .prod-tab__price {
-     display: inline-block;
   }
 }
 
@@ -9440,5 +9443,4 @@ input[type=number]::-webkit-outer-spin-button {
         background-color: #FAB619;
         border: 1px solid #FAB619;
 }
-
 

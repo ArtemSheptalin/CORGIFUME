@@ -1,13 +1,12 @@
-from typing import Any, Dict
-from django.db import models
+from typing import Any
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, DetailView, FormView, UpdateView
-from .forms import NewUserForm, ProfileForm, ProfileChangeForm
-from .models import NewUser, Profile, Order, Favorite
-from product.models import Product
-from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import *
+from .forms import *
+from .models import *
+from product.models import *
+from django.shortcuts import redirect
 
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import PasswordResetForm
@@ -15,9 +14,7 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView
 from utils.utils import UtilitiesFunctions
-
-
-
+from loyal_program.models import *
 
 
 class RegForm(CreateView):
@@ -37,7 +34,12 @@ class RegForm(CreateView):
         new_user = form.instance
         date_of_birth = str(form.cleaned_data['date_of_birth'])
 
-        Profile.objects.create(user=new_user, first_name=form.cleaned_data['first_name'], date_of_birth=date_of_birth, user_id=new_user.id)
+        profile = Profile.objects.create(user=new_user, first_name=form.cleaned_data['first_name'], date_of_birth=date_of_birth, user_id=new_user.id)
+        promocodes = PromoCode.objects.all()
+
+        for promocode in promocodes:
+            promocode.profile.add(profile)
+
         
         return response
 

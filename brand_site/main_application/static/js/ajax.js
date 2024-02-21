@@ -84,8 +84,8 @@ $(function() {
             },
             success: function (response) {
                 if (response.success) {
-                    let value = $('#quantityID_' + product_id).text();
-                    $('#quantityID_' + product_id).text(Number(value) + 1);
+                    let value = $('#quantityID_' + product_id).val();
+                    $('#quantityID_' + product_id).val(Number(value) + 1);
                     if ((response.cart_quantity) < 1) {
                         $('#icon_ID').html('<p>Моя корзина</p>');
                     } else {
@@ -119,8 +119,8 @@ $(function() {
             },
             success: function (response) {
             if (response.success) {
-                let value = $('#quantityID_' + product_id).text();
-                let result_value = Number(value) - 1
+                let value = $('#quantityID_' + product_id).val();
+                let result_value = $('#quantityID_' + product_id).val(Number(value) - 1);
                 
                 $('#icon_ID').html('<p>Моя корзина (' + (response.cart_quantity) + ')</p>');
                 $('#quantityID_' + product_id).text(result_value);
@@ -164,6 +164,7 @@ $(function() {
                     $('#product_row__' + product_id).remove();
                     $('#cart__header').remove();
                     $('#cart__body').remove();
+                    $('#basket__bottom').remove();
                     $('#cart__message').html('<p>В настоящий момент в корзине нет товаров...</p>').css({
                         'display': 'block',
                         'margin-top': '50px',
@@ -193,6 +194,7 @@ $(function() {
                 $('#icon_ID').html('<p>Моя корзина</p>');
                 $('#cart__header').remove();
                 $('#cart__body').remove();
+                $('#basket__bottom').remove();
                 $('#cart__message').html('<p>В настоящий момент в корзине нет товаров...</p>').css({
                     'display': 'block',
                     'margin-top': '50px',
@@ -248,7 +250,7 @@ $(function() {
             if (response.success && response.both_correct) {
                 $('#promo_formID').addClass('promocode_ok');
                 $('#bonuses_formID').addClass('promocode_ok');
-                window.location.href = 'https://5666-46-138-94-207.ngrok-free.app/order/tinkoff-kassa/';
+                window.location.href = 'https://f766-46-138-94-207.ngrok-free.app/order/tinkoff-kassa/';
             } else if (response.success && response.promocode && response.bonuses === false) {
                 $('#promo_formID').addClass('promocode_ok');
                 $('#bonuses_formID').addClass('promocode_error');

@@ -32,7 +32,6 @@ def add_to_cart(request):
 
 def add_product(request):
     if request.method == 'POST':
-        # utilities_object = UtilitiesFunctions(request.user)
         product_id = request.POST.get('product_id')
         product = Product.objects.get(id=product_id)
         
@@ -41,14 +40,9 @@ def add_product(request):
         
         cart_quantity = cart.get_all_items()
         product_amount = cart.get_product_quantity(product.id)
-        total_price = cart.get_total_price()
-
-        current_price = product_amount * product.price
-        # product_bonuses = utilities_object.showing_income_balls(int(current_price))
 
         return JsonResponse({'success': True, 'cart_quantity': cart_quantity,
-                             'price': product.price, 'product_amount': product_amount,
-                             'total_price': total_price})
+                             'price': product.price, 'product_amount': product_amount})
 
 
 def add_certain_amount(request):

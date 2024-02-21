@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% block title %}Корзина{% endblock %}
+{% load static %}
+{% block content %}
+            <main class="page">
+                <div data-observ></div>
+                <div class="basket">
+                    <div class="basket__container">
+                        <div class="basket__crumbs crumbs">
+                            <div class="crumbs__item">
+                                <a href={% url 'main_page' %}>Главная </a>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                    <path d="M7.5 15.5L12.5 10.5L7.5 5.5" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div class="crumbs__item select"><a href="#">Корзина</a></div>
+                        </div>
+                        {% if cart|length == 0 %}
+                        <p class="basket__title" style='margin-top:50px;text-align:center;'>В настоящий момент в корзине нет товаров...</p>
+                        {% else %}    
+                        <p class="basket__title" style='margin-top:50px;text-align:center;display:none;' id="cart__message">В настоящий момент в корзине нет товаров...</p>
+                        <div class="basket__head" id="cart__header">
+                            <h2 class="basket__title">Корзина</h2>
+                            <form action="{% url 'clear-cart' %}" method="post" class="delete__all">
+                                {{ item.update_quantity_form.quantity }}
+                                {{ item.update_quantity_form.update }}
+                                <input type="submit" value="Очистить корзину" class="button white basket__button-clear"> 
+                                {% csrf_token %}
+                            </form>
+                        </div>
+                        <div class="prod-tab basket__tab-product" id="cart__body">
+                            <div class="prod-tab__head">
+                                <div class="prod-tab__row">
+                                    <div class="prod-tab__name">Продукт</div>
+                                    <div class="prod-tab__score">Объем</div>
+                                    <div class="prod-tab__score">Количество</div>
+                                    <div class="prod-tab__score prod-tab__score-bonus">Бонусы при покупке</div>
+                                    <div class="prod-tab__score prod-tab__price">Стоимость</div>
+                                    <div class="prod-tab__remove"></div>
+                                </div>
+                            </div>
+                                                          
+                            <div class="prod-tab__body">
+                                <div class="prod-tab__row prod-tab__row-product">
+                                    <div class="prod-tab__name">
+                                        <picture>
+                                            <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                            <img src={% static "images/top-card-img1.png"%} alt="" class="prod-tab__img" />
+                                        </picture>
+                                        <div class="prod-tab__about">
+                                            <h3>Marc-Antoine Barrois Ganymede</h3>
+                                            <p class="prod-tab__category">Женский аромат</p>
+                                            <div class="price prod-tab-price">1 590 RUB</div>
+                                            <div class="quantity">
+                                                <div class="quantity__row">
+                                                    <button class="quantity__number-minus" type="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                            <path d="M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                    <input type="number" min="1" value="1" readonly="readonly" class="quantity__input" />
+                                                    <button class="quantity__number-plus" type="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                            <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="button white prod-tab__button-remove" data-type="popup-remov">Удалить</div>
+                                        </div>
+                                    </div>
+                                    <div class="prod-tab__score">20 мл</div>
+                                    <div class="prod-tab__score quantity"> 
+                                        <div class="quantity__row">
+                                            <button class="quantity__number-minus" type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                    <path d="M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                            <input type="number" min="1" value="1" readonly="readonly" class="quantity__input" />
+                                            <button class="quantity__number-plus" type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                    <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="prod-tab__score prod-tab__score-bonus">327</div>
+                                    <div class="prod-tab__score prod-tab__price prod-tab-price">1 590 RUB</div>
+                                    <div class="prod-tab__remove">
+                                        <div class="prod-tab__button-remove"><img src="images/button-remove.svg" alt="" data-type="popup-remov" /></div>
+                                    </div>
+                                </div>
+                                <div class="prod-tab__row prod-tab__row-product">
+                                    <div class="prod-tab__name">
+                                        <picture>
+                                            <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                            <img src={% static "images/top-card-img1.png"%} alt="" class="prod-tab__img" />
+                                        </picture>
+                                        <div class="prod-tab__about">
+                                            <h3>Marc-Antoine Barrois Ganymede</h3>
+                                            <p class="prod-tab__category">Женский аромат</p>
+                                            <div class="price prod-tab-price">1 590 RUB</div>
+                                            <div class="quantity">
+                                                <div class="quantity__row">
+                                                    <button class="quantity__number-minus" type="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                            <path d="M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                    <input type="number" min="1" value="1" readonly="readonly" class="quantity__input" />
+                                                    <button class="quantity__number-plus" type="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                            <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="button white prod-tab__button-remove" data-type="popup-remov">Удалить</div>
+                                        </div>
+                                    </div>
+                                    <div class="prod-tab__score">20 мл</div>
+                                    <div class="prod-tab__score quantity">
+                                        <div class="quantity__row">
+                                            <button class="quantity__number-minus" type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                    <path d="M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                            <input type="number" min="1" value="1" readonly="readonly" class="quantity__input" />
+                                            <button class="quantity__number-plus" type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                    <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="prod-tab__score prod-tab__score-bonus">327</div>
+                                    <div class="prod-tab__score prod-tab__price prod-tab-price">1 590 RUB</div>
+                                    <div class="prod-tab__remove">
+                                        <div class="prod-tab__button-remove"><img src="images/button-remove.svg" alt="" data-type="popup-remov" /></div>
+                                    </div>
+                                </div>
+                                <div class="prod-tab__row prod-tab__row-product">
+                                    <div class="prod-tab__name">
+                                        <picture>
+                                            <source srcset={% static 'images/top-card-img1.webp' %} type="image/webp" />
+                                            <img src={% static "images/top-card-img1.png"%} alt="" class="prod-tab__img" />
+                                        </picture>
+                                        <div class="prod-tab__about">
+                                            <h3>Marc-Antoine Barrois Ganymede</h3>
+                                            <p class="prod-tab__category">Женский аромат</p>
+                                            <div class="price prod-tab-price">1 590 RUB</div>
+                                            <div class="quantity">
+                                                <div class="quantity__row">
+                                                    <button class="quantity__number-minus" type="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                            <path d="M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                    <input type="number" min="1" value="1" readonly="readonly" class="quantity__input" />
+                                                    <button class="quantity__number-plus" type="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                            <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="button white prod-tab__button-remove" data-type="popup-remov">Удалить</div>
+                                        </div>
+                                    </div>
+                                    <div class="prod-tab__score">20 мл</div>
+                                    <div class="prod-tab__score quantity">
+                                        <div class="quantity__row">
+                                            <button class="quantity__number-minus" type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                    <path d="M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                            <input type="number" min="1" value="1" readonly="readonly" class="quantity__input" />
+                                            <button class="quantity__number-plus" type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                    <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="prod-tab__score prod-tab__score-bonus">327</div>
+                                    <div class="prod-tab__score prod-tab__price prod-tab-price">1 590 RUB</div>
+                                    <div class="prod-tab__remove">
+                                        <div class="prod-tab__button-remove"><img src="images/button-remove.svg" alt="" data-type="popup-remov" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                            
+                        <div class="basket__bot">
+                            <div class="basket__result">
+                                <p>Предварительный итог:</p>
+                                <p class="basket__result-price" id="total_price">{{ cart.get_total_price }} RUB</p>
+                            </div>
+                            <div class="basket__result">
+                                {% if user.is_authenticated %}
+                                <p>Начисление бонусов:</p>
+                                <div class="basket__result-bonus">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                        <g clip-path="url(#clip0_412_4433)">
+                                            <path
+                                                d="M15.9834 31.9668C24.8108 31.9668 31.9668 24.8108 31.9668 15.9834C31.9668 7.15602 24.8108 0 15.9834 0C7.15602 0 0 7.15602 0 15.9834C0 24.8108 7.15602 31.9668 15.9834 31.9668Z"
+                                                fill="#FEA048"
+                                            />
+                                            <path
+                                                d="M15.9834 28.4187C22.8512 28.4187 28.4186 22.8512 28.4186 15.9835C28.4186 9.11566 22.8512 3.54822 15.9834 3.54822C9.1156 3.54822 3.54816 9.11566 3.54816 15.9835C3.54816 22.8512 9.1156 28.4187 15.9834 28.4187Z"
+                                                fill="white"
+                                            />
+                                            <path
+                                                d="M15.9834 28.7835C8.95336 28.7835 3.18341 23.0467 3.18341 15.9835C3.18341 8.95342 8.95336 3.18347 15.9834 3.18347C23.0135 3.18347 28.7834 8.95342 28.7834 15.9835C28.7834 23.0467 23.0466 28.7835 15.9834 28.7835ZM15.9834 3.91301C9.31813 3.91301 3.91294 9.31819 3.91294 15.9835C3.91294 22.6488 9.31813 28.0539 15.9834 28.0539C22.6487 28.0539 28.0539 22.6488 28.0539 15.9835C28.0539 9.31819 22.6487 3.91301 15.9834 3.91301Z"
+                                                fill="#0C0103"
+                                            />
+                                            <path
+                                                d="M16.7461 9.58341L18.3378 12.7668C18.4705 12.999 18.7026 13.1648 18.9679 13.2311L22.4829 13.7285C23.1461 13.828 23.4445 14.657 22.9471 15.1544L20.3938 17.6414C20.1948 17.8404 20.0953 18.1057 20.1616 18.371L20.7254 21.886C20.858 22.5492 20.1285 23.0798 19.5316 22.7482L16.3813 21.0901C16.1492 20.9575 15.8508 20.9575 15.6186 21.0901L12.4684 22.7482C11.8715 23.0798 11.142 22.5492 11.2746 21.886L11.8715 18.371C11.9047 18.1057 11.8383 17.8404 11.6394 17.6414L9.086 15.1544C8.58859 14.6901 8.85388 13.828 9.55025 13.7285L13.0653 13.2311C13.3306 13.1979 13.5627 13.0321 13.6953 12.7668L15.287 9.58341C15.5523 8.98652 16.4477 8.98652 16.7461 9.58341Z"
+                                                fill="#FEA048"
+                                            />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_412_4433"><rect width="32" height="32" fill="white" /></clipPath>
+                                        </defs>
+                                    </svg>
+                                    <p id="bonuses_ID">{{ total_bonuses_counter }}</p>
+                                </div>
+                                {% else %}
+                                <p>Для подсчета бонусов<br> необходимо авторизоваться</p>
+                                {% endif %}
+                            </div>
+                            <div class="basket__button-row"><a href="{% url 'order:order-create' %}" class="button basket__button">ПЕРЕЙТИ К ОФОРМЛЕНИЮ</a></div>
+                        </div>
+                    </div>
+                </div>
+                
+                {% endif %}
+            </main>
+{% endblock %}
