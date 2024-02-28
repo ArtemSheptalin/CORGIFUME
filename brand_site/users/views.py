@@ -34,7 +34,7 @@ class RegForm(CreateView):
         new_user = form.instance
         date_of_birth = str(form.cleaned_data['date_of_birth'])
 
-        profile = Profile.objects.create(user=new_user, first_name=form.cleaned_data['first_name'], date_of_birth=date_of_birth, user_id=new_user.id)
+        profile = Profile.objects.create(user=new_user, first_name=form.cleaned_data['first_name'], last_name=form.cleaned_data['last_name'], date_of_birth=date_of_birth, user_id=new_user.id)
         promocodes = PromoCode.objects.all()
 
         for promocode in promocodes:

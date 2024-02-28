@@ -232,16 +232,26 @@
                                     {% for product in page_obj %}
                                     <div class="card catalog__card">
                                         <div class="card__body">
+                                            {% comment %} {{product.image.all }} {% endcomment %}
                                             {% for image in product.image.all %}
-                                                {% if forloop.counter == 1 %}
-                                                <a href="{{product.get_absolute_url}}">
+                                                <a href="{{product.get_absolute_url}}"> 
                                                     <picture>
-                                                        <source srcset="{{ product.image.url }}" type="image/webp">
-                                                        <img src="{{ image }}" alt="" class="card__img">
+                                                        {% if image %}
+                                                            
+                                                            {% if forloop.counter == 1 %}
+                                                                <source srcset="{{ product.image.url }}" type="image/webp">
+                                                                <img src="{{ image }}" alt="" class="card__img">
+                                                            {% endif %}
+                                                        {% elif product.image.all|length == 0  %}
+                                                            
+                                                            {% comment %} {% if forloop.counter == 1 %} {% endcomment %}
+                                                                <source srcset={% static 'images/default.png' %} type="image/webp">
+                                                                <img src={% static 'images/default.png' %} alt="" class="card__img">
+                                                            {% comment %} {% endif %} {% endcomment %}
+                                                        {% endif %}
                                                     </picture>
                                                 </a>
-                                                {% endif %}
-                                            {% endfor %}  
+                                            {% endfor %} 
                                             <h3 class="card__title" style="display: inline;">{{ product.name }}</h3>
                                             <div class="card__discount">Сэкономьте 40% <span>+ дополнительно 5%</span></div>
                                             <div class="card__row-star">
@@ -256,9 +266,11 @@
                                                   (Тестер)
                                                 {% endif %}
                                               </div>
-                                              
+                                            {% if product.price is none or product.price == 0 %}
+                                            <div class="card__price">Нет в наличии</div>
+                                            {% else %}
                                             <div class="card__price">{{ product.price }} RUB</div>
-                                                
+                                            {% endif %}  
 
                                             <a href="{{product.get_absolute_url}}" class="button card__button">КУПИТЬ СЕЙЧАС</a>
                                         </div>

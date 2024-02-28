@@ -21,4 +21,6 @@ urlpatterns = [
     path('delete-cart/', delete_all, name="clear-cart"),
     path('product-card/<int:id>/', ProductCardView.as_view(), name='product'),
     path('about-us/', AboutUsView.as_view(), name='about_us'),
+    path('cogifume-conditions/', ConditionsView.as_view(), name='conditions'),
+    path('cogifume-requisites/', RequisitesView.as_view(), name='requisites'),
 ]

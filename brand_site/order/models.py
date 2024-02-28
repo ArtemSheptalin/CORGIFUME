@@ -30,6 +30,7 @@ class Order(models.Model):
     shipment_date = models.CharField(max_length=20, null=True, blank=True)
     order_price = models.FloatField(default=0.0)
     loyal_status = models.CharField(default='Новичок')
+    comment = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return self.order_number

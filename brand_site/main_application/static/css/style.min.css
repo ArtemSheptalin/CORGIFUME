@@ -2580,6 +2580,7 @@ textarea::placeholder {
 .bonus {
   margin-top: 1.375rem;
   background-color: #efa35a;
+  display: none;
 }
 
 .bonus__container {
@@ -2743,6 +2744,7 @@ textarea::placeholder {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border-bottom: 1px solid #c0c0c0;
 }
 
 .bottom-header:hover .bottom-header__wrapper {
@@ -2755,7 +2757,6 @@ textarea::placeholder {
   display: -ms-flexbox;
   display: flex;
   gap: 7.5rem;
-  border-bottom: 1px solid #c0c0c0;
 }
 
 .bottom-header__row {
@@ -9402,15 +9403,14 @@ input[type=number]::-webkit-outer-spin-button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: 20px auto;
+  margin: 2px auto;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  max-width: 300px;
-  width: 300px;
+  max-width: 250px;
 }
-  
+
 .payform-tinkoff-row {
   margin: 2px;
   border-radius: 4px;
@@ -9428,19 +9428,60 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .payform-tinkoff-row:focus {
-        background-color: #FFFFFF;
-        border: 1px solid #616871;
-        border-radius: 4px;
+  background-color: #FFFFFF;
+  border: 1px solid #616871;
+  border-radius: 4px;
 }
 
 .payform-tinkoff-btn {
-        background-color: #FBC520;
-        border: 1px solid #FBC520;
-        color: #3C2C0B;
-}
-    
-.payform-tinkoff-btn:hover {
-        background-color: #FAB619;
-        border: 1px solid #FAB619;
+  background-color: #FBC520;
+  border: 1px solid #FBC520;
+  color: #3C2C0B;
 }
 
+.payform-tinkoff-btn:hover {
+  background-color: #FAB619;
+  border: 1px solid #FAB619;
+}
+
+.about__conditions {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@media (max-width: 998px) {
+  .about__conditions {
+    font-size: 24px;
+  }
+}
+
+.bonus.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.conditions__header {
+  text-align: left;
+  font-size: 24px;
+  margin: 10px;
+}
+
+.conditions__item {
+  padding: 5px 0;
+}
+
+.conditions__subheader {
+  text-align: left;
+  font-size: 18px;
+  margin: 10px 40px;
+}
+
+.conditions__paragraph {
+  text-align: left;
+  font-size: 18px;
+  margin: 10px 40px;
+  font-weight: normal;
+}

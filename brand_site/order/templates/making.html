@@ -108,6 +108,10 @@
                                                     <label for="name" class="delivery__label">Списать бонусов:</label> 
                                                     {{ form.current_bonuses }}
                                                 </div>
+                                                <div class="delivery__row-input">
+                                                    <label for="name" class="delivery__label">Комментарий:</label> 
+                                                    {{ form.comment }}
+                                                </div>
                                                 
                                                 {% comment %} <p class="text__ok" id="text_error">Количество запрашиваемых бонусов меньше доступных!</p>  {% endcomment %}
                                                 <button type="submit" class="button delivery__button" id="delivery__buttonID">ПЕРЕЙТИ К ОПЛАТЕ</button>
@@ -124,18 +128,20 @@
                                         </div>
                                         <div class="score-making__item">
                                             <p>{{ cart.get_total_len }} товаров</p>
-                                            <p>{{ cart.get_total_price }},00 RUB</p>
+                                            <p>{{ cart.get_total_price }} RUB</p>
                                         </div>
-                                        {% if birthday_discount != total_price %}
+                                        {% if birthday_discount != 0 %}
                                             <div class="score-making__item">
                                                 <p>Скидка</p>
                                                 <p>{{ birthday_discount }},00 RUB</p>
                                             </div>
                                         {% endif %}
+                                        {% if total_price < 5000 %}
                                         <div class="score-making__item">
                                             <p>Доставка</p>
                                             <p>199,00 RUB</p>
                                         </div>
+                                        {% endif %}
                                         <div class="score-making__title-bonus">
                                             <p>Бонусы</p>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">

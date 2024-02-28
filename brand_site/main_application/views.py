@@ -237,6 +237,12 @@ class CatalogQuerysetBrand(ListView):
         return data
 
 
+class ConditionsView(TemplateView):
+    template_name = 'conditions.html'
+
+
+class RequisitesView(TemplateView):
+    template_name = 'requisites.html'
     
 
     

@@ -45,12 +45,45 @@ class OrderCreate(CreateView):
         cart = Cart(self.request)
         utilities_object = UtilitiesFunctions(self.request.user)
         profile = Profile.objects.get(user=self.request.user.id)
-        total_price = int(cart.get_total_price()) + 199
+
+        total_price = int(cart.get_total_price())
+        birthday = utilities_object.if_birthday()
         birthday_price = utilities_object.birthday_discount(int(cart.get_total_price()))
+        
+        '''
+            Если ДР и сумма заказа > 5000:
+                1) Скидка 
+                2) Результат
+            Если ДР и сумма заказа < 5000:
+                1) Скидка
+                2) Доставка
+                3) Результат
+            Если нет ДР и сумма заказа > 5000:
+                1) Результат
+            Если нет ДР и сумма заказа < 5000:
+                1) Доставка
+                2) Результат
+        '''
+
+        if birthday and total_price >= 5000:
+            birthday_discount = total_price - birthday_price
+        
+        elif birthday and total_price < 5000:
+            birthday_discount = total_price - birthday_price
+            birthday_price += 199
+        
+        elif not birthday and total_price >= 5000:
+            birthday_discount = 0
+            birthday_price = total_price
+        
+        elif not birthday and total_price < 5000:
+            birthday_discount = 0
+            birthday_price += 199
+        
 
         data.update({'cart': cart, 'total_bonuses': utilities_object.showing_income_balls(int(cart.get_total_price())), 
                      'current_bonuses': int(profile.current_bonuses), 'total_price': total_price,
-                     'birthday_discount': total_price - birthday_price, 'birthday_price': birthday_price + 199 })
+                     'birthday_discount': birthday_discount, 'birthday_price': birthday_price })
         return data
 
 
@@ -70,7 +103,6 @@ def check_bonuses(request):
     if request.method == 'POST':
         profile = Profile.objects.get(user=request.user.id)
         cart = Cart(request)
-        promocodes = PromoCode.objects.all()
         current_bonuses = int(profile.current_bonuses)
         bonuses = request.POST.get('input_bonuses')  
         promocode = request.POST.get('input_promo') 
@@ -104,6 +136,7 @@ def check_bonuses(request):
             'order_price': order_price.replace(',00 RUB', ''),
             'loyal_status': profile.loyal_status,
             'products': products_dict,
+            'comment': request.POST.get('comment') if not None else '',
         }
         
         try:
@@ -203,15 +236,13 @@ def promocode_exists(promocode):
 
 def create_order(data_dictionary, profile, order_price, promocode):
 
-    # print(f"\nИтоговая цена: {order_price}\nВведённый промокод: {promocode}\n")
+    print(f"\nИтоговая цена: {order_price}\nВведённый промокод: {promocode}\n")
 
     exists = promocode_exists(promocode)
     
     if exists:
         promocode_discount = PromoCode.objects.get(title=promocode)
         order_price = order_price - promocode_discount.discount  
-
-    print(f"\nИтоговая цена: {order_price}\n")     
 
     try:
         order = Order.objects.create(
@@ -231,6 +262,7 @@ def create_order(data_dictionary, profile, order_price, promocode):
             order_price=order_price,
             loyal_status=data_dictionary['loyal_status'],
             product=data_dictionary['products'],
+            comment=data_dictionary['comment'],
         )
     except Exception as _:
         print(f"\nОшибка: {_}\n")

@@ -59,7 +59,7 @@
 
                                             <div class="quantity">
                                                 <div class="quantity__row">
-                                                    <form action="{% url 'remove_cart_second' %}" method="post" class="removeCartClass__second">
+                                                    <form action="{% url 'remove_cart_second' %}" method="post" class="removeCartClass__first_instance">
                                                         {% csrf_token %}
                                                         {{ item.update_quantity_form.quantity }}
                                                         {{ item.update_quantity_form.update }}
@@ -71,9 +71,9 @@
                                                         </button>
                                                     </form>
         
-                                                    <input class="quantity__input" id="quantityID_{{item.product.id}}" value="{{ item.quantity }}"/>
+                                                    <span class="quantity__input" id="quantityID_mobile_{{item.product.id}}">{{ item.quantity }}</span>
         
-                                                    <form action="{% url 'add_certain' %}" method="post" class="addCartClass">
+                                                    <form action="{% url 'add_certain' %}" method="post" class="addCartClass__first_instance">
                                                         {% csrf_token %}
                                                         {{ item.update_quantity_form.quantity }}
                                                         {{ item.update_quantity_form.update }}
@@ -98,7 +98,6 @@
                                     <div class="prod-tab__score quantity">
 
                                         <div class="quantity__row">
-
                                             <form action="{% url 'remove_cart_second' %}" method="post" class="removeCartClass__second">
                                                 {% csrf_token %}
                                                 {{ item.update_quantity_form.quantity }}
@@ -111,7 +110,7 @@
                                                 </button>
                                             </form>
 
-                                            <input class="quantity__input" id="quantityID_{{item.product.id}}" value="{{ item.quantity }}"/>
+                                            <span class="quantity__input" id="quantityID_{{item.product.id}}">{{ item.quantity }}</span>
 
                                             <form action="{% url 'add_certain' %}" method="post" class="addCartClass">
                                                 {% csrf_token %}
@@ -124,12 +123,11 @@
                                                     </svg>
                                                 </button>
                                             </form>
-                                            
                                         </div>
 
                                     </div>
 
-                                    <div class="prod-tab__score prod-tab__score-bonus" id="product_bonuses_ID">{{ product_bonuses }}</div>
+                                    <div class="prod-tab__score prod-tab__score-bonus" id="bonusesID__{{item.product.id}}">{{ item.bonuses }}</div>
                                     <div class="prod-tab__score prod-tab__price prod-tab-price" id="item_total_price_{{ item.product.id }}">{{ item.total_price }} RUB</div>
                                     <div class="prod-tab__remove">
                                         <a href="{% url 'delete_product' id=item.product.id %}" class="removeProductLink" name="product_id" value="{{ item.product.id }}" id="delete_{{item.product.id}}">

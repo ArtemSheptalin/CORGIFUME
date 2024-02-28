@@ -257,10 +257,11 @@
                             <div class="footer__item">
                                 <div class="footer__title-list">Информация о компании</div>
                                 <ul class="footer__list">
-                                    <li class="footer__li"><a href="#">Условия пользования</a></li>
+                                    <li class="footer__li"><a href="{% url 'conditions' %}">Условия пользования</a></li>
                                     <li class="footer__li"><a href="#">Политика конфиденциальности</a></li>
                                     <li class="footer__li"><a href="#">Информация о файлах coockie</a></li>
                                     <li class="footer__li"><a href="#">Индивидуальные предложения</a></li>
+                                    <li class="footer__li"><a href="{% url 'requisites' %}">Реквизиты продавца</a></li>
                                 </ul>
                             </div>
                             <div class="footer__item">
@@ -293,7 +294,7 @@
                         </div>
                     </div>
                     <div class="footer-bot footer__bottom">
-                        <div class="footer-bot__protected">© 2023 CORGIFUME. Все права защищены.</div>
+                        <div class="footer-bot__protected">© 2024 CORGIFUME. Все права защищены.</div>
                         <ul class="footer-bot__list">
                             <li class="footer-bot__li"><a href="#">Политика конфиденциальности</a></li>
                             <li class="footer-bot__li"><a href="#">Условия использования</a></li>
@@ -309,24 +310,70 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src={% static 'js/ajax.js' %}></script>  
         <script>
-            let bonusButton = document.getElementById("bonusID");
-            let bonusBlock = document.getElementById('bonus__Header');
+            document.addEventListener('DOMContentLoaded', function() {
 
-            let isHidden = localStorage.getItem('isHidden');
+                let bonusButton = document.getElementById("bonusID");
+                let bonusBlock = document.getElementById('bonus__Header');
 
-            if (isHidden === 'true') {
-                bonusBlock.style.display = 'none';
-            }
+                if (!sessionStorage.getItem('modalClosed'))  { 
+                    showModal(); 
+                } 
+                
 
-            bonusButton.addEventListener('click', function() {
-                bonusBlock.style.opacity = '0';
-                bonusBlock.style.transition = 'opacity 1.5s';
-                setTimeout(function() {
-                    bonusBlock.style.display = 'none';
-                    localStorage.setItem('isHidden', 'true');
-                }, 300);
+                function showModal() {
+                    bonusBlock.style.display = 'block';
+                }
+
+                
+
+                function hideModal() {
+                    bonusBlock.style.opacity = '0';
+                    bonusBlock.style.transition = 'opacity 1.5s';
+                    bonusBlock.style.pointerEvents = 'none';
+                    setTimeout(function() {
+                        bonusBlock.style.display = 'none';
+                    }, 300);
+
+                    sessionStorage.setItem('modalClosed', 'true');
+                }
+
+                bonusButton.addEventListener('click', () => {
+                    hideModal();
+                });
             });
+
         </script>   
-        <script src="https://securepay.tinkoff.ru/html/payForm/js/tinkoff_v2.js"></script>       
+        <script type="text/javascript">
+            const TPF = document.getElementById("payform-tinkoff");
+        
+            TPF.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const {description, amount, email, phone, receipt} = TPF;
+        
+                if (receipt) {
+                    if (!email.value && !phone.value)
+                        return alert("Поле E-mail или Phone не должно быть пустым");
+        
+                    TPF.receipt.value = JSON.stringify({
+                        "EmailCompany": "help@corgifume.com",
+                        "Taxation": "usn_income",
+                        "Items": [
+                            {
+                                "Name": description.value || "Оплата",
+                                "Price": amount.value + '00',
+                                "Quantity": 1.00,
+                                "Amount": amount.value + '00',
+                                "PaymentMethod": "full_prepayment",
+                                "PaymentObject": "commodity",
+                                "Tax": "none"
+                            }
+                        ]
+                    });
+                }
+                pay(TPF);
+            })
+        </script> 
+        <script src="https://securepay.tinkoff.ru/html/payForm/js/tinkoff_v2.js"></script>     
+        
 </body>
 </html>

@@ -24,6 +24,7 @@ class OrderForm(forms.ModelForm):
     shipment_date = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'readonly': 'readonly', 'id': 'shipment_date_ID'}))
     promo = forms.CharField(max_length=10, required=False, widget=forms.TextInput(attrs={'class': 'delivery__input', 'id': 'promo_formID'}))
     current_bonuses = forms.CharField(max_length=10000, required=False, widget=forms.TextInput(attrs={'class': 'delivery__input', 'id': 'bonuses_formID'}))
+    comment = forms.CharField(max_length=250, required=False, widget=forms.TextInput(attrs={'class': 'delivery__input', 'id': 'comment_ID'}))
 
     class Meta:
         model = Profile
@@ -42,6 +43,7 @@ class PaymentForm(forms.Form):
     terminalkey = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': '1708362189241DEMO', 'value': '1708362189241DEMO'}))
     frame = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': 'frame', 'value': 'false'}))
     language = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': 'language', 'value': 'ru'}))
+    reciept = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': 'receipt', 'value': ''}))
     amount = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'Сумма заказа', 'readonly': 'true'}), required=True)
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'ФИО плательщика', 'readonly': 'true'}))
     email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'E-mail', 'readonly': 'true'}))

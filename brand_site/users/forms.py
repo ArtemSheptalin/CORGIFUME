@@ -7,10 +7,11 @@ from .models import Profile
 class NewUserForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'registrationFormDes', 'required': 'true', 'placeholder': 'Придумайте пароль'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'registrationFormDes', 'required': 'true', 'placeholder': 'Повторите ваш пароль'}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Введите ваше имя'}))
-    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Номер телефона'}))
-    email_for_reset = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'E-mail адрес'}))
-    date_of_birth = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'placeholder': 'Дата рождения', 'id': 'birthId'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input','required': 'true', 'placeholder': 'Введите ваше имя'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'required': 'true', 'placeholder': 'Введите вашу фамилию'}))
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'required': 'true', 'placeholder': 'Номер телефона'}))
+    email_for_reset = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'required': 'true', 'placeholder': 'E-mail адрес'}))
+    date_of_birth = forms.CharField(widget=forms.TextInput(attrs={'class': '_req form-ent__input', 'required': 'true', 'placeholder': 'Дата рождения', 'id': 'birthId'}))
 
     class Meta:
         model = NewUser

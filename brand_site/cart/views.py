@@ -45,6 +45,21 @@ def add_product(request):
                              'price': product.price, 'product_amount': product_amount})
 
 
+# def add_one(request):
+#     if request.method == 'POST':
+#         product_id = request.POST.get('product_id')
+#         product = Product.objects.get(id=product_id)
+        
+#         cart = Cart(request)
+#         cart.add(product=product)
+        
+#         cart_quantity = cart.get_all_items()
+#         product_amount = cart.get_product_quantity(product.id)
+
+#         return JsonResponse({'success': True, 'cart_quantity': cart_quantity,
+#                              'price': product.price, 'product_amount': product_amount})
+
+
 def add_certain_amount(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
@@ -138,6 +153,7 @@ def delete_all(request):
         cart.clear()
         cart_quantity = cart.get_total_len()
         return JsonResponse({'success': True, 'cart_quantity': cart_quantity})
+    
 
 
 class CartDetail(LoginRequiredMixin, TemplateView):
@@ -170,7 +186,9 @@ class CartDetail(LoginRequiredMixin, TemplateView):
             
             if first_image:
                 images.append(first_image)
-        data['product_bonuses'] = utilities_object.showing_income_balls(int(current_price))
+        
+        for item in cart:
+            item['bonuses'] = utilities_object.showing_income_balls(int(item['price']))
         data['contents'] = contents
         data['images'] = images
 

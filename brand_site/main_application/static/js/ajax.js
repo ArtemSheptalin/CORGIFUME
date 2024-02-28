@@ -31,6 +31,39 @@ $(function() {
 });
 
 $(function() {
+    $('.addOneProduct').on('submit', function(e){ 
+        e.preventDefault();
+        let product_id = $(this).find('[name="product_id"]').attr('id').split('_')[1];
+        
+        $.ajax({
+            url: '/add-product/',
+            type: 'post',
+            data: {
+                product_id: product_id,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (response) {
+                if (response.success) {
+                    let value = $('#quantityID_' + product_id).text();
+                    $('#quantityID_' + product_id).text(Number(value) + 1);
+                    window.location.href = 'https://1f24-192-109-241-91.ngrok-free.app/cart/';
+                    if ((response.cart_quantity) < 1) {
+                        $('#icon_ID').html('<p>Моя корзина</p>');
+                    } else {
+                        $('#icon_ID').html('<p>Моя корзина (' + (response.cart_quantity) + ')</p>');
+                        $('#item_total_price_' + product_id).html('<p>' + (response.price * response.product_amount) + ',00 RUB</p>');
+                        $('#total_price').html('<p>' + (response.total_price) + 'RUB</p>');
+                        $('#product_bonuses_ID').html('<p>' + (response.product_bonuses) + '</p>');
+                    }
+                } else {
+                    console.log(response);
+                }
+            }
+        });     
+    });
+});
+
+$(function() {
     $('.removeCartClass').on('submit', function(e){ 
         e.preventDefault();
         let product_id = $(this).find('[name="product_id"]').attr('id').split('_')[1];
@@ -70,6 +103,75 @@ $(function() {
 // Страница Корзины
 
 $(function() {
+    $('.addCartClass__first_instance').on('submit', function(e){ 
+        e.preventDefault();
+        let product_id = $(this).find('[name="product_id"]').attr('id').split('_')[1];
+        let current_price = $('#item_total_price_' + product_id).text().split(',')[0];
+        $.ajax({
+            url: '/add-certain-amount/',
+            type: 'post',
+            data: {
+                product_id: product_id,
+                current_price: current_price,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (response) {
+                if (response.success) {
+                    let value = $('#quantityID_mobile_' + product_id).text();
+                    $('#quantityID_mobile_' + product_id).text(Number(value) + 1);
+                    if ((response.cart_quantity) < 1) {
+                        $('#icon_ID').html('<p>Моя корзина</p>');
+                    } else {
+                        $('#icon_ID').html('<p>Моя корзина (' + (response.cart_quantity) + ')</p>');
+                        $('#item_total_price_' + product_id).html('<p>' + (response.price * response.product_amount) + ',00 RUB</p>');
+                        $('#total_price').html('<p>' + (response.total_price) + 'RUB</p>');
+                        $('#bonuses_ID').html('<p>' + (response.bonuses) + '</p>');
+                        $('#bonusesID__' + product_id).html('<div>' + (response.product_bonuses) + '</div>');
+                    }
+                } else {
+                    console.log(response);
+                }
+            }
+        });     
+    });
+});
+
+$(function() {
+    $('.removeCartClass__first_instance').on('submit', function(e){ 
+        e.preventDefault();
+        let product_id = $(this).find('[name="product_id"]').attr('id').split('_')[1];
+        let current_price = $('#item_total_price_' + product_id).text().split(',')[0];
+        
+        $.ajax({
+            url: '/remove_second/',
+            type: 'post',
+            data: {
+                product_id: product_id,
+                current_price: current_price,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (response) {
+            if (response.success) {
+                let value = $('#quantityID_mobile_' + product_id).text();
+                let result_value = Number(value) - 1
+                let current_price = $('#item_total_price_' + product_id).text().split(',')[0];
+                
+                $('#icon_ID').html('<p>Моя корзина (' + (response.cart_quantity) + ')</p>');
+                $('#quantityID_mobile_' + product_id).text(result_value);
+                $('#item_total_price_' + product_id).html('<p>' + (current_price - response.price) + ',00 RUB</p>');
+                $('#total_price').html('<p>' + (response.total_price) + 'RUB</p>');
+                $('#bonuses_ID').html('<p>' + (response.bonuses) + '</p>');
+                $('#bonusesID__' + product_id).html('<div>' + (response.product_bonuses) + '</div>');
+            
+            } else {
+                console.log(response);
+            }
+        }
+    });     
+  });
+});
+
+$(function() {
     $('.addCartClass').on('submit', function(e){ 
         e.preventDefault();
         let product_id = $(this).find('[name="product_id"]').attr('id').split('_')[1];
@@ -84,8 +186,8 @@ $(function() {
             },
             success: function (response) {
                 if (response.success) {
-                    let value = $('#quantityID_' + product_id).val();
-                    $('#quantityID_' + product_id).val(Number(value) + 1);
+                    let value = $('#quantityID_' + product_id).text();
+                    $('#quantityID_' + product_id).text(Number(value) + 1);
                     if ((response.cart_quantity) < 1) {
                         $('#icon_ID').html('<p>Моя корзина</p>');
                     } else {
@@ -93,7 +195,7 @@ $(function() {
                         $('#item_total_price_' + product_id).html('<p>' + (response.price * response.product_amount) + ',00 RUB</p>');
                         $('#total_price').html('<p>' + (response.total_price) + 'RUB</p>');
                         $('#bonuses_ID').html('<p>' + (response.bonuses) + '</p>');
-                        $('#product_bonuses_ID').html('<p>' + (response.product_bonuses) + '</p>');
+                        $('#bonusesID__' + product_id).html('<div>' + (response.product_bonuses) + '</div>');
                     }
                 } else {
                     console.log(response);
@@ -119,15 +221,16 @@ $(function() {
             },
             success: function (response) {
             if (response.success) {
-                let value = $('#quantityID_' + product_id).val();
-                let result_value = $('#quantityID_' + product_id).val(Number(value) - 1);
+                let value = $('#quantityID_' + product_id).text();
+                let result_value = Number(value) - 1
+                let current_price = $('#item_total_price_' + product_id).text().split(',')[0];
                 
                 $('#icon_ID').html('<p>Моя корзина (' + (response.cart_quantity) + ')</p>');
                 $('#quantityID_' + product_id).text(result_value);
                 $('#item_total_price_' + product_id).html('<p>' + (current_price - response.price) + ',00 RUB</p>');
                 $('#total_price').html('<p>' + (response.total_price) + 'RUB</p>');
                 $('#bonuses_ID').html('<p>' + (response.bonuses) + '</p>');
-                $('#product_bonuses_ID').html('<p>' + (response.product_bonuses) + '</p>');
+                $('#bonusesID__' + product_id).html('<div>' + (response.product_bonuses) + '</div>');
             
             } else {
                 console.log(response);
@@ -209,6 +312,8 @@ $(function() {
   });
 });
 
+
+
 // Проверка бонусов в форме при формировании заказа
 
 $(function() {
@@ -226,7 +331,7 @@ $(function() {
         let room = $('#room_ID').val();
         let shipment_date = $('#shipment_date_ID').val()
         let order_price = $('#res_price_ID').text();
-        console.log(order_price);
+        let comment = $('#comment_ID').val()
 
         $.ajax({
             url: "/order/check-bonuses/",
@@ -244,13 +349,14 @@ $(function() {
                 room: room,
                 shipment_date: shipment_date,
                 order_price: order_price,
+                comment: comment,
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             },
             success: function (response) {
             if (response.success && response.both_correct) {
                 $('#promo_formID').addClass('promocode_ok');
                 $('#bonuses_formID').addClass('promocode_ok');
-                window.location.href = 'https://f766-46-138-94-207.ngrok-free.app/order/tinkoff-kassa/';
+                window.location.href = 'https://1f24-192-109-241-91.ngrok-free.app/order/tinkoff-kassa/';
             } else if (response.success && response.promocode && response.bonuses === false) {
                 $('#promo_formID').addClass('promocode_ok');
                 $('#bonuses_formID').addClass('promocode_error');

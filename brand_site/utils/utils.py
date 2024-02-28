@@ -167,6 +167,23 @@ class UtilitiesFunctions():
         Выполняет в момент формирования заказа (см. файл работы с API)
     '''
 
+    def if_birthday(self):
+        current_date = timezone.now().date()
+        specific_date_string = self.profile.date_of_birth
+        pres = self.profile.has_birthday_present
+
+        today_year = timezone.now().year
+        specific_date = datetime.strptime(specific_date_string, '%d.%m.%Y').date()
+        specific_date = specific_date.replace(year=today_year)
+        
+        start_date = specific_date - timedelta(days=14)
+        end_date = specific_date + timedelta(days=14)
+
+        if start_date <= current_date <= end_date and not self.profile.has_birthday_present:
+            return True
+        else:
+            return False
+
     def birthday_discount(self, order_price):
 
         current_date = timezone.now().date()
@@ -183,7 +200,7 @@ class UtilitiesFunctions():
             
             if self.profile.loyal_status == 'Новичок':
                 discount = int(order_price // 100 * 3)
-                self.profile.has_birthday_present = True
+                # self.profile.has_birthday_present = True
                 return order_price - discount
         
             elif self.profile.loyal_status == 'Любитель':
@@ -206,7 +223,7 @@ class UtilitiesFunctions():
                 self.profile.has_birthday_present = True
                 return order_price - discount
         else:
-            return 0
+            return order_price
     
     
     '''
