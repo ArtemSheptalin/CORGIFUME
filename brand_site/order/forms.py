@@ -44,9 +44,11 @@ class PaymentForm(forms.Form):
     frame = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': 'frame', 'value': 'false'}))
     language = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': 'language', 'value': 'ru'}))
     reciept = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'type': 'hidden', 'name': 'receipt', 'value': ''}))
-    amount = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'Сумма заказа', 'readonly': 'true'}), required=True)
+    amount = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'Сумма заказа', 'readonly': 'true', 'required': 'true'}))
+    order_number = forms.CharField(widget=forms.TextInput(attrs={"class": "payform-tinkoff-row", "type": "hidden", "placeholder": "Номер заказа", "name": "order"}))
+    description = forms.CharField(widget=forms.TextInput(attrs={"class": "payform-tinkoff-row", "type": "hidden", "placeholder": "Описание заказа", "name": "description"}))
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'ФИО плательщика', 'readonly': 'true'}))
-    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'E-mail', 'readonly': 'true'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'E-mail', 'readonly': 'true', 'required': 'true'}))
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'payform-tinkoff-row', 'placeholder': 'Контактный телефон', 'readonly': 'true'}))    
 
 

@@ -43,9 +43,12 @@ class MainPageView(TemplateView):
         cart = Cart(self.request)
         data['product'] = product
         data['cart'] = cart
+        for key, value in self.request.session.items():
+            print(f"\nKey: {key}, Value: {value}\n")
+        # print(f"\n{self.request.session.keys()}\n")
         return data
     
-
+    
 
 class CatalogPageView(TemplateView):
     template_name = 'services.html'
