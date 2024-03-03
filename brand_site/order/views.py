@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from datetime import datetime, timedelta
 from loyal_program.models import *
 from product.models import *
+import re
 
 
 @method_decorator(login_required(login_url=reverse_lazy('users:login')), name='dispatch')

@@ -46,7 +46,7 @@ $(function() {
                 if (response.success) {
                     let value = $('#quantityID_' + product_id).text();
                     $('#quantityID_' + product_id).text(Number(value) + 1);
-                    window.location.href = 'https://54a2-46-138-93-13.ngrok-free.app/cart/';
+                    window.location.href = 'https://corgifume.ru/cart/';
                     if ((response.cart_quantity) < 1) {
                         $('#icon_ID').html('<p>Моя корзина</p>');
                     } else {
@@ -356,7 +356,7 @@ $(function() {
             if (response.success && response.both_correct) {
                 $('#promo_formID').addClass('promocode_ok');
                 $('#bonuses_formID').addClass('promocode_ok');
-                window.location.href = 'https://54a2-46-138-93-13.ngrok-free.app/order/tinkoff-kassa/';
+                window.location.href = 'https://corgifume.ru/order/tinkoff-kassa/';
             } else if (response.success && response.promocode && response.bonuses === false) {
                 $('#promo_formID').addClass('promocode_ok');
                 $('#bonuses_formID').addClass('promocode_error');

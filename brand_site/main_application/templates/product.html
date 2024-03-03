@@ -105,36 +105,7 @@
                             <div class="presentation__body product-card">
                                 <div class="presentation__head">
                                     <h1 class="presentation__title">{{ product.name }}</h1>
-                                    {% comment %} <div class="presentation__price">{{ product.price }} RUB</div> {% endcomment %}
-                                    {% comment %} {{ sizes }} {% endcomment %}
-                                    {% comment %} {{length_size}} {% endcomment %}
-                                    {% if length_size > 1 %}
-                                        {% for size in sizes %}
-                                        
-                                            {% if forloop.counter == 1 %}
-                                                <span class="price-number price-number-one _active">{{ size }}</span>
-                                            {% endif %}
-                                            {% if forloop.counter == 2 %}
-                                            <span class="price-number price-number-two">{{ size }}</span>
-                                            {% endif %}
-                                            {% if forloop.counter == 3 %}
-                                            <span class="price-number price-number-three">{{ size }}</span>
-                                            {% endif %}
-                                        {% comment %} <div class="presentation__price">
-                                            <span class="price-number price-number-one _active">3 400</span>
-                                            <span class="price-number price-number-two">5 000</span>
-                                            <span class="price-number price-number-three">7 000</span>
-                                            RUB
-                                        </div> {% endcomment %}
-                                        {% endfor %}
-                                    {% else %}
-                                        {% for size in sizes %}
-                                            {% if forloop.counter == 1 %}
-                                                <span class="price-number price-number-one _active">{{ size }}</span>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                    
+                                    <span class="price-number price-number-one _active">{{ product.price  }} RUB</span>
                                 </div>
                                 <div class="presentation__rating">
                                     <div class="card__row-star">
@@ -147,30 +118,19 @@
                                         <p class="description__title">Категория</p>
                                         <p>{{ product.category }}</p>
                                     </li>
-                                    {% comment %} <li class="description__item">
-                                        <p class="description__title">Производство</p>
-                                        <p>Франция</p>
-                                    </li>
-                                    <li class="description__item">
-                                        <p class="description__title">Торговый дом</p>
-                                        <p>Marc-Antoine Barro</p>
-                                    </li>
-                                    <li class="description__item">
-                                        <p class="description__title">Парфюмер</p>
-                                        <p>Quentin Bisch</p>
-                                    </li> {% endcomment %}
+
                                     <li class="description__item">
                                         <p class="description__title">Год создания</p>
                                         <p>{{ product.year }}</p>
                                     </li>
-                                    {% comment %} <li class="description__item">
-                                        <p class="description__title">Назначение</p>
+                                    <li class="description__item">
+                                        <p class="description__title">Категория</p>
                                         <p>{{ product.category }}</p>
-                                    </li> {% endcomment %}
-                                    {% comment %} <li class="description__item">
-                                        <p class="description__title">Семейство</p>
+                                    </li>
+                                    <li class="description__item">
+                                        <p class="description__title">Тип</p>
                                         <p>Парфюмерная вода</p>
-                                    </li> {% endcomment %}
+                                    </li> 
                                     <li class="description__item">
                                         <p class="description__title">Ноты</p>
                                         <p>{{ product.notes }}</p>
@@ -208,56 +168,14 @@
                                 <div class="presentation__volume volume">
                                     <div class="volume__title">Объем</div>
                                     <div class="volume__row">
-                                        {% comment %} {% for prod in products %} {% endcomment %}
-                                            {% comment %} {% if forloop.counter == 1 %} {% endcomment %}
                                         <div class="volume__item">
-                                            <input type="radio" checked="checked" id="volume1" name="volume" value="50мл" class="volume__input" /> 
+                                            <input type="radio" checked="checked" id="volume1" name="volume" value="{{ product.ml }}" class="volume__input" /> 
                                             <label for="volume1" class="volume__label">{{ product.ml }}</label>
                                         </div>
-                                            {% comment %} {% endif %}
-                                            {% if forloop.counter == 2 %}
-                                                <div class="volume__item">
-                                                    <input type="radio" id="volume2" name="volume" value="120мл" class="volume__input" /> 
-                                                    <label for="volume2" class="volume__label">{{ prod }}</label>
-                                                </div>
-                                            {% endif %}
-                                            {% if forloop.counter == 3 %}
-                                                <div class="volume__item">
-                                                    <input type="radio" id="volume3" name="volume" value="120мл" class="volume__input" /> 
-                                                    <label for="volume3" class="volume__label">{{ prod }}</label>
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %} {% endcomment %}
-                                        {% comment %} <div class="volume__item">
-                                            <input type="radio" id="volume3" name="volume" disabled="disabled" value="280мл" class="volume__input" /> 
-                                            <label for="volume3" class="volume__label">280 МЛ</label>
-                                        </div>  {% endcomment %}
                                     </div>
                                 </div>
-                                {% comment %} <div class="quantity presentation__quantity">
-                                    <div class="quantity__title">Количество</div>
-                                    <div class="quantity__row">
-                                        <button class="quantity__number-minus" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                                <path d="M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </button>
-                                        <input type="number" min="1" value="1" readonly="readonly" class="quantity__input" />
-                                        <button class="quantity__number-plus" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                                <path d="M11 4.58337V17.4167M4.58337 11H17.4167" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div> {% endcomment %}
                                 <div class="presentation__button-row">
-                                    {% comment %} <form action="{% url 'add_cart' %}" method="POST" class="CardForm">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="card_product_id" value="{{ product.id }}" id="{{ product.id }}">
-                                        <input type="submit" value="ДОБАВИТЬ В КОРЗИНУ" class="button card__button" style="width:100%;height:100%;">
-                                    </form> {% endcomment %}
 
-                                    {% comment %} <a href={% url 'add_product' %} class="button white presentation__button-bye">КУПИТЬ СЕЙЧАС</a> {% endcomment %}
                                     <form action="{% url 'add_product' %}" method="post" class="addOneProduct">
                                         {% csrf_token %}
                                         {{ item.update_quantity_form.quantity }}
@@ -266,6 +184,7 @@
                                         <input type="submit" value="КУПИТЬ СЕЙЧАС" class="button white presentation__button-bye" style="width:100%"> 
                                     </form>
                                 </div>
+                                
                                 <p class="presentation__delivery">Бесплатная доставка от 5 000 RUB</p>
                             </div>
                         </div>

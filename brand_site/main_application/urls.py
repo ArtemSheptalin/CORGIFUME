@@ -23,4 +23,5 @@ urlpatterns = [
     path('about-us/', AboutUsView.as_view(), name='about_us'),
     path('cogifume-conditions/', ConditionsView.as_view(), name='conditions'),
     path('cogifume-requisites/', RequisitesView.as_view(), name='requisites'),
+    path('cogifume-confidential-politicts/', PoliticsView.as_view(), name='politics'),
 ]

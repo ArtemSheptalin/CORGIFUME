@@ -258,7 +258,7 @@
                                 <div class="footer__title-list">Информация о компании</div>
                                 <ul class="footer__list">
                                     <li class="footer__li"><a href="{% url 'conditions' %}">Условия пользования</a></li>
-                                    <li class="footer__li"><a href="#">Политика конфиденциальности</a></li>
+                                    <li class="footer__li"><a href="{% url 'politics' %}">Политика конфиденциальности</a></li>
                                     <li class="footer__li"><a href="#">Информация о файлах coockie</a></li>
                                     <li class="footer__li"><a href="#">Индивидуальные предложения</a></li>
                                     <li class="footer__li"><a href="{% url 'requisites' %}">Реквизиты продавца</a></li>
@@ -296,7 +296,7 @@
                     <div class="footer-bot footer__bottom">
                         <div class="footer-bot__protected">© 2024 CORGIFUME. Все права защищены.</div>
                         <ul class="footer-bot__list">
-                            <li class="footer-bot__li"><a href="#">Политика конфиденциальности</a></li>
+                            <li class="footer-bot__li"><a href="{% url 'politics' %}">Политика конфиденциальности</a></li>
                             <li class="footer-bot__li"><a href="#">Условия использования</a></li>
                             <li class="footer-bot__li"><a href="#">Настройки файлов cookie</a></li>
                         </ul>
@@ -306,7 +306,6 @@
         </div>
         <script src={% static 'js/new.min.js' %}></script>
         <script src={% static 'js/app.min.js' %}></script>
-        {% comment %} <script src={% static 'js/vendors.min.js' %}></script> {% endcomment %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src={% static 'js/ajax.js' %}></script>  
         <script>

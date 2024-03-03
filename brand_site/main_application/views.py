@@ -246,6 +246,10 @@ class ConditionsView(TemplateView):
 
 class RequisitesView(TemplateView):
     template_name = 'requisites.html'
+
+
+class PoliticsView(TemplateView):
+    template_name = 'politics.html'
     
 
     

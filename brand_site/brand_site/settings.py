@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-q$r=j&1bk35r_jz$#%=_ft_vxh8p50#ot*hz%^o*=3z!3d$10v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['54a2-46-138-93-13.ngrok-free.app']
+# ALLOWED_HOSTS = ['54a2-46-138-93-13.ngrok-free.app']
 
 
 # Application definition
@@ -162,8 +162,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 CART_SESSION_ID = 'cart'
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://54a2-46-138-93-13.ngrok-free.app',
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://54a2-46-138-93-13.ngrok-free.app',
+# ]
 
 
