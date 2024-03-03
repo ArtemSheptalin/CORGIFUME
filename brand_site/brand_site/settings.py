@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-q$r=j&1bk35r_jz$#%=_ft_vxh8p50#ot*hz%^o*=3z!3d$10v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['54a2-46-138-93-13.ngrok-free.app']
+ALLOWED_HOSTS = ['corgifume.ru', 'www.corgifume.ru']
 
 
 # Application definition
@@ -87,7 +87,7 @@ WSGI_APPLICATION = "brand_site.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "ttt_base",
+        "NAME": "corgufume_server_database",
         "USER": "postgres",
         "PASSWORD": "postgres",
         "HOST": "localhost",
