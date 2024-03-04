@@ -8,7 +8,7 @@ import shutil
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        base_path = '/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/brands'
+        base_path = '/root/projects/CORGIFUME/brand_site/brands'
         for brand in os.listdir(base_path):
             try:
                 if os.path.isdir(f"{base_path}/{brand}/"):

@@ -87,23 +87,13 @@ WSGI_APPLICATION = "brand_site.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "corgufume_server_database",
+        "NAME": "ttt_base",
         "USER": "postgres",
         "PASSWORD": "postgres",
         "HOST": "localhost",
         "PORT": "5432",
     }
 }
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": os.environ.get('DB_NAME'),
-#         "USER": os.environ.get('DB_USER'),
-#         "PASSWORD": os.environ.get('DB_PASS'),
-#         "HOST": os.environ.get('DB_HOST'),
-#     }
-# }
 
 
 # Password validation
@@ -162,8 +152,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 CART_SESSION_ID = 'cart'
 
-# CSRF_TRUSTED_ORIGINS = [
-#     'https://54a2-46-138-93-13.ngrok-free.app',
-# ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://corgifume.ru/',
+]
 
 

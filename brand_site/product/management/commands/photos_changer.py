@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-folder_path = "/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/main_application/static/images/!ALL_IMAGES" # папка проекта
+folder_path = "/root/projects/CORGIFUME/brand_site/main_application/static/images/!ALL_IMAGES" # папка проекта
 desired_width = 200 # ширина
 desired_height = 254 # высота
 background_color = (255, 255, 255)  # Белый фон

@@ -8,8 +8,8 @@ import shutil
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        base_path = '/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/main_application/static/images/brands'
-        destination_folder = '/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/main_application/static/images/'
+        base_path = '/root/projects/CORGIFUME/brand_site/main_application/static/images/brands'
+        destination_folder = '/root/projects/CORGIFUME/brand_site/main_application/static/images/'
 
         for brand in os.listdir(base_path):
             try:

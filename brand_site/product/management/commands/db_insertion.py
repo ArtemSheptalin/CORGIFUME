@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
         # Получить пути к файлам
 
-        data_path = f'/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/price_corg.xlsx'
+        data_path = f'/root/projects/CORGIFUME/brand_site/price_corg.xlsx'
        
         # Объединить файлы
 
@@ -147,7 +147,7 @@ class Command(BaseCommand):
 
                 for image_instance in cleaned_photos:
 
-                    image_path = f"/Users/ArtemBoss/Desktop/Kwork/CORGIFUME/brand_site/main_application/static/images/!ALL_IMAGES/{image_instance}"
+                    image_path = f"/root/projects/CORGIFUME/brand_site/main_application/static/images/!ALL_IMAGES/{image_instance}"
 
                     with open(image_path, 'rb') as f:
                         image_file = File.open(f)

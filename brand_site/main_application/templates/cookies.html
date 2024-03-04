@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %} Файлы cookies{% endblock %}
+{% load static %}
+{% block content %}
+<body>
+    <div class="about__conditions">
+        <h1 class="conditions__header">Информация о файлах cookie</h1>
+
+        <div class="conditions__item conditions__cookies-intro">
+            <h2 class="conditions__subheader">Что такое файлы cookie?</h2 >
+            <p class="conditions__paragraph">Файлы cookie — это небольшие текстовые файлы, которые сайты помещают на компьютеры и мобильные устройства пользователей при их посещении. Эти файлы широко используются для того, чтобы сделать сайты более эффективными, а также для предоставления важной информации владельцам сайтов.</p>
+        </div>
+
+        <div class="conditions__item conditions__cookies-use">
+            <h2 class="conditions__subheader">Как мы используем файлы cookie?</h2 >
+            <p class="conditions__paragraph">На нашем сайте www.corgifume.ru мы используем файлы cookie для улучшения работы сайта, аналитики и производительности, а также для персонализации рекламы.</p>
+        </div>
+
+        <div class="conditions__item conditions__cookies-management">
+            <h2  class="conditions__subheader">Управление файлами cookie</h2 >
+            <p class="conditions__paragraph">Большинство веб-браузеров позволяют вам контролировать файлы cookie через настройки браузера. Вы можете установить свой браузер на блокировку или удаление файлов cookie или на предупреждение вас перед их установкой.</p>
+        </div>
+
+        <div class="conditions__item conditions__cookies-consent">
+            <h2  class="conditions__subheader">Согласие на использование файлов cookie</h2 >
+            <p class="conditions__paragraph">При первом посещении нашего сайта вас будет проинформировано о нашем использовании файлов cookie, и мы попросим ваше согласие на их использование. Вы можете изменить свои предпочтения в любое время, вернувшись на эту страницу.</p>
+        </div>
+
+        <div class="conditions__item conditions__privacy-policy">
+            <p class="conditions__paragraph">Для получения дополнительной информации о том, как мы используем, храним и защищаем ваши личные данные, пожалуйста, ознакомьтесь с нашей <a href="#">Политикой конфиденциальности</a>.</p>
+        </div>
+    </div>
+</body>
+{% endblock %}

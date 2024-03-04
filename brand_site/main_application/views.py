@@ -252,6 +252,10 @@ class PoliticsView(TemplateView):
     template_name = 'politics.html'
     
 
+class CookiesView(TemplateView):
+    template_name = 'cookies.html'
+    
+
     
 
 
